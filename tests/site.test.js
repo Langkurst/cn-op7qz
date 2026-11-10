@@ -7,7 +7,7 @@ const path = require("node:path");
 
 const ROOT = path.join(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(ROOT, file), "utf8");
-const PAGES = ["index.html", "invoice-checker.html", "3d/index.html"];
+const PAGES = ["index.html", "privacy-checker.html", "3d/index.html"];
 const css = read("assets/css/site.css");
 
 // ---------- colour contrast (WCAG 2) ----------
@@ -60,7 +60,7 @@ test("motion: reduced motion switches the animation off, and focus is visible", 
 // ---------- the pages ----------
 // Things the site must never say. Each is a rule from the evidence file or the brief.
 const NEVER = [
-  /\bDiscord\b/i, /\bCopilot\b/i, /Power Automate/i, /Power BI/i, /\bSQL\b/, /\bPython\b/i,
+  /\bDiscord\b/i, /\bCopilot\b/i, /Power Automate/i, /Power BI/i, /\bSQL\b/, /\bPython\b(?!-stdnum)/i,
   /Rift Assistant/i, /game server/i, /integrations?\b/i, /independent review/i, /code review/i,
   /every release/i, /\bseven years\b(?<!nearly seven years)/i, /I wrote the (code|website|user guide)/i,
   /\b(our|my) (users|customers)\b/i, /[–—]/, /\b0\d{2}[ -]?\d{3}[ -]?\d{3,5}\b/,
@@ -113,7 +113,7 @@ for (const page of PAGES) {
       assert.match(img, /\salt="[^"]{10,}"/, `no alt text: ${img.slice(0, 60)}`);
       assert.match(img, /\swidth="\d+"/);
       assert.match(img, /\sheight="\d+"/);
-      assert.match(img, /\sloading="lazy"/);
+      if (!/fetchpriority="high"/.test(img)) assert.match(img, /\sloading="lazy"/);
     }
   });
 }
@@ -154,4 +154,25 @@ test("3d page: falls back to the flat view, and loads the 3D code only when it w
   assert.ok(!/^import /m.test(boot), "boot.js must not import three.js up front");
   assert.ok(fs.existsSync(path.join(ROOT, "3d/vendor/three.module.min.js")));
   assert.ok(fs.existsSync(path.join(ROOT, "3d/vendor/LICENSE-three.txt")));
+});
+
+test("privacy checker page: a security policy blocks every connection, so pasted text cannot leave", () => {
+  const html = read("privacy-checker.html");
+  const csp = (html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/) || [])[1] || "";
+  assert.match(csp, /connect-src 'none'/);
+  assert.match(csp, /form-action 'none'/);
+  assert.match(csp, /default-src 'self'/);
+  assert.ok(!/<script>[^<]/.test(html), "no inline scripts, which the policy would block");
+  assert.ok(!/ style="/.test(html), "no inline styles, which the policy would block");
+});
+
+test("the invoice checker is gone from every page", () => {
+  for (const page of PAGES) assert.ok(!/invoice-checker/.test(read(page)), page);
+});
+
+test("at most one image per page skips lazy loading, and it is marked high priority", () => {
+  for (const page of PAGES) {
+    const eager = (read(page).match(/<img\b[^>]*fetchpriority="high"[^>]*>/g) || []).length;
+    assert.ok(eager <= 1, `${page} has ${eager} high-priority images`);
+  }
 });
