@@ -60,10 +60,10 @@ function paperTexture(p, i, n, aniso) {
   g.fillStyle = "#f2eee4";
   g.fillRect(0, 0, c.width, c.height);
   const rnd = seeded(i * 97 + 13);
-  for (let k = 0; k < 4000; k++) {           // paper fibre
-    g.fillStyle = rnd() > 0.5 ? "rgba(120,105,80,0.035)" : "rgba(255,255,255,0.06)";
-    g.fillRect(rnd() * 1024, rnd() * 1448, 1 + rnd() * 2, 1 + rnd() * 2);
-  }
+  const fibreDark = new Path2D(), fibreLight = new Path2D();   // paper fibre, filled once per colour
+  for (let k = 0; k < 4000; k++) (rnd() > 0.5 ? fibreDark : fibreLight).rect(rnd() * 1024, rnd() * 1448, 1 + rnd() * 2, 1 + rnd() * 2);
+  g.fillStyle = "rgba(120,105,80,0.035)"; g.fill(fibreDark);
+  g.fillStyle = "rgba(255,255,255,0.06)"; g.fill(fibreLight);
   // Printed like a real document: a mono header, a heavy title, ruled rows with values, and one big figure.
   const M = 92, R = 1024 - M, TW = R - M;
   const CHIP = { id: ["#fff0d9", "#efc27f", "#8a4b00"], money: ["#e7eeff", "#a7bdf0", "#234da8"], contact: ["#e2f3e7", "#97cfa9", "#1f6b3a"] };
@@ -194,10 +194,10 @@ function tableTexture(aniso) {
     g.fillStyle = "rgba(90,64,36,0.18)";
     g.fillRect(0, b * 256, 1024, 2);
   }
-  for (let k = 0; k < 16000; k++) {
-    g.fillStyle = r() > 0.5 ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.025)";
-    g.fillRect(r() * 1024, r() * 1024, 1.5, 1.5);
-  }
+  const light = new Path2D(), dark = new Path2D();   // fine speckle, gathered per colour and filled once
+  for (let k = 0; k < 16000; k++) (r() > 0.5 ? light : dark).rect(r() * 1024, r() * 1024, 1.5, 1.5);
+  g.fillStyle = "rgba(255,255,255,0.02)"; g.fill(light);
+  g.fillStyle = "rgba(0,0,0,0.025)"; g.fill(dark);
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
@@ -211,11 +211,14 @@ function blindsTexture() {
   const c = document.createElement("canvas");
   c.width = c.height = 512;
   const g = c.getContext("2d");
-  g.fillStyle = "#000";
+  // Soft slat edges from one gradient (a canvas blur does the same but is slow without a graphics card).
+  const grad = g.createLinearGradient(0, 0, 0, 512);
+  const at = (y, colour) => grad.addColorStop(Math.min(1, Math.max(0, y / 512)), colour);
+  at(0, "#000");
+  for (let y = 10; y < 512; y += 46) { at(y - 6, "#000"); at(y + 6, "#fff"); at(y + 22, "#fff"); at(y + 34, "#000"); }
+  at(512, "#000");
+  g.fillStyle = grad;
   g.fillRect(0, 0, 512, 512);
-  g.filter = "blur(5px)";
-  g.fillStyle = "#fff";
-  for (let y = 10; y < 512; y += 46) g.fillRect(-20, y, 552, 28);
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   return t;
@@ -297,6 +300,7 @@ export async function start(canvas) {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const aniso = renderer.capabilities.getMaxAnisotropy();
+  await new Promise((r) => setTimeout(r, 0));   // a pause, so set-up never blocks the page for long
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xe9e4da);
@@ -322,13 +326,16 @@ export async function start(canvas) {
   const fill = new THREE.DirectionalLight(0xdfe7f0, 0.35);   // cool window light from the front
   fill.position.set(2.5, 3, 4);
   scene.add(fill);
+  await new Promise((r) => setTimeout(r, 0));   // a pause, so set-up never blocks the page for long
 
   const table = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ map: tableTexture(aniso), roughness: 0.78, metalness: 0 }));
   table.rotation.x = -Math.PI / 2;
   table.receiveShadow = true;
   scene.add(table);
+  await new Promise((r) => setTimeout(r, 0));   // a pause, so set-up never blocks the page for long
 
   const stampTex = stampTexture(aniso);
+  await new Promise((r) => setTimeout(r, 0));   // a pause, so set-up never blocks the page for long
   const rnd = seeded(2026);
   // One sheet at a time, with a pause between, so drawing nine textures never blocks the page for long.
   const textures = [];
@@ -361,7 +368,7 @@ export async function start(canvas) {
     const panelRight = wide && panel ? Math.min(panel.getBoundingClientRect().right, w * 0.6) : 0;
     const availW = wide ? w - panelRight : w;
     const availH = wide ? h * 0.8 : h * 0.42;
-    const dx = wide ? (panelRight + w) / 2 - w / 2 : 0;
+    const dx = wide ? (panelRight + w) / 2 - w / 2 : w * 0.06;   // phones: nudge right so the pile to check is never cut; the filed pile may run off the edge, as on wide screens
     const dy = wide ? 0 : -(h / 2 - h * 0.26);
     const fullW = w + 2 * Math.abs(dx), fullH = h + 2 * Math.abs(dy);
     camera.aspect = fullW / fullH;
