@@ -134,27 +134,7 @@ test("the live SwimSorted view is tied to the one address it is allowed on", () 
   for (const page of ["welcome", "features", "pricing", "about", "story"]) assert.ok(js.includes(`"${page}"`));
 });
 
-test("3d page: every sheet has a label and a title, and the scene stays decorative", () => {
-  const html = read("3d/index.html");
-  const papers = html.split('class="paper"').length - 1;
-  const stops = html.split('class="stop"').length - 1;
-  assert.equal(papers, stops, "one paper card per section");
-  assert.equal((html.match(/class="p-label"/g) || []).length, papers);
-  assert.equal((html.match(/class="p-title"/g) || []).length, papers);
-  assert.match(html, /<canvas id="scene" aria-hidden="true">/);
-  assert.match(html, /href="\.\.\/index\.html"/, "links back to the plain site");
-});
 
-test("3d page: falls back to the flat view, and loads the 3D code only when it will be used", () => {
-  const boot = read("3d/boot.js");
-  assert.match(boot, /prefers-reduced-motion: reduce/);
-  assert.match(boot, /webgl2/);
-  assert.match(boot, /saveData/);
-  assert.match(boot, /if \(!flat\) \{\s*import\("\.\/scene\.js"\)/);
-  assert.ok(!/^import /m.test(boot), "boot.js must not import three.js up front");
-  assert.ok(fs.existsSync(path.join(ROOT, "3d/vendor/three.module.min.js")));
-  assert.ok(fs.existsSync(path.join(ROOT, "3d/vendor/LICENSE-three.txt")));
-});
 
 for (const page of ["privacy-checker.html", "invoice-checker.html"]) {
   test(`${page}: a security policy blocks every connection, so typed text cannot leave`, () => {
@@ -190,10 +170,85 @@ test("at most one image per page skips lazy loading, and it is marked high prior
   }
 });
 
-test("3d page: the 3D scripts parse, so a typo can't quietly drop every visitor to the flat view", () => {
-  const { spawnSync } = require("child_process");
-  for (const f of ["3d/scene.js", "3d/boot.js"]) {
-    const r = spawnSync(process.execPath, ["--check", path.join(ROOT, f)], { encoding: "utf8" });
-    assert.equal(r.status, 0, `${f}: ${r.stderr}`);
+
+// ---------- AI-look tells (PERSONAL STUFF\Portfolio\AI-TELLS.md, November 2026) ----------
+// Each of these is on the published lists of signs that a page was made by AI. Any hit fails.
+const TELL_PAGES = [["index.html", "assets/css/site.css"], ["3d/index.html", "3d/style.css"]];
+function tellsIn(html, sheet) {
+  const found = [];
+  const visible = html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ");
+  const rules = sheet.replace(/@font-face\s*\{[^}]*\}/g, "");
+  if (/font-style:\s*italic/.test(rules)) found.push("italic text styling");
+  if (/text-transform:\s*uppercase/.test(rules)) found.push("uppercase labels");
+  for (const m of rules.matchAll(/letter-spacing:\s*(\.\d+|\d+(?:\.\d+)?)em/g)) if (parseFloat(m[1]) > 0.02) found.push(`letter-spacing ${m[1]}em`);
+  if (/ · /.test(visible)) found.push('" · " strings');
+  if (/(^|\s)0[1-9](\s|$)/.test(visible)) found.push("01 / 02 / 03 markers");
+  for (const f of ["Instrument Serif", "Geist", "Inter", "Space Grotesk", "Fraunces", "Newsreader"]) {
+    if (new RegExp(`["']${f}["']`).test(sheet + html)) found.push(`font ${f}`);
   }
+  if (/border-left:\s*(?:[2-9]|\d{2,})px/.test(rules)) found.push("thick coloured left rule");
+  // Motion only after a user action: every animation must sit under .is-running (set by a button) or be "none".
+  for (const m of rules.matchAll(/([^{}]+)\{[^{}]*\banimation:\s*([^;}]+)/g)) {
+    if (!/none/.test(m[2]) && !/is-running/.test(m[1])) found.push(`animation on load: ${m[1].trim()}`);
+  }
+  // Cream page: light, warm and tinted.
+  const bg = (sheet.match(/:root\s*\{[\s\S]*?--bg:\s*(#[0-9a-fA-F]{6})/) || [])[1];
+  if (bg) {
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(bg.slice(i, i + 2), 16) / 255);
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), l = (max + min) / 2, d = max - min;
+    const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+    let h = 0;
+    if (d) h = max === r ? 60 * (((g - b) / d) % 6) : max === g ? 60 * ((b - r) / d + 2) : 60 * ((r - g) / d + 4);
+    if (h < 0) h += 360;
+    if (l > 0.9 && s > 0.15 && h >= 25 && h <= 65) found.push(`cream page ${bg}`);
+  }
+  return found;
+}
+for (const [page, sheetFile] of TELL_PAGES) {
+  test(`${page}: none of the AI-look tells`, () => {
+    assert.deepEqual(tellsIn(read(page), read(sheetFile)), []);
+  });
+}
+module.exports = { tellsIn };
+
+// ---------- the invoice matching demo (3d/index.html) ----------
+test("demo page: uses the invoice checker's own rules and samples, works from a button, and has no WebGL", () => {
+  const html = read("3d/index.html");
+  assert.match(html, /<script src="\.\.\/assets\/js\/matcher\.js"><\/script>/);
+  assert.match(html, /<script src="\.\.\/assets\/js\/samples\.js"><\/script>/);
+  assert.match(html, /<script src="demo\.js"><\/script>/);
+  assert.match(html, /<button type="button" class="btn btn-primary" data-check>Check<\/button>/, "a keyboard and screen-reader way to run the check");
+  assert.match(html, /aria-live="polite"/, "the result is announced");
+  assert.ok(!/<canvas/.test(html) && !fs.existsSync(path.join(ROOT, "3d/vendor/three.module.min.js")), "no WebGL scene");
+  assert.match(html, /href="\.\.\/index\.html"/, "links back to the portfolio");
+  const { spawnSync } = require("child_process");
+  const r = spawnSync(process.execPath, ["--check", path.join(ROOT, "3d/demo.js")], { encoding: "utf8" });
+  assert.equal(r.status, 0, r.stderr);
+});
+
+test("demo page: what it says after a check matches the real result for every sample bill", () => {
+  const M = require(path.join(ROOT, "assets/js/matcher.js"));
+  const S = require(path.join(ROOT, "assets/js/samples.js"));
+  const { verdictText } = require(path.join(ROOT, "3d/demo.js"));
+  for (const s of S) {
+    const r = M.check(s.order, s.invoice);
+    const lines = verdictText(r, M.formatMoney);
+    if (r.verdict === "match") assert.equal(lines[0], "Matches the order. Ready to pay.", s.id);
+    if (r.checkCount) assert.match(lines[0], new RegExp(`^${r.checkCount} things? to check before paying\\.$`), s.id);
+    if (r.queryCents > 0) assert.equal(lines[1], `${M.formatMoney(r.queryCents)} to raise with the supplier, before GST.`, s.id);
+    else assert.equal(lines.length, 1, s.id);
+  }
+  const shi = S.find((s) => s.invoice.number === "SHI-7731");
+  assert.deepEqual(verdictText(M.check(shi.order, shi.invoice), M.formatMoney),
+    ["2 things to check before paying.", "$225.00 to raise with the supplier, before GST."], "the bill in the portfolio's first screen");
+});
+
+test("demo page: the first bill is built into the page, exactly as the script draws it, so nothing jumps on load", () => {
+  const M = require(path.join(ROOT, "assets/js/matcher.js"));
+  const S = require(path.join(ROOT, "assets/js/samples.js"));
+  const D = require(path.join(ROOT, "3d/demo.js"));
+  const html = read("3d/index.html");
+  assert.ok(html.includes(D.orderHTML(S[D.FIRST].order, M)), "purchase order differs from the script's");
+  assert.ok(html.includes(D.invoiceHTML(S[D.FIRST].invoice, M)), "invoice differs from the script's");
+  assert.ok(html.includes(D.billsHTML(S, D.FIRST)), "bill list differs from the script's");
 });

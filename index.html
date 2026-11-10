@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Christopher Nottle | Business systems and AI implementation, Auckland</title>
-  <meta name="description" content="Christopher Nottle, Auckland. Nearly seven years running purchasing in SAP, and careful, tested AI tools for the same kind of business work.">
+  <title>Christopher Nottle, Auckland | Purchasing in SAP, now building with AI</title>
+  <meta name="description" content="Christopher Nottle, Auckland. Nearly seven years as a Purchaser in SAP at Häfele New Zealand. Now building software by directing AI coding agents, including an invoice checker and NZ Redact.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Christopher Nottle | Business systems and AI implementation">
-  <meta property="og:description" content="Nearly seven years running purchasing in SAP, and careful, tested AI tools for the same kind of business work.">
+  <meta property="og:title" content="Christopher Nottle, Auckland">
+  <meta property="og:description" content="Nearly seven years as a Purchaser in SAP. Now building software by directing AI coding agents.">
   <meta property="og:url" content="https://langkurst.github.io/cn-op7qz/">
   <meta property="og:image" content="https://langkurst.github.io/cn-op7qz/assets/img/og-portfolio.png">
   <meta property="og:image:width" content="1200">
@@ -17,9 +17,9 @@
   <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-  <link rel="preload" href="assets/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/ibm-plex-sans-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <script src="assets/js/theme.js"></script>
   <link rel="stylesheet" href="assets/css/site.css">
 </head>
@@ -32,265 +32,185 @@
       <nav class="site-nav" aria-label="Sections">
         <ul>
           <li><a href="#work">Work</a></li>
-          <li><a href="#ai">How I work with AI</a></li>
+          <li><a href="#ai">Working with AI</a></li>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
-      <div class="head-end">
-        <button type="button" class="theme-toggle" data-theme-toggle>Dark theme</button>
-      </div>
     </div>
   </header>
 
   <main id="main">
 
-    <!-- ============ First screen: who, what, and the evidence ============ -->
     <section class="hero" id="top" aria-labelledby="hero-h">
-      <div class="wrap">
-        <h1 id="hero-h">Christopher Nottle</h1>
-      </div>
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="hero-text">I spent nearly seven years running purchasing in SAP at Häfele New Zealand. Since October 2026 I have built four tools and products by directing AI coding agents. They write the code, and I decide what each one does and test it.</p>
-          <dl class="figures ledger">
-            <div><dt class="figure-n">NZ$500k</dt><dd>of orders placed in a busy fortnight at Häfele, at the most</dd></div>
-            <div><dt class="figure-n">4</dt><dd>public tools and products since October 2026</dd></div>
-            <div><dt class="figure-n">4,500+</dt><dd>automated tests across them</dd></div>
-            <div><dt class="figure-n">95%</dt><dd>of personal details found by NZ Redact in a blind test, before AI sees the text</dd></div>
-          </dl>
-          <p class="hero-place">Auckland, New Zealand. Available now.</p>
+          <h1 id="hero-h">I'm looking for a job helping New Zealand businesses use AI in their office work.</h1>
+          <p>I was a Purchaser at Häfele New Zealand for nearly seven years. I placed orders in SAP, matched supplier invoices to them and sorted out the differences with suppliers. In a busy fortnight that was up to about NZ$500,000 of orders.</p>
+          <p>Since October I've built four pieces of software by directing AI coding agents. They write the code. I decide what it does, and I test it.</p>
+          <p class="hero-place">Auckland. Available now.</p>
           <div class="reach">
             <button type="button" class="btn btn-primary needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email">Copy email</button>
             <span class="email" id="email">chris.a.nottle@gmail.com</span>
             <span class="visually-hidden" role="status" data-copy-status></span>
           </div>
-          <p class="text-links"><a href="Christopher_Nottle_CV.pdf" download>CV (PDF)</a> <a href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a> <a href="#work">The work</a></p>
+          <p class="text-links"><a href="Christopher_Nottle_CV.pdf" download>CV (PDF)</a> <a href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a></p>
         </div>
 
-        <figure class="hero-visual">
-          <!-- Drawn in HTML rather than a screenshot, so it stays sharp and readable at any size and in both themes. -->
-          <div class="demo" aria-hidden="true">
-            <div class="demo-bar"><span class="demo-title">NZ Redact</span><span class="demo-status">6 details removed</span></div>
-            <div class="demo-body">
-              <div class="demo-text">
-                <p class="demo-label">Your text</p>
-                <p>Hi <mark class="t-name">Mere</mark>,</p>
-                <p>Can you sort out Sam's refund? His IRD number is <mark class="t-ird">49-098-576</mark> and the refund goes to <mark class="t-bank">01-0902-0068389-00</mark>.</p>
-                <p>Email <mark class="t-email">sam@example.co.nz</mark>. DOB <mark class="t-email">12/03/1985</mark>. NHI <mark class="t-nhi">ZAA0067</mark>.</p>
-                <p class="demo-quiet">Order 4500012904 is not part of this.</p>
-              </div>
-              <div class="demo-side">
-                <p class="demo-label">Found</p>
-                <p class="demo-count">6 <span>details</span></p>
-                <ul>
-                  <li><span>IRD number</span><code class="tok c-id">IRD_1</code></li>
-                  <li><span>Bank account</span><code class="tok c-money">BANK_ACCOUNT_1</code></li>
-                  <li><span>NHI number</span><code class="tok c-id">NHI_1</code></li>
-                  <li><span>Email address</span><code class="tok c-contact">EMAIL_1</code></li>
-                  <li><span>Name, date of birth</span><span class="demo-more">2 more</span></li>
-                </ul>
-              </div>
-            </div>
-            <div class="demo-out"><span class="demo-label">Safe to paste</span> His IRD number is <code class="tok c-id">IRD_1</code> and the refund goes to <code class="tok c-money">BANK_ACCOUNT_1</code>.</div>
+        <figure class="match" data-match>
+          <div class="match-head">
+            <p><span class="doc-kind">Tax invoice</span> <code>SHI-7731</code></p>
+            <p><span class="doc-kind">against order</span> <code>4500012904</code></p>
           </div>
-          <figcaption class="visually-hidden">NZ Redact, an open-source tool, finding the personal details in a made-up email and replacing them with placeholders. In a blind test it found 95% of numbers, dates, emails, phones and addresses.</figcaption>
+          <table class="match-table">
+            <caption class="visually-hidden">Invoice SHI-7731 checked line by line against purchase order 4500012904</caption>
+            <thead>
+              <tr><th scope="col">Item</th><th scope="col" class="num">Ordered</th><th scope="col" class="num">Invoiced</th><th scope="col"><span class="visually-hidden">Result</span></th></tr>
+            </thead>
+            <tbody>
+              <tr class="row is-flag"><th scope="row"><code>RUN-500</code> <span>Drawer runner, 500 mm</span></th><td class="num">80 at $15.60</td><td class="num">80 at <span class="diff">$16.10</span></td><td class="mark">Check</td></tr>
+              <tr class="reason is-flag"><td colspan="4">$0.50 more each, or $40.00 over 80 units.</td></tr>
+              <tr class="row is-flag"><th scope="row"><code>LED-2M</code> <span>LED strip, 2 m</span></th><td class="num">50 at $18.50</td><td class="num"><span class="diff">60</span> at $18.50</td><td class="mark">Check</td></tr>
+              <tr class="reason is-flag"><td colspan="4">10 more than ordered: $185.00 at the order price.</td></tr>
+              <tr class="row is-ok"><th scope="row"><code>SCR-430</code> <span>Screws, box of 500</span></th><td class="num">24 at $11.90</td><td class="num">24 at $11.90</td><td class="mark"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Matches</span></td></tr>
+              <tr class="row is-note"><th scope="row"><code>LEG-100</code> <span>Cabinet leg, 100 mm</span></th><td class="num">400 at $1.35</td><td class="num">300 at $1.35</td><td class="mark">Note</td></tr>
+              <tr class="reason is-note"><td colspan="4">100 fewer than ordered. They may come on a later invoice.</td></tr>
+            </tbody>
+            <tfoot>
+              <tr class="total"><th scope="row" colspan="2">To raise with the supplier, before GST</th><td class="num" colspan="2">$225.00</td></tr>
+            </tfoot>
+          </table>
+          <figcaption><span>A sample bill in the <a href="invoice-checker.html">invoice checker</a>. The supplier and prices are made up.</span> <button type="button" class="btn-quiet needs-js match-run" data-match-run>Run the check again</button></figcaption>
         </figure>
       </div>
-
     </section>
 
-    <!-- ============ Work ============ -->
     <section class="section" id="work" aria-labelledby="work-h">
       <div class="wrap">
-        <div class="section-head" data-reveal>
-          <h2 id="work-h">Work</h2>
-        </div>
+        <h2 id="work-h">Work</h2>
 
-        <article class="case" data-reveal id="nz-redact" aria-labelledby="redact-h">
-          <div class="case-media">
-            <figure class="shot">
-              <div class="frame">
-                <picture>
-                  <source type="image/webp" srcset="assets/img/nz-redact-app.webp">
-                  <img src="assets/img/nz-redact-app.jpg" width="1200" height="720" loading="lazy" decoding="async"
-                    alt="NZ Redact with a made-up email loaded. Each personal detail is highlighted in place, and the findings panel lists each one with its placeholder, such as IRD_1 and BANK_ACCOUNT_1.">
-                </picture>
-              </div>
-              <div class="shot-actions">
-                <a class="btn btn-quiet" href="https://langkurst.github.io/nz-redact/" rel="noopener">Open NZ Redact</a>
-                <a class="btn btn-quiet" href="https://github.com/Langkurst/nz-redact" rel="noopener">Source on GitHub</a>
-                <a class="btn btn-quiet" href="https://langkurst.github.io/nz-redact/#accuracy" rel="noopener">Blind-test results</a>
-              </div>
-            </figure>
-          </div>
-          <div class="case-body">
-            <p class="case-meta"><span class="case-num">01</span> Open-source tool, November 2026</p>
-            <h3 id="redact-h">NZ Redact</h3>
-            <p class="case-lede">Takes New Zealand personal details out of text before it goes into an AI tool, then puts them back into the answer. Free and open source.</p>
-            <dl class="case-grid">
-              <div><dt>The problem</dt><dd>In Xero's May 2026 survey, 40% of New Zealand small businesses named data privacy and security as a reason they are not using AI, or not using it more.</dd></div>
-              <div><dt>What I asked for</dt><dd>It had to run on the user's own device and be blocked from connecting to anything. IRD, bank and NHI numbers had to follow Inland Revenue's and Health New Zealand's own rules. And it had to be tested on documents its rules had never seen.</dd></div>
-              <div><dt>The AI's part</dt><dd>An AI coding agent wrote the code, the rules and the tests. A separate agent wrote the test documents without seeing the rules.</dd></div>
-              <div><dt>What it shows an employer</dt><dd>I can put AI to work on a business's own data without putting that data at risk, and I measure whether it works.</dd></div>
-            </dl>
-            <dl class="facts">
-              <div><dt>95%</dt><dd>of numbers, dates, emails, phones and addresses found in a blind test</dd></div>
-              <div><dt>25%</dt><dd>of names found, so names still need a read through</dd></div>
-              <div><dt>6</dt><dd>errors found by checking the official specifications, each fixed with a test</dd></div>
-              <div><dt>40</dt><dd>automated tests, run by GitHub on every change</dd></div>
-            </dl>
-          </div>
-        </article>
-
-        <article class="case case-flip" data-reveal id="invoice" aria-labelledby="invoice-h">
-          <div class="case-media">
-            <figure class="shot">
-              <div class="frame">
-                <picture>
-                  <source type="image/webp" srcset="assets/img/invoice-app.webp">
-                  <img src="assets/img/invoice-app.jpg" width="1200" height="720" loading="lazy" decoding="async"
-                    alt="The invoice checker. A list of four made-up bills, the selected tax invoice drawn as a sheet of paper, and a review panel saying 2 things to check before paying and $225.00 to raise with the supplier.">
-                </picture>
-              </div>
-              <div class="shot-actions">
-                <a class="btn btn-quiet" href="invoice-checker.html">Open the invoice checker</a>
-              </div>
-            </figure>
-          </div>
-          <div class="case-body">
-            <p class="case-meta"><span class="case-num">02</span> Demo, November 2026</p>
+        <article class="project project-long" id="invoice" aria-labelledby="invoice-h">
+          <div class="project-text">
             <h3 id="invoice-h">Invoice checker</h3>
-            <p class="case-lede">Checks each supplier invoice against its purchase order before it is paid. Built from the matching I did as a Purchaser.</p>
-            <dl class="case-grid">
-              <div><dt>The problem</dt><dd>Paying an invoice that does not match its order costs money: a higher price, extra units, a missing line or wrong GST. At Häfele I matched supplier invoices to purchase orders by hand.</dd></div>
-              <div><dt>What I asked for</dt><dd>Line-by-line matching with a plain reason for every flag, Inland Revenue's tax invoice rules, and money held in whole cents so the sums are exact.</dd></div>
-              <div><dt>The AI's part</dt><dd>An AI coding agent wrote the code and the tests. The suppliers and prices are made up.</dd></div>
-              <div><dt>What it shows an employer</dt><dd>I know the process an accounts or purchasing team runs, so I can see where automation helps and where a person still has to decide.</dd></div>
-            </dl>
-            <dl class="facts">
-              <div><dt>31</dt><dd>automated tests</dd></div>
-              <div><dt>3</dt><dd>tax invoice rules, including the GST number check digit</dd></div>
-              <div><dt>$225</dt><dd>flagged to raise with the supplier on one sample bill</dd></div>
-              <div><dt>0</dt><dd>connections the page is allowed to make</dd></div>
-            </dl>
+            <p class="project-meta">Demo, November 2026</p>
+            <p>At Häfele I checked supplier invoices against purchase orders by hand. A higher price, a few extra units, a missing line or the wrong GST all cost money if the bill gets paid as it is. This demo does the same check.</p>
+            <table class="compare">
+              <caption class="visually-hidden">How I checked invoices at Häfele, and what the checker does</caption>
+              <thead><tr><th scope="col">At Häfele, by hand</th><th scope="col">The invoice checker</th></tr></thead>
+              <tbody>
+                <tr><td>I read each invoice line against the order in SAP.</td><td>It compares every line with the order and gives a plain reason for each flag.</td></tr>
+                <tr><td>I checked the GST.</td><td>It checks the GST and the check digit of the supplier's GST number.</td></tr>
+                <tr><td>I sorted out the differences with the supplier.</td><td>It adds up what to raise with the supplier. On the sample bill above, that's $225.00.</td></tr>
+              </tbody>
+            </table>
+            <p class="muted">The suppliers and prices are made up. An AI coding agent wrote the code and the tests, and money is kept in whole cents so the sums come out exact.</p>
+            <p class="text-links"><a href="invoice-checker.html">Open the invoice checker</a> <a href="3d/index.html">Try the matching demo</a></p>
+          </div>
+          <figure class="shot">
+            <div class="frame">
+              <picture>
+                <source type="image/webp" srcset="assets/img/invoice-app.webp">
+                <img src="assets/img/invoice-app.jpg" width="1200" height="720" loading="lazy" decoding="async"
+                  alt="The invoice checker. A list of four made-up bills, the selected tax invoice drawn as a sheet of paper, and a review panel saying 2 things to check before paying and $225.00 to raise with the supplier.">
+              </picture>
+            </div>
+          </figure>
+        </article>
+
+        <article class="project" id="nz-redact" aria-labelledby="redact-h">
+          <figure class="shot">
+            <div class="frame">
+              <picture>
+                <source type="image/webp" srcset="assets/img/nz-redact-app.webp">
+                <img src="assets/img/nz-redact-app.jpg" width="1200" height="720" loading="lazy" decoding="async"
+                  alt="NZ Redact with a made-up email loaded. Each personal detail is highlighted in place, and the findings panel lists each one with its placeholder, such as IRD_1 and BANK_ACCOUNT_1.">
+              </picture>
+            </div>
+          </figure>
+          <div class="project-text">
+            <h3 id="redact-h">NZ Redact</h3>
+            <p class="project-meta">Open source, November 2026</p>
+            <p>NZ Redact takes New Zealand personal details out of text before it's pasted into an AI tool, then puts them back into the answer. It checks IRD, bank and NHI numbers against Inland Revenue's and Health New Zealand's own rules, and the page is blocked from connecting to anything, so the text stays on the computer.</p>
+            <p>In a blind test on documents it had never seen, it found 95% of the numbers, dates, emails, phone numbers and addresses. It found only a quarter of the names, so names still need a read through.</p>
+            <p class="muted">An AI coding agent wrote the code and the rules. A separate agent wrote the test documents without seeing the rules. In Xero's May 2026 survey, 40% of New Zealand small businesses named data privacy and security as a reason they weren't using AI, or weren't using it more.</p>
+            <p class="text-links"><a href="https://langkurst.github.io/nz-redact/" rel="noopener">Open NZ Redact</a> <a href="https://github.com/Langkurst/nz-redact" rel="noopener">Source on GitHub</a> <a href="https://langkurst.github.io/nz-redact/#accuracy" rel="noopener">Blind-test results</a></p>
           </div>
         </article>
 
-        <article class="case" data-reveal aria-labelledby="swimsorted-h">
-          <div class="case-media">
-            <figure class="shot" data-swimsorted>
-              <div class="frame">
-                <picture>
-                  <source type="image/webp" srcset="assets/img/swimsorted-visit.webp">
-                  <img src="assets/img/swimsorted-visit.jpg" width="1200" height="720" loading="lazy" decoding="async"
-                    alt="SwimSorted's How a visit works section, on sample data. A phone shows a technician entering a pH reading of 7.8 for a sample family pool, next to the five steps of a visit.">
-                </picture>
-              </div>
-              <div class="shot-actions">
-                <button type="button" class="btn btn-quiet needs-js" data-play>Play the recording</button>
-                <button type="button" class="btn btn-quiet" data-live hidden>Show the live site here</button>
-                <a class="btn btn-quiet" href="https://swimsorted.co.nz" rel="noopener">Open swimsorted.co.nz</a>
-              </div>
-            </figure>
-          </div>
-          <div class="case-body">
-            <p class="case-meta"><span class="case-num">03</span> My own product, October 2026 to now</p>
+        <article class="project" id="swimsorted" aria-labelledby="swimsorted-h">
+          <div class="project-text">
             <h3 id="swimsorted-h">SwimSorted</h3>
-            <p class="case-lede">An app for New Zealand pool technicians and small pool service teams. Website and demo live. Company sign-ups open in December 2026. No customers yet.</p>
-            <dl class="case-grid">
-              <div><dt>The problem</dt><dd>I service pools for The Pool Guy, and every visit includes testing the water and working out what to add. Getting a dose wrong is a safety risk.</dd></div>
-              <div><dt>What it does</dt><dd>It works out each dose from the water test and the products carried. Every dose has a safety limit, and acid and chlorine never go in together. It works with no phone signal.</dd></div>
-              <div><dt>My part, and the AI's</dt><dd>I make the product decisions and test it myself, including on my own phone. AI coding agents write the code, and researched 80 pool-service apps at my direction, later 113.</dd></div>
-              <div><dt>What it shows an employer</dt><dd>I can take work I know first-hand and turn it into a product with safety limits and thousands of tests.</dd></div>
-            </dl>
-            <dl class="facts">
-              <div><dt>About 130</dt><dd>changes merged in four weeks</dd></div>
-              <div><dt>3,000+</dt><dd>automated tests</dd></div>
-              <div><dt>26</dt><dd>dose cases checked against PoolMath</dd></div>
-              <div><dt>11</dt><dd>tests on the live site's security settings</dd></div>
-            </dl>
+            <p class="project-meta">My own product, October 2026 to now</p>
+            <p>I service pools casually for The Pool Guy. Every visit includes testing the water and working out what to add, and getting a dose wrong is a safety risk.</p>
+            <p>SwimSorted works out each dose from the water test and the products the technician carries. Every dose has a safety limit, acid and chlorine never go in together, and it works with no phone signal. I make the product decisions and test it on my own phone. AI coding agents write the code.</p>
+            <p class="muted">The website and demo are live. Company sign-ups open in December 2026. It has no customers yet.</p>
+            <p class="text-links"><a href="https://swimsorted.co.nz" rel="noopener">Open swimsorted.co.nz</a></p>
           </div>
+          <figure class="shot" data-swimsorted>
+            <div class="frame">
+              <picture>
+                <source type="image/webp" srcset="assets/img/swimsorted-visit.webp">
+                <img src="assets/img/swimsorted-visit.jpg" width="1200" height="720" loading="lazy" decoding="async"
+                  alt="SwimSorted's How a visit works section, on sample data. A phone shows a technician entering a pH reading of 7.8 for a sample family pool, next to the five steps of a visit.">
+              </picture>
+            </div>
+            <div class="shot-actions">
+              <button type="button" class="btn btn-quiet needs-js" data-play>Play the recording</button>
+              <button type="button" class="btn btn-quiet" data-live hidden>Show the live site here</button>
+            </div>
+          </figure>
         </article>
 
-        <article class="case case-flip" data-reveal aria-labelledby="keaclip-h">
-          <div class="case-media">
-            <figure class="shot">
-              <div class="frame">
-                <picture>
-                  <source type="image/webp" srcset="assets/img/keaclip-editor-dark-1180.webp">
-                  <img src="assets/img/keaclip-editor-dark-1180.png" width="1180" height="800" loading="lazy" decoding="async"
-                    alt="The KeaClip editor in its dark theme. A 10-second test clip with its waveform, orange handles at each end to keep the part you want, and start, end and length boxes.">
-                </picture>
-              </div>
-              <div class="shot-actions">
-                <a class="btn btn-quiet" href="https://langkurst.github.io/KeaClip/" rel="noopener">KeaClip website</a>
-                <a class="btn btn-quiet" href="https://github.com/Langkurst/KeaClip/releases" rel="noopener">All 12 releases</a>
-                <a class="btn btn-quiet" href="https://github.com/Langkurst/KeaClip/blob/main/docs/KNOWN_LIMITATIONS.md" rel="noopener">The 30 known limits</a>
-              </div>
-            </figure>
-          </div>
-          <div class="case-body">
-            <p class="case-meta"><span class="case-num">04</span> My own product, October 2026</p>
+        <article class="project project-short" id="keaclip" aria-labelledby="keaclip-h">
+          <div class="project-text">
             <h3 id="keaclip-h">KeaClip</h3>
-            <p class="case-lede">A free Windows app for saving, trimming and sharing video and audio, with no ads, account or tracking.</p>
-            <dl class="case-grid">
-              <div><dt>My part</dt><dd>I wrote the 49-section brief and decided what shipped. I set 38 working rules for the AI agents, including a test gate, a release gate and no purchases, publishing or messages without my say.</dd></div>
-              <div><dt>How it was released</dt><dd>The last two releases could not publish unless every test and a 41-check installer self-test passed. Each release publishes checksums.</dd></div>
-              <div><dt>The AI's part</dt><dd>AI coding agents wrote the code, the website and the user guide, to my rules and plain style. I used the app and reported faults.</dd></div>
-              <div><dt>What it shows an employer</dt><dd>I can run a release process with gates, so nothing reaches people unless the checks pass.</dd></div>
-            </dl>
-            <dl class="facts">
-              <div><dt>12</dt><dd>public releases in 15 days</dd></div>
-              <div><dt>1,433</dt><dd>tests passing at the latest release, none failing</dd></div>
-              <div><dt>41</dt><dd>checks in the installer self-test</dd></div>
-              <div><dt>30</dt><dd>known limits, published</dd></div>
-            </dl>
+            <p class="project-meta">My own app, October 2026</p>
+            <p>A free Windows app for saving, trimming and sharing video and audio, with no ads, account or tracking. I wrote a 49-section brief for the AI agents. It went through 12 releases in 15 days, and the last two couldn't be published unless every test and a 41-check installer self-test passed.</p>
+            <p class="text-links"><a href="https://langkurst.github.io/KeaClip/" rel="noopener">KeaClip website</a> <a href="https://github.com/Langkurst/KeaClip/releases" rel="noopener">Releases</a> <a href="https://github.com/Langkurst/KeaClip/blob/main/docs/KNOWN_LIMITATIONS.md" rel="noopener">Known limits</a></p>
           </div>
+          <blockquote class="brief">
+            <p>Do not rush to a prototype and call it finished.</p>
+            <p>Do not claim every website will work permanently. Website extractors change over time.</p>
+            <p>Only support downloading content the user owns, is authorised to save, or is otherwise permitted to download.</p>
+            <footer>From the brief I wrote for KeaClip</footer>
+          </blockquote>
         </article>
       </div>
     </section>
 
-    <!-- ============ How I work with AI ============ -->
     <section class="section" id="ai" aria-labelledby="ai-h">
       <div class="wrap two-col">
-        <div class="section-head" data-reveal>
-          <h2 id="ai-h">How I work with AI</h2>
-          <p class="rule">It does not buy, publish, send or permanently delete without my say. Passwords and keys stay out of logs and saved files.</p>
-          <p class="gap-top">I use Claude and ChatGPT every day. Claude is connected to my Gmail, Google Calendar, Google Drive and 11 other services, and I have set up 10 saved skills for repeat work, such as release checklists and plain-English wording checks.</p>
-        </div>
         <div>
-          <ol class="cases">
-            <li class="case-item" data-reveal>
-              <time datetime="2026-10-14">14 October 2026</time>
-              <h3>A cloud service that could have charged me</h3>
-              <p>On KeaClip, the AI advised adding cloud storage and said a charge "isn't impossible in theory". I told it I must never be charged. It added hard limits, with tests, before the first upload.</p>
-            </li>
-            <li class="case-item" data-reveal>
-              <time datetime="2026-10-15">15 October 2026</time>
-              <h3>A domain purchase I declined twice</h3>
-              <p>On SwimSorted, the AI recommended buying a domain for the product. I asked whether I could use the name first. About 50 minutes later it recommended buying again, and I asked for the name check. It found the name registered as a trade mark in Australia, so I renamed the product.</p>
-            </li>
-            <li class="case-item" data-reveal>
-              <time datetime="2026-11-07">7 November 2026</time>
-              <h3>Wording that read like slogans</h3>
-              <p>On SwimSorted, the AI kept writing slogan-style copy. I told it the whole business had to read as if I wrote it. The result was a rewrite, and a build check that fails if that style comes back.</p>
-            </li>
-          </ol>
-          <p class="muted small gap-top">KeaClip's final review used six AI reviewers, each followed by a second agent trying to disprove its findings. 21 findings were confirmed and fixed. These were AI checks of AI work, not a review by a person.</p>
+          <h2 id="ai-h">Working with AI</h2>
+          <p>I use Claude and ChatGPT every day. Claude is connected to my Gmail, Google Calendar, Google Drive and 11 other services, and I've set up 10 saved skills for jobs I repeat, such as release checklists and wording checks.</p>
+          <p>The agents don't buy anything, publish, send messages or permanently delete files without asking me first.</p>
+          <p class="muted">No person has reviewed the code in my projects. Every review in the project records is an AI checking another AI's work.</p>
         </div>
+        <ol class="log">
+          <li>
+            <time datetime="2026-10-14">14 October 2026</time>
+            <p>On KeaClip, the AI suggested cloud storage and said a charge "isn't impossible in theory". I told it I must never be charged. It added hard limits, with tests, before the first upload.</p>
+          </li>
+          <li>
+            <time datetime="2026-10-15">15 October 2026</time>
+            <p>On SwimSorted, the AI twice recommended buying a domain before anyone had checked the name. I asked for the check. The name was a registered trade mark in Australia, so I renamed the product.</p>
+          </li>
+          <li>
+            <time datetime="2026-11-07">7 November 2026</time>
+            <p>On SwimSorted, the AI kept writing slogans for the website. I asked for wording that reads as if I wrote it myself, and for a build check that fails if the slogans come back.</p>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <!-- ============ Experience ============ -->
     <section class="section" id="experience" aria-labelledby="experience-h">
       <div class="wrap two-col">
-        <div class="section-head" data-reveal>
+        <div>
           <h2 id="experience-h">Experience</h2>
-          <p><a href="Christopher_Nottle_CV.pdf" download>Download the full CV (PDF)</a></p>
+          <p><a href="Christopher_Nottle_CV.pdf" download>Full CV (PDF)</a></p>
         </div>
         <div>
-          <ol class="jobs" data-reveal>
+          <ol class="jobs">
             <li>
               <span class="when">January 2018 to November 2024</span>
               <div>
@@ -320,11 +240,11 @@
                   <li>Player Support Specialist, Grinding Gear Games, temporary through Madison, December 2024 to February 2025. Answered 700 to more than 1,000 player requests on most days of the Path of Exile 2 launch, and around 1,400 on the busiest.</li>
                   <li>Display Installer, Atlantis Bathrooms, family business, 2025. Installed shower displays in Mitre 10 and plumbing merchant showrooms.</li>
                   <li>Pool Valet Technician, The Pool Guy, casual, January 2026 to now. Cleaning and water testing for residential pools.</li>
-                  <li>The four projects above, from October 2026. SwimSorted is my own product and is not yet trading.</li>
                 </ul>
               </div>
             </li>
           </ol>
+          <p class="muted gap-top">I haven't yet set up AI for another business or trained anyone to use it. I have trained new staff in purchasing and IT.</p>
           <ul class="edu">
             <li><strong>Diploma in Network Computer Engineering</strong><span>Avonmore IT Tertiary Institute, 2014 to 2015</span></li>
             <li><strong>Introduction to Pool Operations, NZQA Unit Standard 20046</strong><span>Environmental Training Centre, June 2026</span></li>
@@ -334,38 +254,19 @@
       </div>
     </section>
 
-    <!-- ============ Straight answers ============ -->
-    <section class="section section-tight" id="not-yet" aria-labelledby="not-yet-h">
-      <div class="wrap">
-        <div class="panel-muted two-col">
-          <div class="section-head" data-reveal>
-            <h2 id="not-yet-h">What I have not done yet</h2>
-          </div>
-          <ul class="plain-list">
-            <li>I am not a developer. AI coding agents write the code. I decide what gets built, set the rules and test it.</li>
-            <li>I have not set AI up for another business yet, and I have not yet trained anyone to use AI. I have trained new staff in purchasing and IT.</li>
-            <li>None of the four projects has users or customers yet. Nobody outside has sent feedback on them.</li>
-            <li>No person has reviewed the code in my projects. Every review in the project records is an AI checking an AI's work.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ Contact ============ -->
     <section class="section" id="contact" aria-labelledby="contact-h">
-      <div class="wrap">
-        <div class="band">
-          <div>
-            <h2 id="contact-h">Contact</h2>
-            <p class="contact-line">I am in Auckland and available now for remote, hybrid or on-site work. I am a New Zealand and British citizen.</p>
-          </div>
+      <div class="wrap contact">
+        <div>
+          <h2 id="contact-h">Contact</h2>
+          <p>I'm in Auckland and available now for remote, hybrid or on-site work. I'm a New Zealand and British citizen.</p>
+        </div>
+        <div>
           <div class="reach">
-            <span class="email" id="email-2">chris.a.nottle@gmail.com</span>
             <button type="button" class="btn btn-primary needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email-2">Copy email</button>
-            <a class="btn btn-quiet" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
-            <a class="btn btn-quiet" href="Christopher_Nottle_CV.pdf" download>CV (PDF)</a>
+            <span class="email" id="email-2">chris.a.nottle@gmail.com</span>
             <span class="visually-hidden" role="status" data-copy-status></span>
           </div>
+          <p class="text-links"><a href="Christopher_Nottle_CV.pdf" download>CV (PDF)</a> <a href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a></p>
         </div>
       </div>
     </section>
@@ -373,8 +274,8 @@
 
   <footer class="site-foot">
     <div class="wrap">
-      <span>Christopher Nottle, Auckland, New Zealand. Updated November 2026.</span>
-      <span>No cookies and no tracking. <a href="3d/index.html">3D version</a></span>
+      <span>Christopher Nottle, Auckland. Updated November 2026.</span>
+      <a href="3d/index.html">Invoice matching demo</a>
     </div>
   </footer>
 

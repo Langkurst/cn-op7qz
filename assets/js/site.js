@@ -137,34 +137,33 @@
 })();
 
 /*
-  Gentle reveal as sections arrive, and the menu marks the section in view.
-  The reveal only switches on once this script runs, so text is never hidden if it fails,
-  and it stays off for anyone who prefers reduced motion.
+  The invoice check in the first screen. It shows the finished check from the start.
+  "Run the check again" replays it line by line, the way the checker works through a bill.
+  Nothing moves unless someone presses the button, and nothing moves at all with reduced motion.
 */
 (function () {
   "use strict";
-  var items = document.querySelectorAll("[data-reveal]");
+  var fig = document.querySelector("[data-match]");
+  var run = document.querySelector("[data-match-run]");
+  if (!fig || !run) return;
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (items.length && "IntersectionObserver" in window && !reduce) {
-    document.documentElement.classList.add("reveal-ready");
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
-    items.forEach(function (el) { io.observe(el); });
-    // Anything already on screen at load shows at once.
-    items.forEach(function (el) { if (el.getBoundingClientRect().top < innerHeight) el.classList.add("is-in"); });
-  }
-
-  var links = document.querySelectorAll('.site-nav a[href^="#"]');
-  if (links.length && "IntersectionObserver" in window) {
-    var byId = {};
-    links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
-    var spy = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        var a = byId[e.target.id];
-        if (a && e.isIntersecting) { links.forEach(function (l) { l.classList.remove("is-active"); }); a.classList.add("is-active"); }
-      });
-    }, { rootMargin: "-45% 0px -50% 0px" });
-    Object.keys(byId).forEach(function (id) { var s = document.getElementById(id); if (s) spy.observe(s); });
-  }
+  var timers = [];
+  run.addEventListener("click", function () {
+    timers.forEach(clearTimeout);
+    timers = [];
+    if (reduce) return;                        // the finished check is already on screen
+    var rows = [].slice.call(fig.querySelectorAll("tbody tr"));
+    var foot = fig.querySelector("tfoot");
+    rows.forEach(function (tr) { tr.classList.remove("is-done"); });
+    if (foot) foot.classList.remove("is-done");
+    fig.classList.add("is-running");
+    var at = 150;
+    rows.forEach(function (tr) {
+      if (!tr.classList.contains("reason")) at += 320;  // a reason lands with its line
+      var when = at;
+      timers.push(setTimeout(function () { tr.classList.add("is-done"); }, when));
+    });
+    timers.push(setTimeout(function () { if (foot) foot.classList.add("is-done"); }, at + 320));
+    timers.push(setTimeout(function () { fig.classList.remove("is-running"); }, at + 700));
+  });
 })();
