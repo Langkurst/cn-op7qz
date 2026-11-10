@@ -75,3 +75,21 @@ if (!flat) {
       root.classList.add("flat");
     });
 }
+
+// ----- running index on the right: which document is in view
+const indexN = document.querySelector("[data-index-n]"), indexName = document.querySelector("[data-index-name]");
+const stopsForIndex = [...document.querySelectorAll(".stop")];
+if (indexN && indexName && "IntersectionObserver" in window) {
+  const total = String(stopsForIndex.length).padStart(2, "0");
+  const of = document.querySelector(".index-of");
+  if (of) of.textContent = "/ " + total;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const i = stopsForIndex.indexOf(e.target);
+      indexN.textContent = String(i + 1).padStart(2, "0");
+      indexName.textContent = e.target.dataset.name || "";
+    });
+  }, { rootMargin: "-45% 0px -45% 0px" });
+  stopsForIndex.forEach((s) => io.observe(s));
+}

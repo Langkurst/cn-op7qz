@@ -46,34 +46,49 @@
   <main id="main">
 
     <!-- ============ First screen: who, what, and the evidence ============ -->
-    <section class="hero" id="top" aria-labelledby="name">
+    <section class="hero" id="top" aria-labelledby="hero-h">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="hero-place"><span class="dot-live" aria-hidden="true"></span>Auckland, New Zealand. Available now.</p>
-          <h1 id="name">Christopher Nottle</h1>
-          <p class="hero-line">Business systems and <em>AI implementation</em>.</p>
-          <p class="hero-text">Nearly seven years running purchasing in SAP at Häfele New Zealand taught me how orders, suppliers and invoices really work. Now I build careful, tested AI tools for that kind of work. I direct AI coding agents: they write the code, and I decide what gets built, set the rules and test it.</p>
+          <p class="hero-place"><span class="dot-live" aria-hidden="true"></span><span class="name-kicker">Christopher Nottle</span> <span class="sep" aria-hidden="true">·</span> Auckland <span class="sep" aria-hidden="true">·</span> Available now</p>
+          <h1 id="hero-h">Careful, tested AI tools for the way a business really runs.</h1>
+          <p class="hero-text">I spent nearly seven years running purchasing in SAP at Häfele New Zealand, so I know how orders, suppliers and invoices really work. Now I build AI tools for that kind of work. I direct AI coding agents: they write the code, and I decide what gets built, set the rules and test it.</p>
           <div class="reach">
-            <button type="button" class="btn btn-primary needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email">Copy email</button>
-            <a class="btn" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
+            <a class="btn btn-primary" href="#work">See the work</a>
+            <button type="button" class="btn needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email">Copy email</button>
             <a class="btn" href="Christopher_Nottle_CV.pdf" download>CV (PDF)</a>
+            <a class="btn btn-quiet" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
             <span class="visually-hidden" role="status" data-copy-status></span>
           </div>
           <p class="email-line"><span class="email email-plain" id="email">chris.a.nottle@gmail.com</span></p>
         </div>
 
         <figure class="hero-visual">
-          <div class="browser">
-            <div class="browser-bar" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span><span class="url">langkurst.github.io/nz-redact</span></div>
-            <picture>
-              <source type="image/webp" srcset="assets/img/nz-redact-app.webp">
-              <img src="assets/img/nz-redact-app.jpg" width="1200" height="720" fetchpriority="high" decoding="async"
-                alt="NZ Redact checking a made-up email. An IRD number, a bank account, a phone number, an email address, a date of birth, an NHI number and a driver licence are highlighted, and a panel on the right lists 8 details found.">
-            </picture>
+          <!-- Drawn in HTML rather than a screenshot, so it stays sharp and readable at any size and in both themes. -->
+          <div class="demo" aria-hidden="true">
+            <div class="demo-bar"><span class="dots"><i></i><i></i><i></i></span><span class="demo-title">NZ Redact</span><span class="demo-pill">6 details removed</span></div>
+            <div class="demo-body">
+              <div class="demo-text">
+                <p class="demo-label">Your text</p>
+                <p>Hi <mark class="t-name">Mere</mark>,</p>
+                <p>Can you sort out Sam's refund? His IRD number is <mark class="t-ird">49-098-576</mark> and the refund goes to <mark class="t-bank">01-0902-0068389-00</mark>.</p>
+                <p>Email <mark class="t-email">sam@example.co.nz</mark>. DOB <mark class="t-email">12/03/1985</mark>. NHI <mark class="t-nhi">ZAA0067</mark>.</p>
+                <p class="demo-quiet">Order 4500012904 is not part of this.</p>
+              </div>
+              <div class="demo-side">
+                <p class="demo-label">Found</p>
+                <p class="demo-count">6 <span>details</span></p>
+                <ul>
+                  <li><span>IRD number</span><code class="tok c-id">IRD_1</code></li>
+                  <li><span>Bank account</span><code class="tok c-money">BANK_ACCOUNT_1</code></li>
+                  <li><span>NHI number</span><code class="tok c-id">NHI_1</code></li>
+                  <li><span>Email address</span><code class="tok c-contact">EMAIL_1</code></li>
+                  <li><span>Name, date of birth</span><span class="demo-more">2 more</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="demo-out"><span class="demo-label">Safe to paste</span> His IRD number is <code class="tok c-id">IRD_1</code> and the refund goes to <code class="tok c-money">BANK_ACCOUNT_1</code>.</div>
           </div>
-          <div class="float float-a" aria-hidden="true"><span class="float-n">95%</span><span>found in a blind test on 30 NZ documents</span></div>
-          <div class="float float-b" aria-hidden="true"><span class="float-n">0</span><span>connections the page is allowed to make</span></div>
-          <figcaption class="visually-hidden">NZ Redact found 95% of numbers, dates, emails, phones and addresses in a blind test, and its page cannot connect to anything.</figcaption>
+          <figcaption class="visually-hidden">NZ Redact, an open-source tool, finding the personal details in a made-up email and replacing them with placeholders. In a blind test it found 95% of numbers, dates, emails, phones and addresses.</figcaption>
         </figure>
       </div>
 
@@ -90,13 +105,13 @@
     <!-- ============ Work ============ -->
     <section class="section" id="work" aria-labelledby="work-h">
       <div class="wrap">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <p class="eyebrow">Selected work</p>
           <h2 id="work-h">Four projects, and what each shows an employer</h2>
           <p>For each one: the problem, what I asked for, what the AI did, and the measured result.</p>
         </div>
 
-        <article class="case" id="nz-redact" aria-labelledby="redact-h">
+        <article class="case" data-reveal id="nz-redact" aria-labelledby="redact-h">
           <div class="case-media">
             <figure class="shot">
               <div class="frame">
@@ -132,7 +147,7 @@
           </div>
         </article>
 
-        <article class="case case-flip" id="invoice" aria-labelledby="invoice-h">
+        <article class="case case-flip" data-reveal id="invoice" aria-labelledby="invoice-h">
           <div class="case-media">
             <figure class="shot">
               <div class="frame">
@@ -166,7 +181,7 @@
           </div>
         </article>
 
-        <article class="case" aria-labelledby="swimsorted-h">
+        <article class="case" data-reveal aria-labelledby="swimsorted-h">
           <div class="case-media">
             <figure class="shot" data-swimsorted>
               <div class="frame">
@@ -202,7 +217,7 @@
           </div>
         </article>
 
-        <article class="case case-flip" aria-labelledby="keaclip-h">
+        <article class="case case-flip" data-reveal aria-labelledby="keaclip-h">
           <div class="case-media">
             <figure class="shot">
               <div class="frame">
@@ -243,7 +258,7 @@
     <!-- ============ How I work with AI ============ -->
     <section class="section" id="ai" aria-labelledby="ai-h">
       <div class="wrap two-col">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <p class="eyebrow">How I work with AI</p>
           <h2 id="ai-h">The AI drafts. I decide.</h2>
           <p class="rule">It does not buy, publish, send or permanently delete without my say. Passwords and keys stay out of logs and saved files.</p>
@@ -251,17 +266,17 @@
         </div>
         <div>
           <ol class="cases">
-            <li class="case-item">
+            <li class="case-item" data-reveal>
               <time datetime="2026-10-14">14 October 2026</time>
               <h3>A cloud service that could have charged me</h3>
               <p>On KeaClip, the AI advised adding cloud storage and said a charge "isn't impossible in theory". I told it I must never be charged. It added hard limits, with tests, before the first upload.</p>
             </li>
-            <li class="case-item">
+            <li class="case-item" data-reveal>
               <time datetime="2026-10-15">15 October 2026</time>
               <h3>A domain purchase I declined twice</h3>
               <p>On SwimSorted, the AI recommended buying a domain for the product. I asked whether I could use the name first. About 50 minutes later it recommended buying again, and I asked for the name check. It found the name registered as a trade mark in Australia, so I renamed the product.</p>
             </li>
-            <li class="case-item">
+            <li class="case-item" data-reveal>
               <time datetime="2026-11-07">7 November 2026</time>
               <h3>Wording that read like slogans</h3>
               <p>On SwimSorted, the AI kept writing slogan-style copy. I told it the whole business had to read as if I wrote it. The result was a rewrite, and a build check that fails if that style comes back.</p>
@@ -275,13 +290,13 @@
     <!-- ============ Experience ============ -->
     <section class="section" id="experience" aria-labelledby="experience-h">
       <div class="wrap two-col">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <p class="eyebrow">Experience</p>
           <h2 id="experience-h">Where I have worked</h2>
           <p><a href="Christopher_Nottle_CV.pdf" download>Download the full CV (PDF)</a></p>
         </div>
         <div>
-          <ol class="jobs">
+          <ol class="jobs" data-reveal>
             <li>
               <span class="when">January 2018 to November 2024</span>
               <div>
@@ -328,8 +343,8 @@
     <!-- ============ Straight answers ============ -->
     <section class="section section-tight" id="not-yet" aria-labelledby="not-yet-h">
       <div class="wrap">
-        <div class="panel-muted two-col">
-          <div class="section-head">
+        <div class="panel-muted two-col" data-reveal>
+          <div class="section-head" data-reveal>
             <h2 id="not-yet-h">What I have not done yet</h2>
             <p>I would rather say these plainly.</p>
           </div>
@@ -346,7 +361,7 @@
     <!-- ============ Contact ============ -->
     <section class="section" id="contact" aria-labelledby="contact-h">
       <div class="wrap">
-        <div class="band">
+        <div class="band" data-reveal>
           <div>
             <h2 id="contact-h">Contact</h2>
             <p class="contact-line">I am in Auckland and available now for remote, hybrid or on-site work. I am a New Zealand and British citizen.</p>

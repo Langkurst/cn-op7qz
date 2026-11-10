@@ -6,7 +6,10 @@
   <title>Christopher Nottle | 3D portfolio</title>
   <meta name="description" content="Christopher Nottle, Auckland. Nearly seven years running purchasing in SAP, and careful, tested AI tools for the same kind of business work, shown as a pile of documents checked one by one.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="color-scheme" content="dark">
+  <meta name="color-scheme" content="light">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Christopher Nottle | 3D portfolio">
+  <meta property="og:image" content="https://langkurst.github.io/cn-op7qz/assets/img/og-portfolio.png">
   <link rel="icon" href="../assets/img/favicon.png" type="image/png">
   <link rel="preload" href="../assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
@@ -18,18 +21,22 @@
   <canvas id="scene" aria-hidden="true"></canvas>
 
   <header class="bar">
-    <a class="bar-name" href="#top">Christopher Nottle</a>
-    <a class="bar-link" href="../index.html">Plain version</a>
-    <button type="button" class="bar-btn needs-js" data-view-toggle>Flat view</button>
+    <a class="bar-name" href="#top"><span class="bar-mark" aria-hidden="true">CN</span><span>Christopher Nottle</span><span class="bar-role">Business systems and AI implementation</span></a>
+    <nav class="bar-end" aria-label="Site">
+      <a class="pill" href="../index.html">Plain version</a>
+      <button type="button" class="pill needs-js" data-view-toggle>Flat view</button>
+      <a class="pill pill-ink" href="#contact">Contact</a>
+    </nav>
   </header>
 
+  <div class="index" aria-hidden="true"><span class="index-n" data-index-n>01</span><span class="index-of">/ 09</span><span class="index-rule"></span><span class="index-name" data-index-name>Profile</span></div>
+
   <main id="main">
-    <section class="stop" id="top" aria-labelledby="name">
+    <section class="stop" id="top" data-name="Profile" aria-labelledby="hero-h">
       <div class="panel">
-        <p class="kicker"><span class="dot" aria-hidden="true"></span>Auckland, New Zealand. Available now.</p>
-        <h1 id="name">Christopher Nottle</h1>
-        <p class="lede">Business systems and <span class="hl">AI implementation</span>.</p>
-        <p>Nearly seven years running purchasing in SAP at Häfele New Zealand taught me how orders, suppliers and invoices really work. Now I build careful, tested AI tools for that kind of work. I direct AI coding agents: they write the code, and I decide what gets built, set the rules and test it.</p>
+        <p class="kicker"><span class="dot" aria-hidden="true"></span><span class="k-name">Christopher Nottle · </span>Auckland · Available now</p>
+        <h1 id="hero-h">Careful, tested AI tools for the way a business really runs.</h1>
+        <p class="lede">Nearly seven years running purchasing in SAP at Häfele New Zealand. Now I build AI tools for that kind of work. I direct AI coding agents: they write the code, and I decide what gets built, set the rules and test it.</p>
         <dl class="facts">
           <div><dt>Nearly 7</dt><dd>years in SAP at Häfele</dd></div>
           <div><dt>4</dt><dd>tools and products, all public</dd></div>
@@ -38,9 +45,9 @@
         </dl>
         <div class="reach">
           <span class="email" id="email">chris.a.nottle@gmail.com</span>
-          <button type="button" class="btn needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email">Copy email</button>
-          <a class="btn" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
+          <button type="button" class="btn btn-ink needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email">Copy email</button>
           <a class="btn" href="../Christopher_Nottle_CV.pdf" download>CV (PDF)</a>
+          <a class="btn" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
           <span class="visually-hidden" role="status" data-copy-status></span>
         </div>
         <p class="cue" aria-hidden="true">Scroll to check each document</p>
@@ -56,29 +63,32 @@
       </div>
     </section>
 
-    <section class="stop" aria-labelledby="redact-h">
+    <section class="stop" data-name="NZ Redact" aria-labelledby="redact-h">
       <div class="panel">
         <p class="meta"><span class="num">01</span> Open-source tool, November 2026</p>
         <h2 id="redact-h">NZ Redact</h2>
         <p class="lede">Takes New Zealand personal details out of text before it goes into an AI tool, then puts them back into the answer.</p>
-        <dl class="grid">
-          <div><dt>The problem</dt><dd>In Xero's May 2026 survey, 40% of New Zealand small businesses named data privacy and security as a reason they are not using AI, or not using it more.</dd></div>
-          <div><dt>What I asked for</dt><dd>It runs on the user's own device and is blocked from connecting to anything. IRD, bank and NHI numbers follow Inland Revenue's and Health New Zealand's own rules. It is tested on documents its rules had never seen.</dd></div>
-          <div><dt>The AI's part</dt><dd>An AI coding agent wrote the code, the rules and the tests. A separate agent wrote the test documents without seeing the rules.</dd></div>
-          <div><dt>What it shows</dt><dd>I can put AI to work on a business's own data without putting that data at risk, and I measure whether it works.</dd></div>
-        </dl>
         <dl class="facts">
           <div><dt>95%</dt><dd>of numbers, dates, emails, phones and addresses found, blind</dd></div>
           <div><dt>25%</dt><dd>of names found, so names need a read through</dd></div>
           <div><dt>6</dt><dd>errors found against the official specifications, each fixed</dd></div>
           <div><dt>40</dt><dd>automated tests on every change</dd></div>
         </dl>
-        <p class="links"><a class="btn btn-primary" href="https://langkurst.github.io/nz-redact/">Open NZ Redact</a> <a class="btn" href="https://github.com/Langkurst/nz-redact" rel="noopener">Source on GitHub</a></p>
+        <p class="links"><a class="btn btn-ink" href="https://langkurst.github.io/nz-redact/">Open NZ Redact</a> <a class="btn" href="https://github.com/Langkurst/nz-redact" rel="noopener">Source on GitHub</a></p>
+        <details class="more">
+          <summary>Read the case study</summary>
+          <dl class="grid">
+            <div><dt>The problem</dt><dd>In Xero's May 2026 survey, 40% of New Zealand small businesses named data privacy and security as a reason they are not using AI, or not using it more.</dd></div>
+            <div><dt>What I asked for</dt><dd>It runs on the user's own device and is blocked from connecting to anything. IRD, bank and NHI numbers follow Inland Revenue's and Health New Zealand's own rules. It is tested on documents its rules had never seen.</dd></div>
+            <div><dt>The AI's part</dt><dd>An AI coding agent wrote the code, the rules and the tests. A separate agent wrote the test documents without seeing the rules.</dd></div>
+            <div><dt>What it shows</dt><dd>I can put AI to work on a business's own data without putting that data at risk, and I measure whether it works.</dd></div>
+          </dl>
+        </details>
       </div>
       <div class="paper" aria-hidden="true">
         <p class="p-label">Privacy check</p>
         <p class="p-title">Before it goes into AI</p>
-        <p class="p-line">His IRD number is</p>
+        <p class="p-line">Safe to paste:</p>
         <p class="p-chips"><span class="p-chip id">[IRD_1]</span><span class="p-chip money">[BANK_ACCOUNT_1]</span><span class="p-chip contact">[EMAIL_1]</span></p>
         <p class="p-row"><span>Found, blind test</span><span>95%</span></p>
         <p class="p-row"><span>Names found</span><span>25%</span></p>
@@ -87,23 +97,26 @@
       </div>
     </section>
 
-    <section class="stop" aria-labelledby="invoice-h">
+    <section class="stop" data-name="Invoice checker" aria-labelledby="invoice-h">
       <div class="panel">
         <p class="meta"><span class="num">02</span> Demo, November 2026</p>
         <h2 id="invoice-h">Invoice checker</h2>
         <p class="lede">Checks each supplier invoice against its purchase order before it is paid. Built from the matching I did as a Purchaser.</p>
-        <dl class="grid">
-          <div><dt>The problem</dt><dd>Paying an invoice that does not match its order costs money: a higher price, extra units, a missing line or wrong GST. At Häfele I matched supplier invoices to purchase orders by hand.</dd></div>
-          <div><dt>What I asked for</dt><dd>Line-by-line matching with a plain reason for every flag, Inland Revenue's tax invoice rules, and money held in whole cents so the sums are exact.</dd></div>
-          <div><dt>The AI's part</dt><dd>An AI coding agent wrote the code and the tests. The suppliers and prices are made up.</dd></div>
-          <div><dt>What it shows</dt><dd>I know the process an accounts or purchasing team runs, so I can see where automation helps and where a person still has to decide.</dd></div>
-        </dl>
         <dl class="facts">
           <div><dt>31</dt><dd>automated tests</dd></div>
           <div><dt>3</dt><dd>tax invoice rules, including the GST number check digit</dd></div>
           <div><dt>$225</dt><dd>flagged to raise with the supplier on one sample bill</dd></div>
         </dl>
-        <p class="links"><a class="btn btn-primary" href="../invoice-checker.html">Open the invoice checker</a></p>
+        <p class="links"><a class="btn btn-ink" href="../invoice-checker.html">Open the invoice checker</a></p>
+        <details class="more">
+          <summary>Read the case study</summary>
+          <dl class="grid">
+            <div><dt>The problem</dt><dd>Paying an invoice that does not match its order costs money: a higher price, extra units, a missing line or wrong GST. At Häfele I matched supplier invoices to purchase orders by hand.</dd></div>
+            <div><dt>What I asked for</dt><dd>Line-by-line matching with a plain reason for every flag, Inland Revenue's tax invoice rules, and money held in whole cents so the sums are exact.</dd></div>
+            <div><dt>The AI's part</dt><dd>An AI coding agent wrote the code and the tests. The suppliers and prices are made up.</dd></div>
+            <div><dt>What it shows</dt><dd>I know the process an accounts or purchasing team runs, so I can see where automation helps and where a person still has to decide.</dd></div>
+          </dl>
+        </details>
       </div>
       <div class="paper" aria-hidden="true">
         <p class="p-label">Tax invoice</p>
@@ -116,23 +129,26 @@
       </div>
     </section>
 
-    <section class="stop" aria-labelledby="swimsorted-h">
+    <section class="stop" data-name="SwimSorted" aria-labelledby="swimsorted-h">
       <div class="panel">
         <p class="meta"><span class="num">03</span> My own product, October 2026 to now</p>
         <h2 id="swimsorted-h">SwimSorted</h2>
-        <p class="lede">An app for New Zealand pool technicians and small pool service teams. Website and demo live. Company sign-ups open in December 2026. No customers yet.</p>
-        <dl class="grid">
-          <div><dt>The problem</dt><dd>I service pools for The Pool Guy, and every visit includes testing the water and working out what to add. Getting a dose wrong is a safety risk.</dd></div>
-          <div><dt>What it does</dt><dd>It works out each dose from the water test and the products carried. Every dose has a safety limit, and acid and chlorine never go in together.</dd></div>
-          <div><dt>My part, and the AI's</dt><dd>I make the product decisions and test it myself, including on my own phone. AI coding agents write the code.</dd></div>
-          <div><dt>What it shows</dt><dd>I can take work I know first-hand and turn it into a product with safety limits and thousands of tests.</dd></div>
-        </dl>
+        <p class="lede">An app for New Zealand pool technicians. Website and demo live. Company sign-ups open in December 2026. No customers yet.</p>
         <dl class="facts">
           <div><dt>About 130</dt><dd>changes merged in four weeks</dd></div>
           <div><dt>3,000+</dt><dd>automated tests</dd></div>
           <div><dt>26</dt><dd>dose cases checked against PoolMath</dd></div>
         </dl>
         <p class="links"><a class="btn" href="https://swimsorted.co.nz" rel="noopener">swimsorted.co.nz</a></p>
+        <details class="more">
+          <summary>Read the case study</summary>
+          <dl class="grid">
+            <div><dt>The problem</dt><dd>I service pools for The Pool Guy, and every visit includes testing the water and working out what to add. Getting a dose wrong is a safety risk.</dd></div>
+            <div><dt>What it does</dt><dd>It works out each dose from the water test and the products carried. Every dose has a safety limit, and acid and chlorine never go in together.</dd></div>
+            <div><dt>My part, and the AI's</dt><dd>I make the product decisions and test it myself, including on my own phone. AI coding agents write the code.</dd></div>
+            <div><dt>What it shows</dt><dd>I can take work I know first-hand and turn it into a product with safety limits and thousands of tests.</dd></div>
+          </dl>
+        </details>
       </div>
       <div class="paper" aria-hidden="true">
         <p class="p-label">Test report</p>
@@ -145,23 +161,26 @@
       </div>
     </section>
 
-    <section class="stop" aria-labelledby="keaclip-h">
+    <section class="stop" data-name="KeaClip" aria-labelledby="keaclip-h">
       <div class="panel">
         <p class="meta"><span class="num">04</span> My own product, October 2026</p>
         <h2 id="keaclip-h">KeaClip</h2>
         <p class="lede">A free Windows app for saving, trimming and sharing video and audio, with no ads, account or tracking.</p>
-        <dl class="grid">
-          <div><dt>My part</dt><dd>I wrote the 49-section brief and decided what shipped. I set 38 working rules for the AI agents, including a test gate, a release gate and no purchases, publishing or messages without my say.</dd></div>
-          <div><dt>How it was released</dt><dd>The last two releases could not publish unless every test and a 41-check installer self-test passed. Each release publishes checksums.</dd></div>
-          <div><dt>The AI's part</dt><dd>AI coding agents wrote the code, the website and the user guide, to my rules and plain style. I used the app and reported faults.</dd></div>
-          <div><dt>What it shows</dt><dd>I can run a release process with gates, so nothing reaches people unless the checks pass.</dd></div>
-        </dl>
         <dl class="facts">
           <div><dt>12</dt><dd>public releases in 15 days</dd></div>
           <div><dt>1,433</dt><dd>tests passing at the latest release</dd></div>
           <div><dt>30</dt><dd>known limits, published</dd></div>
         </dl>
         <p class="links"><a class="btn" href="https://langkurst.github.io/KeaClip/" rel="noopener">KeaClip website</a> <a class="btn" href="https://github.com/Langkurst/KeaClip/releases" rel="noopener">All 12 releases</a></p>
+        <details class="more">
+          <summary>Read the case study</summary>
+          <dl class="grid">
+            <div><dt>My part</dt><dd>I wrote the 49-section brief and decided what shipped. I set 38 working rules for the AI agents, including a test gate, a release gate and no purchases, publishing or messages without my say.</dd></div>
+            <div><dt>How it was released</dt><dd>The last two releases could not publish unless every test and a 41-check installer self-test passed. Each release publishes checksums.</dd></div>
+            <div><dt>The AI's part</dt><dd>AI coding agents wrote the code, the website and the user guide, to my rules and plain style. I used the app and reported faults.</dd></div>
+            <div><dt>What it shows</dt><dd>I can run a release process with gates, so nothing reaches people unless the checks pass.</dd></div>
+          </dl>
+        </details>
       </div>
       <div class="paper" aria-hidden="true">
         <p class="p-label">Release notes</p>
@@ -174,19 +193,28 @@
       </div>
     </section>
 
-    <section class="stop" aria-labelledby="work-h">
+    <section class="stop" data-name="Experience" aria-labelledby="work-h">
       <div class="panel">
         <p class="meta"><span class="num">05</span> Experience</p>
         <h2 id="work-h">Where I have worked</h2>
-        <ol class="jobs">
-          <li><p class="job">Purchaser, Häfele New Zealand <span>January 2018 to November 2024</span></p>
-            <p>SAP every day for purchase orders, requisitions, material records and supplier prices, with weekly stock forecasts. Bought from Australia, Germany and Asia, with orders of up to around NZ$500,000 in a busy fortnight. Matched supplier invoices to purchase orders. Trained new purchasing staff.</p></li>
-          <li><p class="job">IT Support, Häfele New Zealand <span>2016 to 2017</span></p>
-            <p>IT support for the whole business of about 50 staff. Later worked alongside Dell's team for several months to rebuild staff computers after a cybersecurity incident.</p></li>
-          <li><p class="job">Since Häfele <span>2024 to now</span></p>
-            <p>Player Support Specialist at Grinding Gear Games during the Path of Exile 2 launch, up to around 1,400 player requests a day. Display installs for Atlantis Bathrooms. Casual pool servicing for The Pool Guy.</p></li>
-        </ol>
-        <p class="small">Diploma in Network Computer Engineering, Avonmore IT Tertiary Institute. Introduction to Pool Operations, NZQA Unit Standard 20046.</p>
+        <p class="lede">Purchaser at Häfele New Zealand, January 2018 to November 2024, in SAP every day. IT Support there before that.</p>
+        <dl class="facts">
+          <div><dt>Nearly 7</dt><dd>years as a Purchaser</dd></div>
+          <div><dt>NZ$500k</dt><dd>orders in a busy fortnight, around</dd></div>
+          <div><dt>50</dt><dd>staff supported in IT</dd></div>
+        </dl>
+        <details class="more">
+          <summary>The full history</summary>
+          <ol class="jobs">
+            <li><p class="job">Purchaser, Häfele New Zealand <span>January 2018 to November 2024</span></p>
+              <p>SAP every day for purchase orders, requisitions, material records and supplier prices, with weekly stock forecasts. Bought from Australia, Germany and Asia, with orders of up to around NZ$500,000 in a busy fortnight. Matched supplier invoices to purchase orders. Trained new purchasing staff.</p></li>
+            <li><p class="job">IT Support, Häfele New Zealand <span>2016 to 2017</span></p>
+              <p>IT support for the whole business of about 50 staff. Later worked alongside Dell's team for several months to rebuild staff computers after a cybersecurity incident.</p></li>
+            <li><p class="job">Since Häfele <span>2024 to now</span></p>
+              <p>Player Support Specialist at Grinding Gear Games during the Path of Exile 2 launch, up to around 1,400 player requests a day. Display installs for Atlantis Bathrooms. Casual pool servicing for The Pool Guy.</p></li>
+          </ol>
+          <p class="small">Diploma in Network Computer Engineering, Avonmore IT Tertiary Institute. Introduction to Pool Operations, NZQA Unit Standard 20046.</p>
+        </details>
       </div>
       <div class="paper" aria-hidden="true">
         <p class="p-label">Purchase order</p>
@@ -199,16 +227,19 @@
       </div>
     </section>
 
-    <section class="stop" aria-labelledby="ai-h">
+    <section class="stop" data-name="How I work with AI" aria-labelledby="ai-h">
       <div class="panel">
         <p class="meta"><span class="num">06</span> How I work with AI</p>
         <h2 id="ai-h">The AI drafts. I decide.</h2>
-        <p class="rule">It does not buy, publish, send or permanently delete without my say.</p>
-        <ol class="jobs">
-          <li><p class="job">A domain purchase I declined twice <span>15 October 2026</span></p><p>The AI twice recommended buying a domain before anyone had checked the name. I asked for the check. The name was a registered trade mark in Australia, so I renamed the product.</p></li>
-          <li><p class="job">A cloud service that could have charged me <span>14 October 2026</span></p><p>I told the AI I must never be charged. It added hard limits, with tests, before the first upload.</p></li>
-          <li><p class="job">Wording that read like slogans <span>7 November 2026</span></p><p>I told the AI the business had to read as if I wrote it. The result was a rewrite, and a build check that fails if that style comes back.</p></li>
-        </ol>
+        <p class="lede">It does not buy, publish, send or permanently delete without my say. Passwords and keys stay out of logs.</p>
+        <details class="more">
+          <summary>Three times I stepped in</summary>
+          <ol class="jobs">
+            <li><p class="job">A domain purchase I declined twice <span>15 October 2026</span></p><p>The AI twice recommended buying a domain before anyone had checked the name. I asked for the check. The name was a registered trade mark in Australia, so I renamed the product.</p></li>
+            <li><p class="job">A cloud service that could have charged me <span>14 October 2026</span></p><p>I told the AI I must never be charged. It added hard limits, with tests, before the first upload.</p></li>
+            <li><p class="job">Wording that read like slogans <span>7 November 2026</span></p><p>I told the AI the business had to read as if I wrote it. The result was a rewrite, and a build check that fails if that style comes back.</p></li>
+          </ol>
+        </details>
       </div>
       <div class="paper" aria-hidden="true">
         <p class="p-label">House rules</p>
@@ -220,7 +251,7 @@
       </div>
     </section>
 
-    <section class="stop" aria-labelledby="notyet-h">
+    <section class="stop" data-name="Not done yet" aria-labelledby="notyet-h">
       <div class="panel">
         <p class="meta"><span class="num">07</span> Straight answers</p>
         <h2 id="notyet-h">What I have not done yet</h2>
@@ -241,16 +272,16 @@
       </div>
     </section>
 
-    <section class="stop" aria-labelledby="contact-h">
+    <section class="stop" id="contact" data-name="Contact" aria-labelledby="contact-h">
       <div class="panel">
         <p class="meta"><span class="num">08</span> Contact</p>
         <h2 id="contact-h">Talk to me</h2>
-        <p>I am in Auckland and available now for remote, hybrid or on-site work. I am a New Zealand and British citizen.</p>
+        <p class="lede">I am in Auckland and available now for remote, hybrid or on-site work. I am a New Zealand and British citizen.</p>
         <div class="reach">
           <span class="email" id="email-2">chris.a.nottle@gmail.com</span>
-          <button type="button" class="btn needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email-2">Copy email</button>
-          <a class="btn" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
+          <button type="button" class="btn btn-ink needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email-2">Copy email</button>
           <a class="btn" href="../Christopher_Nottle_CV.pdf" download>CV (PDF)</a>
+          <a class="btn" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
           <span class="visually-hidden" role="status" data-copy-status></span>
         </div>
         <p class="links"><a href="../index.html">Plain version of this site</a></p>

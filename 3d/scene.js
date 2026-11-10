@@ -1,5 +1,5 @@
 /*
-  The desk at night: a pile of documents under a lamp. As the visitor scrolls, the top sheet
+  A desk in late-afternoon sun: a pile of documents, with light through a window blind. As the visitor scrolls, the top sheet
   is stamped CHECKED, then lifts, curls and slides onto the filed pile, showing the next one.
 
   The text on each sheet is read from the .paper cards in index.html, so the page has one
@@ -173,33 +173,58 @@ function stampTexture(aniso) {
 }
 
 function tableTexture(aniso) {
+  // Pale oak boards in afternoon light: long soft grain, a few darker streaks, faint seams between boards.
   const c = document.createElement("canvas");
   c.width = c.height = 1024;
   const g = c.getContext("2d");
-  g.fillStyle = "#151d20";
+  g.fillStyle = "#d3c2a4";
   g.fillRect(0, 0, 1024, 1024);
   const r = seeded(777);
-  for (let k = 0; k < 220; k++) {            // long, soft grain
-    const y = r() * 1024, h = 1 + r() * 2;
-    g.fillStyle = r() > 0.5 ? "rgba(255,240,220,0.010)" : "rgba(0,0,0,0.028)";
+  for (let k = 0; k < 520; k++) {            // long grain
+    const y = r() * 1024, h = 1 + r() * 3;
+    g.fillStyle = r() > 0.55 ? "rgba(255,248,232,0.035)" : "rgba(110,80,45,0.028)";
     g.fillRect(0, y, 1024, h);
   }
-  for (let k = 0; k < 24000; k++) {
-    g.fillStyle = r() > 0.5 ? "rgba(255,255,255,0.018)" : "rgba(0,0,0,0.05)";
+  for (let k = 0; k < 40; k++) {             // darker streaks
+    const y = r() * 1024;
+    g.fillStyle = "rgba(120,86,48,0.045)";
+    g.fillRect(r() * 300, y, 400 + r() * 600, 1 + r() * 2);
+  }
+  for (let b = 0; b < 4; b++) {              // seams between boards
+    g.fillStyle = "rgba(90,64,36,0.18)";
+    g.fillRect(0, b * 256, 1024, 2);
+  }
+  for (let k = 0; k < 16000; k++) {
+    g.fillStyle = r() > 0.5 ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.025)";
     g.fillRect(r() * 1024, r() * 1024, 1.5, 1.5);
   }
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
-  t.repeat.set(3, 3);
+  t.repeat.set(2.5, 2.5);
   t.anisotropy = aniso;
+  return t;
+}
+
+function blindsTexture() {
+  // What the sun projects through a window blind: bright slats with soft dark gaps.
+  const c = document.createElement("canvas");
+  c.width = c.height = 512;
+  const g = c.getContext("2d");
+  g.fillStyle = "#000";
+  g.fillRect(0, 0, 512, 512);
+  g.filter = "blur(5px)";
+  g.fillStyle = "#fff";
+  for (let y = 10; y < 512; y += 46) g.fillRect(-20, y, 552, 28);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
   return t;
 }
 
 function makeSheet(texture, stampTex) {
   const geo = new THREE.PlaneGeometry(W, H, SEG_X, 2);
   const base = Float32Array.from(geo.attributes.position.array);
-  const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: texture, roughness: 0.82, metalness: 0, side: THREE.DoubleSide }));
+  const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: texture, color: 0xe6dfd2, roughness: 0.86, metalness: 0, side: THREE.DoubleSide }));   // a touch darker than white, so the sun never washes the print out
   mesh.castShadow = true;
   mesh.receiveShadow = true;
   mesh.rotation.x = -Math.PI / 2;             // lie flat, text towards the camera
@@ -268,34 +293,37 @@ export async function start(canvas) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NeutralToneMapping;   // keeps printed ink dark; the filmic curve washed it out
-  renderer.toneMappingExposure = 1.0;
+  renderer.toneMappingExposure = 0.95;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const aniso = renderer.capabilities.getMaxAnisotropy();
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x0b1012);
-  scene.fog = new THREE.Fog(0x0b1012, 6, 13);
+  scene.background = new THREE.Color(0xe9e4da);
+  scene.fog = new THREE.Fog(0xe9e4da, 6, 13);
 
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 40);
 
-  scene.add(new THREE.HemisphereLight(0xc9d6d8, 0x2a2622, 1.1));
-  const lamp = new THREE.SpotLight(0xffeedd, 120, 12, Math.PI / 5.5, 0.75, 1.4);
-  lamp.position.set(-1.1, 4.1, 1.7);
-  lamp.target.position.set(0.78, 0, 0.15);
+  // Late-afternoon sun, low from the left, through a window blind. A soft sky fill keeps the shadows warm, not black.
+  scene.add(new THREE.HemisphereLight(0xfbf6ee, 0x968a78, 1.35));
+  const lamp = new THREE.SpotLight(0xffe6c8, 150, 20, Math.PI / 4.2, 0.45, 1.2);
+  lamp.position.set(-3.4, 3.1, -1.2);
+  lamp.target.position.set(0.85, 0, 0.25);
+  lamp.map = blindsTexture();                  // the blind's slats, projected across the desk and the paper
   lamp.castShadow = true;
   lamp.shadow.mapSize.set(2048, 2048);
   lamp.shadow.camera.near = 1;
-  lamp.shadow.camera.far = 9;
+  lamp.shadow.camera.far = 12;
   lamp.shadow.bias = -0.0004;
   lamp.shadow.normalBias = 0.012;
-  if ("intensity" in lamp.shadow) lamp.shadow.intensity = 0.7;   // softer, lighter shadows where supported
+  lamp.shadow.radius = 5;
+  if ("intensity" in lamp.shadow) lamp.shadow.intensity = 0.75;
   scene.add(lamp, lamp.target);
-  const rim = new THREE.DirectionalLight(0xcfd8da, 0.12);
-  rim.position.set(3, 2, -2.5);
-  scene.add(rim);
+  const fill = new THREE.DirectionalLight(0xdfe7f0, 0.35);   // cool window light from the front
+  fill.position.set(2.5, 3, 4);
+  scene.add(fill);
 
-  const table = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ map: tableTexture(aniso), roughness: 0.92, metalness: 0 }));
+  const table = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ map: tableTexture(aniso), roughness: 0.78, metalness: 0 }));
   table.rotation.x = -Math.PI / 2;
   table.receiveShadow = true;
   scene.add(table);
@@ -341,12 +369,12 @@ export async function start(canvas) {
     camera.setViewOffset(fullW, fullH, dx > 0 ? 0 : 2 * Math.abs(dx), dy > 0 ? 0 : 2 * Math.abs(dy), w, h);
     camera.updateProjectionMatrix();
     const tanH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-    const spanW = 2.4, spanH = 1.5;             // the pile to check fills the frame; the filed pile sits at the edge            // both piles across, and their depth as seen from above at an angle
+    const spanW = 2.4, spanH = 1.35;            // the pile to check fills the frame; the filed pile sits at the edge
     const dist = Math.max(3.0,
       (spanW * fullH) / (2 * tanH * availW * 0.88),
       (spanH * fullH) / (2 * tanH * availH * 0.9));
     look.set((IN.x + OUT.x) / 2, 0, 0.18);
-    const dir = new THREE.Vector3(-0.12, 1, 0.92).normalize();
+    const dir = new THREE.Vector3(-0.2, 0.82, 1).normalize();   // lower than straight down: more like sitting at the desk
     camBase.copy(look).addScaledVector(dir, dist);
     scene.fog.near = dist + 1.2;                // fog only beyond the piles, whatever the camera distance
     scene.fog.far = dist + 8;

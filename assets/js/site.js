@@ -135,3 +135,36 @@
     });
   }
 })();
+
+/*
+  Gentle reveal as sections arrive, and the menu marks the section in view.
+  The reveal only switches on once this script runs, so text is never hidden if it fails,
+  and it stays off for anyone who prefers reduced motion.
+*/
+(function () {
+  "use strict";
+  var items = document.querySelectorAll("[data-reveal]");
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (items.length && "IntersectionObserver" in window && !reduce) {
+    document.documentElement.classList.add("reveal-ready");
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
+    items.forEach(function (el) { io.observe(el); });
+    // Anything already on screen at load shows at once.
+    items.forEach(function (el) { if (el.getBoundingClientRect().top < innerHeight) el.classList.add("is-in"); });
+  }
+
+  var links = document.querySelectorAll('.site-nav a[href^="#"]');
+  if (links.length && "IntersectionObserver" in window) {
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var a = byId[e.target.id];
+        if (a && e.isIntersecting) { links.forEach(function (l) { l.classList.remove("is-active"); }); a.classList.add("is-active"); }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    Object.keys(byId).forEach(function (id) { var s = document.getElementById(id); if (s) spy.observe(s); });
+  }
+})();

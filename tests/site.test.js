@@ -189,3 +189,11 @@ test("at most one image per page skips lazy loading, and it is marked high prior
     assert.ok(eager <= 1, `${page} has ${eager} high-priority images`);
   }
 });
+
+test("3d page: the 3D scripts parse, so a typo can't quietly drop every visitor to the flat view", () => {
+  const { spawnSync } = require("child_process");
+  for (const f of ["3d/scene.js", "3d/boot.js"]) {
+    const r = spawnSync(process.execPath, ["--check", path.join(ROOT, f)], { encoding: "utf8" });
+    assert.equal(r.status, 0, `${f}: ${r.stderr}`);
+  }
+});
