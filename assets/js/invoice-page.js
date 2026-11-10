@@ -1,6 +1,7 @@
 /*
-  The invoice checker page: an inbox of bills, the selected invoice drawn as a sheet of paper with its
-  numbers editable in place, and a review panel built from the rules in matcher.js. Nothing leaves the page.
+  The invoice checker page: a table of bills to pay, and the open bill below it as an invoice preview
+  (its numbers can be changed in place) beside the check results from the rules in matcher.js.
+  Nothing leaves the page.
 */
 (function () {
   "use strict";
@@ -8,7 +9,7 @@
   if (!C || !SAMPLES || !E) return;
   var $ = function (id) { return document.getElementById(id); };
   var inboxEl = $("inbox"), paperEl = $("paper"), panelEl = $("panel"), tolEl = $("tolerance"), summaryEl = $("inbox-summary"), liveEl = $("inv-live");
-  var tolCentsEl = $("tolerance-cents"), copyLiveEl = $("copy-live"), printHeadEl = $("print-head"), appEl = $("app");
+  var tolCentsEl = $("tolerance-cents"), copyLiveEl = $("copy-live"), printHeadEl = $("print-head"), appEl = $("app"), openEl = $("open-bill"), docSourceEl = $("doc-source");
   var DEFAULT_CENTS = 5, COPIED_MS = 1500;
   var ICONS = "assets/img/icons.svg#";
 
@@ -31,65 +32,25 @@
     svg.appendChild(use);
     return svg;
   }
-  // The flag for "holds the bill" (Lucide flag, ISC licence), drawn here as the sprite has no flag.
-  var FLAG = ["M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z", "M4 22v-7"];
-  function flag() {
-    var NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
-    svg.setAttribute("class", "i"); svg.setAttribute("aria-hidden", "true"); svg.setAttribute("viewBox", "0 0 24 24");
-    svg.setAttribute("fill", "none"); svg.setAttribute("stroke", "currentColor"); svg.setAttribute("stroke-width", "2");
-    svg.setAttribute("stroke-linecap", "round"); svg.setAttribute("stroke-linejoin", "round");
-    FLAG.forEach(function (d) { var p = document.createElementNS(NS, "path"); p.setAttribute("d", d); svg.appendChild(p); });
-    return svg;
-  }
-  // A tick for a match, a flag for something that holds the bill, an "i" for a note.
-  function mark(st) { return st === "check" ? flag() : icon(st === "note" ? "info" : "check"); }
+  // The usual accounts software signs: a tick for a match, a warning triangle for something that
+  // holds the bill, an "i" for a note.
+  function mark(st) { return icon(st === "check" ? "alert-triangle" : st === "note" ? "info" : "check"); }
   var MARK_TEXT = { ok: "Matches", check: "Holds the bill", note: "Note" };
+  // Only a figure that needs a look gets an icon on the invoice. A matching figure stays plain.
   function paintMark(box, st) {
     if (!box || box.getAttribute("data-st") === st) return;
     box.setAttribute("data-st", st);
     box.textContent = "";
+    if (st === "ok") return;
     box.appendChild(mark(st));
     box.appendChild(el("span", "visually-hidden", MARK_TEXT[st]));
   }
-
-  /*
-    When a bill opens, its values are written into the sheet one after another, like values typed
-    into a spreadsheet. Times are in milliseconds from the start. Each line writes its item, quantity,
-    unit price and amount 40 ms apart, and its tick or flag lands 120 ms after the amount. Then the
-    subtotal, GST and total are written the same way. Long bills get a shorter gap between lines.
-  */
-  function writeSchedule(lineCount) {
-    var CELL = 40, MARK = 120, VALUE = 180;
-    var gap = Math.min(90, Math.floor(800 / Math.max(lineCount, 1)));
-    var rows = [];
-    for (var i = 0; i < lineCount; i++) {
-      var t = i * gap;
-      rows.push({ cells: [t, t + CELL, t + 2 * CELL, t + 3 * CELL], mark: t + 3 * CELL + MARK });
-    }
-    var start = lineCount ? rows[lineCount - 1].cells[3] + 160 : 0;
-    var totals = [0, 1, 2].map(function (j) { var v = start + j * 90; return { value: v, mark: v + MARK }; });
-    return { rows: rows, totals: totals, end: totals[2].mark + VALUE };
-  }
-  var writeTimer = 0, paintedId = null;
-  function writeIn() {
-    clearTimeout(writeTimer);
-    paperEl.classList.remove("is-writing");
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    var rows = paperEl.querySelectorAll(".lines tbody tr"), plan = writeSchedule(rows.length);
-    function at(node, ms) { if (node) node.style.setProperty("--w", ms + "ms"); }
-    rows.forEach(function (tr, i) {
-      var p = plan.rows[i], w = tr.querySelectorAll(".w");
-      for (var c = 0; c < w.length; c++) at(w[c], p.cells[c]);
-      at(tr.querySelector(".ring"), p.cells[3]);
-      at(tr.querySelector(".mk"), p.mark);
-    });
-    paperEl.querySelectorAll(".totals > div").forEach(function (d, j) {
-      at(d.querySelector(".w"), plan.totals[j].value);
-      at(d.querySelector(".mk"), plan.totals[j].mark);
-    });
-    void paperEl.offsetWidth; // restart the animations
-    paperEl.classList.add("is-writing");
-    writeTimer = setTimeout(function () { paperEl.classList.remove("is-writing"); }, plan.end + 600);
+  // A status is a word in its colour with a small icon in front.
+  function statusEl(cls, iconName, text) {
+    var s = el("span", "status " + cls);
+    s.appendChild(icon(iconName));
+    s.appendChild(document.createTextNode(text));
+    return s;
   }
 
   function money(c) { return C.formatMoney(c); }
@@ -109,42 +70,52 @@
   }
 
   function statusOf(b) {
-    if (b.decision === "approved") return { cls: "is-ok", text: "Approved" };
-    if (b.decision === "held") return { cls: "is-held", text: "On hold" };
+    if (b.decision === "approved") return { cls: "is-ok", icon: "check", text: "Approved" };
+    if (b.decision === "held") return { cls: "is-held", icon: "pause", text: "On hold" };
     var r = result(b);
-    if (r.verdict === "check") return { cls: "is-warn", text: plural(r.checkCount, "issue", "issues") };
-    if (r.verdict === "notes") return { cls: "is-info", text: "Ready, with notes" };
-    return { cls: "is-ok", text: "Ready to pay" };
+    if (r.verdict === "check") return { cls: "is-warn", icon: "alert-triangle", text: "Needs review", extra: plural(r.checkCount, "issue", "issues") };
+    if (r.verdict === "notes") return { cls: "is-ok", icon: "circle-check", text: "Ready to pay", extra: plural(r.noteCount, "note", "notes") };
+    return { cls: "is-ok", icon: "circle-check", text: "Ready to pay" };
+  }
+  function headlineOf(r) {
+    return r.verdict === "check" ? plural(r.checkCount, "thing", "things") + " to check before paying"
+      : r.verdict === "notes" ? "Ready to pay, with " + plural(r.noteCount, "note", "notes") : "Matches the order. Ready to pay.";
   }
 
-  // ---------- inbox ----------
+  // ---------- bills to pay ----------
   function renderInbox() {
     inboxEl.textContent = "";
     var waiting = 0;
     bills.forEach(function (b, i) {
       var st = statusOf(b);
       if (!b.decision && result(b).verdict === "check") waiting++;
-      var li = el("li");
-      var btn = el("button", "bill" + (i === selected ? " is-current" : ""));
+      var tr = el("tr", i === selected ? "is-current" : "");
+      var sup = el("td", "sup"), btn = el("button", "bill", b.invoice.supplier);
       btn.type = "button";
       if (i === selected) btn.setAttribute("aria-current", "true");
-      btn.appendChild(el("span", "bill-sup", b.invoice.supplier));
-      btn.appendChild(el("span", "bill-no", b.invoice.number + " · " + String(b.invoice.issued || "No date").replace(/ 2026$/, "")));
-      var bottom = el("span", "bill-bottom");
-      bottom.appendChild(el("span", "bill-amt", money(b.invoice.totalCents)));
-      bottom.appendChild(el("span", "pill " + st.cls, st.text));
-      btn.appendChild(bottom);
-      btn.addEventListener("click", function () { selected = i; renderAll(); inboxEl.querySelectorAll(".bill")[i].focus(); });
-      li.appendChild(btn);
-      inboxEl.appendChild(li);
+      sup.appendChild(btn);
+      tr.appendChild(sup);
+      tr.appendChild(el("td", "num", b.invoice.number));
+      tr.appendChild(el("td", "bill-date", b.invoice.issued || "No date"));
+      tr.appendChild(el("td", "n", money(b.invoice.totalCents)));
+      var stCell = el("td", "st");
+      stCell.appendChild(statusEl(st.cls, st.icon, st.text));
+      if (st.extra) stCell.appendChild(el("span", "status-extra", st.extra));
+      tr.appendChild(stCell);
+      // Clicking anywhere on the row opens the bill. The supplier button does the same from the keyboard.
+      tr.addEventListener("click", function () { openBill(i, true); });
+      inboxEl.appendChild(tr);
     });
-    // On narrow screens the bills scroll sideways: keep the open one in view without moving the page.
-    var cur = inboxEl.children[selected];
-    if (cur && inboxEl.scrollWidth > inboxEl.clientWidth) {
-      var left = cur.offsetLeft - inboxEl.offsetLeft, right = left + cur.offsetWidth;
-      if (left < inboxEl.scrollLeft || right > inboxEl.scrollLeft + inboxEl.clientWidth) inboxEl.scrollLeft = Math.max(0, left - 16);
-    }
     summaryEl.textContent = waiting ? plural(waiting, "needs", "need") + " review" : "Nothing waiting";
+  }
+
+  function openBill(i, fromPointer) {
+    var changed = i !== selected;
+    selected = i;
+    renderAll();
+    focusBill(i);
+    // On a narrow screen the bill opens below the list. Jump to it when it is off screen.
+    if (fromPointer && changed && openEl.getBoundingClientRect().top > window.innerHeight * 0.6) openEl.scrollIntoView({ block: "start" });
   }
 
   // ---------- the invoice ----------
@@ -158,6 +129,19 @@
     return x;
   }
 
+  /*
+    Opening a different bill fades its two panels in over 180 ms, so it is clear the view changed.
+    It only happens after a bill has already been shown, so nothing moves when the page loads.
+    Reduced motion switches it off in the stylesheet.
+  */
+  var paintedId = null;
+  function showOpening() {
+    openEl.classList.remove("is-opening");
+    void openEl.offsetWidth; // restart the animation
+    openEl.classList.add("is-opening");
+  }
+  openEl.addEventListener("animationend", function () { openEl.classList.remove("is-opening"); });
+
   function renderPaper() {
     var b = bills[selected], inv = b.invoice;
     paperEl.textContent = "";
@@ -168,17 +152,17 @@
     who.appendChild(el("p", "paper-addr", ADDRESS[inv.supplier] || ""));
     head.appendChild(who);
     var title = el("div", "paper-title");
-    title.appendChild(el("h2", null, "Tax invoice"));
-    title.appendChild(el("p", null, inv.number));
+    title.appendChild(el("h3", null, "Tax invoice"));
+    title.appendChild(el("p", null, "Invoice number " + inv.number));
     head.appendChild(title);
     paperEl.appendChild(head);
 
     var meta = el("dl", "paper-meta");
     function row(t, v, cls) { var d = el("div", cls); d.appendChild(el("dt", null, t)); var dd = el("dd"); if (typeof v === "string") dd.textContent = v; else dd.appendChild(v); d.appendChild(dd); meta.appendChild(d); }
-    row("GST number", input("Supplier GST number", inv.gstNumber || "", function (v) { inv.gstNumber = v; }, "cell-text", "text"));
-    row("Issued", input("Date issued", inv.issued || "", function (v) { inv.issued = v; renderInbox(); }, "cell-text", "text"));
-    row("Your order", input("Order number quoted on the invoice", inv.orderNumber || "", function (v) { inv.orderNumber = v; }, "cell-text", "text"));
-    row("Due", inv.due || "Not given");
+    row("Invoice date", input("Date issued", inv.issued || "", function (v) { inv.issued = v; renderInbox(); }, "cell-text", "text"));
+    row("Due date", inv.due || "Not given");
+    row("Your order number", input("Order number quoted on the invoice", inv.orderNumber || "", function (v) { inv.orderNumber = v; }, "cell-text", "text"));
+    row("Supplier GST number", input("Supplier GST number", inv.gstNumber || "", function (v) { inv.gstNumber = v; }, "cell-text", "text"));
     var billTo = el("span");
     var buyer = inv.buyer || {};
     billTo.appendChild(el("strong", null, buyer.name || "Not shown"));
@@ -196,15 +180,14 @@
     var tbody = el("tbody");
     inv.lines.forEach(function (line, idx) {
       var tr = el("tr"); tr.dataset.code = String(line.code).toUpperCase();
-      var item = el("td"), itemText = el("span", "line-item w");
-      itemText.appendChild(el("span", "line-code", line.code));
-      if (line.description && line.description !== line.code) itemText.appendChild(el("span", "line-desc", line.description));
-      item.appendChild(itemText);
-      var q = el("td", "n"); q.appendChild(input("Quantity for " + line.code, String(line.qty), function (v) { line.qty = C.toQuantity(v); }, "cell-qty w"));
-      var p = el("td", "n"); p.appendChild(input("Unit price for " + line.code, asText(line.unitCents), function (v) { line.unitCents = C.toCents(v); }, "w"));
-      // The animated parts are spans inside the cells, so a flagged row keeps its tint while it is written.
-      var a = el("td", "n line-amt ring"); a.dataset.idx = idx; a.appendChild(el("span", "amt w"));
-      var m = el("td", "mark-cell"); m.appendChild(el("span", "mark mk"));
+      var item = el("td", "line-item");
+      item.appendChild(el("span", "line-code", line.code));
+      if (line.description && line.description !== line.code) item.appendChild(el("span", "line-desc", line.description));
+      // The labels show above each figure when the lines stack on a phone.
+      var q = el("td", "n line-qty"); q.dataset.label = "Qty"; q.appendChild(input("Quantity for " + line.code, String(line.qty), function (v) { line.qty = C.toQuantity(v); }, "cell-qty"));
+      var p = el("td", "n line-price"); p.dataset.label = "Unit price"; p.appendChild(input("Unit price for " + line.code, asText(line.unitCents), function (v) { line.unitCents = C.toCents(v); }));
+      var a = el("td", "n line-amt"); a.dataset.idx = idx; a.dataset.label = "Amount";
+      var m = el("td", "mark-cell"); m.appendChild(el("span", "mark"));
       tr.appendChild(item); tr.appendChild(q); tr.appendChild(p); tr.appendChild(a); tr.appendChild(m);
       tbody.appendChild(tr);
     });
@@ -216,26 +199,26 @@
       var d = el("div", t[1] === "totalCents" ? "is-total" : "");
       d.appendChild(el("dt", null, t[0]));
       var dd = el("dd");
-      dd.appendChild(input(t[0] + " on the invoice", asText(inv[t[1]]), function (v) { inv[t[1]] = C.toCents(v); }, "w"));
-      var m = el("span", "mark mk"); m.dataset.rule = t[2];
+      dd.appendChild(input(t[0] + " on the invoice", asText(inv[t[1]]), function (v) { inv[t[1]] = C.toCents(v); }));
+      var m = el("span", "mark"); m.dataset.rule = t[2];
       dd.appendChild(m);
       d.appendChild(dd); totals.appendChild(d);
     });
     paperEl.appendChild(totals);
-    var foot = el("div", "paper-foot");
-    foot.appendChild(el("span", null, "Every number and the GST number can be changed. The review updates as you type."));
-    foot.appendChild(el("span", null, b.entered ? "Entered by you" : "Sample data"));
-    paperEl.appendChild(foot);
+    docSourceEl.textContent = b.entered ? "Entered by you" : "Sample data";
     refreshPaper();
-    // Write the values in when a different bill is opened, and once on load. Not on every edit.
-    if (paintedId !== b.id) { paintedId = b.id; writeIn(); }
+    // A different bill was opened by the user: show the change. Not on load, and not on every edit.
+    if (paintedId !== b.id) {
+      if (paintedId !== null) showOpening();
+      paintedId = b.id;
+    }
   }
 
   function refreshPaper() {
     var b = bills[selected], r = result(b);
     paperEl.querySelectorAll(".line-amt").forEach(function (cell) {
       var amt = C.lineTotalCents(b.invoice.lines[+cell.dataset.idx]);
-      cell.firstChild.textContent = Number.isFinite(amt) ? money(amt) : "?";
+      cell.textContent = Number.isFinite(amt) ? money(amt) : "?";
     });
     paperEl.querySelectorAll("tbody tr").forEach(function (tr) {
       var st = r.lineStatus[tr.dataset.code];
@@ -253,38 +236,51 @@
     });
   }
 
-  // ---------- review panel ----------
+  // ---------- check results ----------
+  // A short result for each line, in the words accounts staff use.
+  var LINE_RESULT = {
+    "price-higher": "price higher", "price-lower": "price lower", "price-within-allowance": "price inside tolerance",
+    "quantity-over": "more than ordered", "quantity-short": "fewer than ordered", "extra-line": "not on the order",
+    "missing-line": "not invoiced", "duplicate-line": "repeated line", "invalid-number": "number cannot be read"
+  };
+  function lineResult(findings, k, st) {
+    var words = [];
+    findings.forEach(function (f) {
+      if (f.code && String(f.code).toUpperCase() === k && LINE_RESULT[f.rule] && words.indexOf(LINE_RESULT[f.rule]) === -1) words.push(LINE_RESULT[f.rule]);
+    });
+    var text = words.length ? words.join(", ") : "matches";
+    text = text.charAt(0).toUpperCase() + text.slice(1);
+    return statusEl(st === "check" ? "is-warn" : st === "note" ? "is-note" : "is-ok", st === "check" ? "alert-triangle" : st === "note" ? "info" : "check", text);
+  }
+
   function renderPanel() {
     var b = bills[selected], r = result(b), order = b.order, inv = b.invoice;
     panelEl.textContent = "";
     var rules = r.findings.map(function (f) { return f.rule; });
     var has = function (rule) { return rules.indexOf(rule) !== -1; };
 
-    var headline = r.verdict === "check" ? plural(r.checkCount, "thing", "things") + " to check before paying"
-      : r.verdict === "notes" ? "Ready to pay, with " + plural(r.noteCount, "note", "notes") : "Matches the order. Ready to pay.";
+    var headline = headlineOf(r);
     var live = inv.supplier + ", " + inv.number + ": " + headline + (b.decision ? ". " + statusOf(b).text : "");
     if (liveEl.textContent !== live) liveEl.textContent = live;
 
-    var verdict = el("div", "verdict v-" + r.verdict);
-    var vi = el("span", "verdict-icon"); vi.appendChild(r.verdict === "check" ? flag() : icon(r.verdict === "notes" ? "info" : "circle-check"));
-    verdict.appendChild(vi);
-    var vt = el("div");
-    vt.appendChild(el("p", "v-head", headline));
-    vt.appendChild(el("p", "v-sub", "Against order " + order.number + " from " + order.supplier));
-    verdict.appendChild(vt);
-    panelEl.appendChild(verdict);
-    if (r.queryCents > 0) {
-      var amt = el("p", "v-amount");
-      amt.appendChild(el("strong", null, money(r.queryCents)));
-      amt.appendChild(el("span", null, "to raise with the supplier, before GST"));
-      panelEl.appendChild(amt);
-    }
+    var head = el("div", "panel-head");
+    head.appendChild(el("h2", null, "Check results"));
+    head.appendChild(el("span", null, "Against order " + order.number));
+    panelEl.appendChild(head);
+    var body = el("div", "review-body");
+    panelEl.appendChild(body);
+
+    var summary = el("p", "summary v-" + r.verdict);
+    summary.appendChild(icon(r.verdict === "check" ? "alert-triangle" : "circle-check"));
+    summary.appendChild(el("span", null, headline + (r.verdict === "match" ? "" : ".")));
+    body.appendChild(summary);
+    if (r.queryCents > 0) body.appendChild(el("p", "raise", "Raise " + money(r.queryCents) + " with the supplier before GST."));
 
     // Line by line
-    var h1 = el("h3", "pn-h"); h1.appendChild(el("span", "label-mono", "Lines")); h1.appendChild(el("span", "label-mono", "Ordered and invoiced"));
-    panelEl.appendChild(h1);
-    var t = el("table", "cmp"), thead = el("thead"), th = el("tr");
-    ["Item", "Ordered", "Invoiced", "Change"].forEach(function (h, i) { var c = el("th", i ? "n" : "", h); c.scope = "col"; th.appendChild(c); });
+    body.appendChild(el("h3", null, "Lines against the order"));
+    var t = el("table", "cmp cmp-lines"), thead = el("thead"), th = el("tr");
+    t.appendChild(el("caption", "visually-hidden", "Each line on the order and the invoice"));
+    [["Line", ""], ["Ordered", "n"], ["Invoiced", "n"], ["Difference", "n"], ["Result", ""]].forEach(function (h) { var c = el("th", h[1], h[0]); c.scope = "col"; th.appendChild(c); });
     thead.appendChild(th); t.appendChild(thead);
     var tb = el("tbody"), codes = [];
     order.lines.concat(inv.lines).forEach(function (l) { var k = String(l.code).toUpperCase(); if (codes.indexOf(k) === -1) codes.push(k); });
@@ -295,21 +291,20 @@
       var oc = o.reduce(function (s, l) { return s + C.lineTotalCents(l); }, 0), vc = v.reduce(function (s, l) { return s + C.lineTotalCents(l); }, 0);
       var st = r.lineStatus[k] || "ok";
       var tr = el("tr", "st-" + st);
-      var c1 = el("td"), item = el("span", "cmp-item");
-      var stIcon = el("span", "st"); stIcon.appendChild(mark(st)); item.appendChild(stIcon);
-      item.appendChild(el("span", "cmp-code", o[0] ? o[0].code : v[0].code));
-      c1.appendChild(item); tr.appendChild(c1);
-      tr.appendChild(el("td", "n", o.length ? oq + " × " + money(o[0].unitCents) : "Not ordered"));
-      tr.appendChild(el("td", "n", v.length ? vq + " × " + money(v[0].unitCents) + (v.length > 1 ? " (" + v.length + " lines)" : "") : "Not invoiced"));
+      tr.appendChild(el("td", "code", o[0] ? o[0].code : v[0].code));
+      var cell = function (label, text, cls) { var td = el("td", "n" + (cls ? " " + cls : ""), text); td.dataset.label = label; return td; };
+      tr.appendChild(cell("Ordered", o.length ? oq + " at " + money(o[0].unitCents) : "Not ordered"));
+      tr.appendChild(cell("Invoiced", v.length ? vq + " at " + money(v[0].unitCents) + (v.length > 1 ? " (" + v.length + " lines)" : "") : "Not invoiced"));
       var diff = (Number.isFinite(vc) ? vc : 0) - (Number.isFinite(oc) ? oc : 0);
-      tr.appendChild(el("td", "n cmp-diff" + (diff > 0 ? " up" : diff < 0 ? " down" : ""), diff === 0 ? "None" : (diff > 0 ? "+" : "") + money(diff)));
+      tr.appendChild(cell("Difference", (diff > 0 ? "+" : "") + money(diff), diff === 0 ? "zero" : ""));
+      var res = el("td", "res"); res.appendChild(lineResult(r.findings, k, st)); tr.appendChild(res);
       tb.appendChild(tr);
     });
     t.appendChild(tb);
-    panelEl.appendChild(t);
+    body.appendChild(t);
 
-    // Invoice checks
-    var h2 = el("h3", "pn-h"); h2.appendChild(el("span", "label-mono", "Invoice checks")); panelEl.appendChild(h2);
+    // Tax invoice and totals
+    body.appendChild(el("h3", null, "Tax invoice and totals"));
     var buyer = inv.buyer || {};
     var checks = [
       ["Order number", !has("order-number"), "Quotes " + (inv.orderNumber || "nothing")],
@@ -322,55 +317,63 @@
       ["Duplicates", !has("duplicate-invoice"), has("duplicate-invoice") ? "Possible duplicate" : "None found"],
       ["Your details", !has("tax-buyer"), buyer.name ? buyer.name : "Not shown"]
     ];
-    var ul = el("ul", "checks");
+    var ct = el("table", "cmp checks"), cth = el("thead"), chr = el("tr");
+    ct.appendChild(el("caption", "visually-hidden", "Tax invoice details and totals"));
+    ["Check", "On the invoice", "Result"].forEach(function (h) { var c = el("th", null, h); c.scope = "col"; chr.appendChild(c); });
+    cth.appendChild(chr); ct.appendChild(cth);
+    var ctb = el("tbody");
     checks.forEach(function (c) {
-      var li = el("li", c[1] ? "ck-ok" : "ck-bad");
-      var s = el("span", "st"); s.appendChild(mark(c[1] ? "ok" : "check")); li.appendChild(s);
-      li.appendChild(el("span", "ck-name", c[0]));
-      li.appendChild(el("span", "ck-detail", c[2]));
-      ul.appendChild(li);
+      var tr = el("tr", c[1] ? "ck-ok" : "ck-bad");
+      var name = el("th", null, c[0]); name.scope = "row"; tr.appendChild(name);
+      tr.appendChild(el("td", null, c[2]));
+      var res = el("td"); res.appendChild(c[1] ? statusEl("is-ok", "check", "Passes") : statusEl("is-warn", "alert-triangle", "Holds the bill"));
+      tr.appendChild(res);
+      ctb.appendChild(tr);
     });
-    panelEl.appendChild(ul);
+    ct.appendChild(ctb);
+    body.appendChild(ct);
 
     if (r.findings.length) {
-      var h3 = el("h3", "pn-h"); h3.appendChild(el("span", "label-mono", "What needs a person")); panelEl.appendChild(h3);
-      var ol = el("ol", "issues");
+      body.appendChild(el("h3", null, "Needs a person"));
+      var ul = el("ul", "issues");
       r.findings.forEach(function (f) {
         var li = el("li", "sev-" + f.severity);
-        var tag = el("span", "issue-tag"); tag.appendChild(mark(f.severity === "check" ? "check" : "note")); tag.appendChild(document.createTextNode(f.severity === "check" ? "Check before paying" : "Note"));
-        li.appendChild(tag);
-        li.appendChild(el("p", "issue-title", f.title));
+        var title = el("p", "issue-title");
+        title.appendChild(mark(f.severity === "check" ? "check" : "note"));
+        title.appendChild(el("span", "visually-hidden", f.severity === "check" ? "Check before paying: " : "Note: "));
+        title.appendChild(el("span", null, f.title));
+        li.appendChild(title);
         li.appendChild(el("p", "issue-detail", f.detail));
-        ol.appendChild(li);
+        ul.appendChild(li);
       });
-      panelEl.appendChild(ol);
+      body.appendChild(ul);
     }
 
-    var helpers = el("div", "helpers" + (r.verdict === "check" ? "" : " single"));
+    var actions = el("div", "actions");
     if (r.verdict === "check") {
       var copy = el("button", "btn"); copy.type = "button"; copy.id = "copy-query";
       paintCopy(copy, false);
       copy.addEventListener("click", function () { copyQuery(copy, b, r); });
-      helpers.appendChild(copy);
+      actions.appendChild(copy);
     }
     var print = el("button", "btn"); print.type = "button"; print.id = "print-summary";
     print.appendChild(icon("printer")); print.appendChild(el("span", null, "Print summary"));
     print.addEventListener("click", function () { window.print(); });
-    helpers.appendChild(print);
-    panelEl.appendChild(helpers);
+    actions.appendChild(print);
 
-    var actions = el("div", "decide");
+    var decideBox = el("span", "decide");
     var hold = el("button", "btn", b.decision === "held" ? "On hold" : "Hold");
     hold.type = "button"; hold.id = "hold"; hold.insertBefore(icon("pause"), hold.firstChild);
     hold.setAttribute("aria-pressed", String(b.decision === "held"));
     hold.addEventListener("click", function () { decide("held", "hold"); });
-    var approve = el("button", "btn btn-ink", b.decision === "approved" ? "Approved" : r.verdict === "check" ? "Approve anyway" : "Approve");
+    var approve = el("button", "btn btn-primary", b.decision === "approved" ? "Approved" : r.verdict === "check" ? "Approve anyway" : "Approve");
     approve.type = "button"; approve.id = "approve"; approve.insertBefore(icon("check"), approve.firstChild);
     approve.setAttribute("aria-pressed", String(b.decision === "approved"));
     approve.addEventListener("click", function () { decide("approved", "approve"); });
-    actions.appendChild(hold); actions.appendChild(approve);
-    panelEl.appendChild(actions);
-    panelEl.appendChild(el("p", "decide-note", "Approve and Hold only change this page. Nothing is paid."));
+    decideBox.appendChild(hold); decideBox.appendChild(approve);
+    actions.appendChild(decideBox);
+    body.appendChild(actions);
+    body.appendChild(el("p", "decide-note", "Approve and Hold only change this page. Nothing is paid."));
   }
 
   // ---------- copy a query for the supplier, and print ----------
@@ -416,7 +419,7 @@
     printHeadEl.textContent = "";
     printHeadEl.appendChild(el("h2", null, "Invoice check summary"));
     printHeadEl.appendChild(el("p", null, inv.supplier + ", invoice " + inv.number + (inv.issued ? ", dated " + inv.issued : "") + ", against order " + b.order.number));
-    printHeadEl.appendChild(el("p", null, (r.verdict === "check" ? plural(r.checkCount, "thing", "things") + " to check before paying" : r.verdict === "notes" ? "Ready to pay, with " + plural(r.noteCount, "note", "notes") : "Matches the order") +
+    printHeadEl.appendChild(el("p", null, (r.verdict === "match" ? "Matches the order" : headlineOf(r)) +
       (b.decision ? ". " + statusOf(b).text : "") + ". Printed " + new Date().toLocaleDateString("en-NZ", { day: "numeric", month: "long", year: "numeric" }) + "."));
   });
 
@@ -552,7 +555,7 @@
     var tag = t && t.tagName;
     return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || !!(t && t.isContentEditable);
   }
-  function focusBill(i) { var list = inboxEl.querySelectorAll(".bill"); if (list[i]) list[i].focus(); }
+  function focusBill(i) { var list = inboxEl.querySelectorAll(".bill"); if (list[i]) list[i].focus({ preventScroll: true }); }
   function moveTo(i) {
     if (i < 0 || i > bills.length - 1 || i === selected) return;
     selected = i; renderAll(); focusBill(i);
