@@ -16,8 +16,9 @@ function tokens(block) {
   for (const m of block.matchAll(/--([\w-]+):\s*(#[0-9a-fA-F]{6})\s*;/g)) out[m[1]] = m[2];
   return out;
 }
-const dark = tokens(css.match(/:root\s*\{([\s\S]*?)\n\}/)[1]);
-const light = { ...dark, ...tokens(css.match(/:root\[data-theme="light"\]\s*\{([\s\S]*?)\n\}/)[1]) };
+// Light is the default (:root); dark overrides it.
+const light = tokens(css.match(/:root\s*\{([\s\S]*?)\n\}/)[1]);
+const dark = { ...light, ...tokens(css.match(/:root\[data-theme="dark"\]\s*\{([\s\S]*?)\n\}/)[1]) };
 
 function luminance(hex) {
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
@@ -34,6 +35,7 @@ const PAIRS = [
   ["text", "bg", 4.5], ["text", "surface", 4.5], ["text", "surface-2", 4.5],
   ["muted", "bg", 4.5], ["muted", "surface", 4.5], ["muted", "surface-2", 4.5],
   ["accent", "bg", 4.5], ["accent", "surface", 4.5], ["accent-ink", "accent", 4.5],
+  ["btn-ink", "btn", 4.5], ["text", "stage", 4.5], ["muted", "stage", 4.5], ["accent", "stage", 4.5], ["accent", "surface-2", 4.5],
   ["check", "check-bg", 4.5], ["note", "note-bg", 4.5], ["ok", "ok-bg", 4.5],
   ["line-strong", "bg", 3], ["line-strong", "surface", 3],
   ["check", "surface", 3], ["note", "surface", 3], ["ok", "surface", 3],

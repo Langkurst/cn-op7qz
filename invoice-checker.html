@@ -1,14 +1,15 @@
 <!doctype html>
-<html lang="en-NZ" data-theme="dark">
+<html lang="en-NZ" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Purchase order and invoice checker | Christopher Nottle</title>
   <meta name="description" content="A demo that checks a supplier invoice against its purchase order, on made-up sample data. Plain rules, no AI.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="color-scheme" content="dark light">
+  <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <script src="assets/js/theme.js"></script>
   <link rel="stylesheet" href="assets/css/site.css">
 </head>
@@ -17,7 +18,7 @@
 
   <header class="site-head">
     <div class="wrap">
-      <a class="site-name" href="index.html">Christopher Nottle</a>
+      <a class="site-name" href="index.html"><span class="mark" aria-hidden="true">CN</span><span class="name-text">Christopher Nottle</span></a>
       <nav class="site-nav" aria-label="Site">
         <ul>
           <li><a href="index.html#work">Work</a></li>
@@ -25,7 +26,10 @@
           <li><a href="index.html#contact">Contact</a></li>
         </ul>
       </nav>
-      <button type="button" class="btn btn-quiet theme-toggle" data-theme-toggle>Light theme</button>
+      <div class="head-end">
+        <button type="button" class="btn btn-quiet theme-toggle" data-theme-toggle>Dark theme</button>
+        <a class="btn btn-primary btn-small" href="Christopher_Nottle_CV.pdf" download>Download CV</a>
+      </div>
     </div>
   </header>
 

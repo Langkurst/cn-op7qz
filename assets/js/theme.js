@@ -1,9 +1,9 @@
 /*
   Runs before the page paints, so the chosen theme shows straight away.
-  Dark is the default. A visitor's choice of light or dark is kept in their own browser only.
+  Light is the default. A visitor's choice of light or dark is kept in their own browser only.
 */
 (function () {
-  var theme = "dark";
+  var theme = "light";
   try {
     var saved = localStorage.getItem("theme");
     if (saved === "light" || saved === "dark") theme = saved;
