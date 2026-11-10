@@ -31,6 +31,67 @@
     svg.appendChild(use);
     return svg;
   }
+  // The flag for "holds the bill" (Lucide flag, ISC licence), drawn here as the sprite has no flag.
+  var FLAG = ["M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z", "M4 22v-7"];
+  function flag() {
+    var NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "i"); svg.setAttribute("aria-hidden", "true"); svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("fill", "none"); svg.setAttribute("stroke", "currentColor"); svg.setAttribute("stroke-width", "2");
+    svg.setAttribute("stroke-linecap", "round"); svg.setAttribute("stroke-linejoin", "round");
+    FLAG.forEach(function (d) { var p = document.createElementNS(NS, "path"); p.setAttribute("d", d); svg.appendChild(p); });
+    return svg;
+  }
+  // A tick for a match, a flag for something that holds the bill, an "i" for a note.
+  function mark(st) { return st === "check" ? flag() : icon(st === "note" ? "info" : "check"); }
+  var MARK_TEXT = { ok: "Matches", check: "Holds the bill", note: "Note" };
+  function paintMark(box, st) {
+    if (!box || box.getAttribute("data-st") === st) return;
+    box.setAttribute("data-st", st);
+    box.textContent = "";
+    box.appendChild(mark(st));
+    box.appendChild(el("span", "visually-hidden", MARK_TEXT[st]));
+  }
+
+  /*
+    When a bill opens, its values are written into the sheet one after another, like values typed
+    into a spreadsheet. Times are in milliseconds from the start. Each line writes its item, quantity,
+    unit price and amount 40 ms apart, and its tick or flag lands 120 ms after the amount. Then the
+    subtotal, GST and total are written the same way. Long bills get a shorter gap between lines.
+  */
+  function writeSchedule(lineCount) {
+    var CELL = 40, MARK = 120, VALUE = 180;
+    var gap = Math.min(90, Math.floor(800 / Math.max(lineCount, 1)));
+    var rows = [];
+    for (var i = 0; i < lineCount; i++) {
+      var t = i * gap;
+      rows.push({ cells: [t, t + CELL, t + 2 * CELL, t + 3 * CELL], mark: t + 3 * CELL + MARK });
+    }
+    var start = lineCount ? rows[lineCount - 1].cells[3] + 160 : 0;
+    var totals = [0, 1, 2].map(function (j) { var v = start + j * 90; return { value: v, mark: v + MARK }; });
+    return { rows: rows, totals: totals, end: totals[2].mark + VALUE };
+  }
+  var writeTimer = 0, paintedId = null;
+  function writeIn() {
+    clearTimeout(writeTimer);
+    paperEl.classList.remove("is-writing");
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var rows = paperEl.querySelectorAll(".lines tbody tr"), plan = writeSchedule(rows.length);
+    function at(node, ms) { if (node) node.style.setProperty("--w", ms + "ms"); }
+    rows.forEach(function (tr, i) {
+      var p = plan.rows[i], w = tr.querySelectorAll(".w");
+      for (var c = 0; c < w.length; c++) at(w[c], p.cells[c]);
+      at(tr.querySelector(".ring"), p.cells[3]);
+      at(tr.querySelector(".mk"), p.mark);
+    });
+    paperEl.querySelectorAll(".totals > div").forEach(function (d, j) {
+      at(d.querySelector(".w"), plan.totals[j].value);
+      at(d.querySelector(".mk"), plan.totals[j].mark);
+    });
+    void paperEl.offsetWidth; // restart the animations
+    paperEl.classList.add("is-writing");
+    writeTimer = setTimeout(function () { paperEl.classList.remove("is-writing"); }, plan.end + 600);
+  }
+
   function money(c) { return C.formatMoney(c); }
   function asText(c) { return Number.isFinite(c) ? C.formatMoney(c) : ""; }
   function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
@@ -46,7 +107,6 @@
       duplicates: (dupes || duplicateMap())[b.id] || []
     });
   }
-  var STATUS_ICON = { check: "alert-triangle", note: "info", ok: "check" };
 
   function statusOf(b) {
     if (b.decision === "approved") return { cls: "is-ok", text: "Approved" };
@@ -78,6 +138,12 @@
       li.appendChild(btn);
       inboxEl.appendChild(li);
     });
+    // On narrow screens the bills scroll sideways: keep the open one in view without moving the page.
+    var cur = inboxEl.children[selected];
+    if (cur && inboxEl.scrollWidth > inboxEl.clientWidth) {
+      var left = cur.offsetLeft - inboxEl.offsetLeft, right = left + cur.offsetWidth;
+      if (left < inboxEl.scrollLeft || right > inboxEl.scrollLeft + inboxEl.clientWidth) inboxEl.scrollLeft = Math.max(0, left - 16);
+    }
     summaryEl.textContent = waiting ? plural(waiting, "needs", "need") + " review" : "Nothing waiting";
   }
 
@@ -124,28 +190,35 @@
     table.appendChild(el("caption", "visually-hidden", "Invoice lines. Quantities and prices can be changed."));
     var thead = el("thead"), hr = el("tr");
     [["Item", ""], ["Qty", "n"], ["Unit price", "n"], ["Amount", "n"]].forEach(function (h) { var th = el("th", h[1], h[0]); th.scope = "col"; hr.appendChild(th); });
+    var markHead = el("th", "mark-h"); markHead.scope = "col"; markHead.appendChild(el("span", "visually-hidden", "Result"));
+    hr.appendChild(markHead);
     thead.appendChild(hr); table.appendChild(thead);
     var tbody = el("tbody");
     inv.lines.forEach(function (line, idx) {
       var tr = el("tr"); tr.dataset.code = String(line.code).toUpperCase();
-      var item = el("td");
-      item.appendChild(el("span", "line-code", line.code));
-      if (line.description && line.description !== line.code) item.appendChild(el("span", "line-desc", line.description));
-      var q = el("td", "n"); q.appendChild(input("Quantity for " + line.code, String(line.qty), function (v) { line.qty = C.toQuantity(v); }, "cell-qty"));
-      var p = el("td", "n"); p.appendChild(input("Unit price for " + line.code, asText(line.unitCents), function (v) { line.unitCents = C.toCents(v); }));
-      var a = el("td", "n line-amt"); a.dataset.idx = idx;
-      tr.appendChild(item); tr.appendChild(q); tr.appendChild(p); tr.appendChild(a);
+      var item = el("td"), itemText = el("span", "line-item w");
+      itemText.appendChild(el("span", "line-code", line.code));
+      if (line.description && line.description !== line.code) itemText.appendChild(el("span", "line-desc", line.description));
+      item.appendChild(itemText);
+      var q = el("td", "n"); q.appendChild(input("Quantity for " + line.code, String(line.qty), function (v) { line.qty = C.toQuantity(v); }, "cell-qty w"));
+      var p = el("td", "n"); p.appendChild(input("Unit price for " + line.code, asText(line.unitCents), function (v) { line.unitCents = C.toCents(v); }, "w"));
+      // The animated parts are spans inside the cells, so a flagged row keeps its tint while it is written.
+      var a = el("td", "n line-amt ring"); a.dataset.idx = idx; a.appendChild(el("span", "amt w"));
+      var m = el("td", "mark-cell"); m.appendChild(el("span", "mark mk"));
+      tr.appendChild(item); tr.appendChild(q); tr.appendChild(p); tr.appendChild(a); tr.appendChild(m);
       tbody.appendChild(tr);
     });
     table.appendChild(tbody);
     paperEl.appendChild(table);
 
     var totals = el("dl", "totals");
-    [["Subtotal", "subtotalCents"], ["GST 15%", "gstCents"], ["Total due", "totalCents"]].forEach(function (t) {
+    [["Subtotal", "subtotalCents", "subtotal"], ["GST 15%", "gstCents", "gst"], ["Total due", "totalCents", "total"]].forEach(function (t) {
       var d = el("div", t[1] === "totalCents" ? "is-total" : "");
       d.appendChild(el("dt", null, t[0]));
       var dd = el("dd");
-      dd.appendChild(input(t[0] + " on the invoice", asText(inv[t[1]]), function (v) { inv[t[1]] = C.toCents(v); }));
+      dd.appendChild(input(t[0] + " on the invoice", asText(inv[t[1]]), function (v) { inv[t[1]] = C.toCents(v); }, "w"));
+      var m = el("span", "mark mk"); m.dataset.rule = t[2];
+      dd.appendChild(m);
       d.appendChild(dd); totals.appendChild(d);
     });
     paperEl.appendChild(totals);
@@ -154,17 +227,24 @@
     foot.appendChild(el("span", null, b.entered ? "Entered by you" : "Sample data"));
     paperEl.appendChild(foot);
     refreshPaper();
+    // Write the values in when a different bill is opened, and once on load. Not on every edit.
+    if (paintedId !== b.id) { paintedId = b.id; writeIn(); }
   }
 
   function refreshPaper() {
     var b = bills[selected], r = result(b);
     paperEl.querySelectorAll(".line-amt").forEach(function (cell) {
       var amt = C.lineTotalCents(b.invoice.lines[+cell.dataset.idx]);
-      cell.textContent = Number.isFinite(amt) ? money(amt) : "?";
+      cell.firstChild.textContent = Number.isFinite(amt) ? money(amt) : "?";
     });
     paperEl.querySelectorAll("tbody tr").forEach(function (tr) {
       var st = r.lineStatus[tr.dataset.code];
       tr.className = st === "check" ? "is-check" : st === "note" ? "is-note" : "";
+      paintMark(tr.querySelector(".mark"), st === "check" || st === "note" ? st : "ok");
+    });
+    var flagged = r.findings.map(function (f) { return f.rule; });
+    paperEl.querySelectorAll(".totals .mark").forEach(function (m) {
+      paintMark(m, flagged.indexOf(m.dataset.rule) !== -1 ? "check" : "ok");
     });
     paperEl.querySelectorAll("input.cell").forEach(function (x) {
       var bad = x.inputMode === "decimal" && x.value.trim() !== "" && Number.isNaN(C.toCents(x.value));
@@ -186,7 +266,7 @@
     if (liveEl.textContent !== live) liveEl.textContent = live;
 
     var verdict = el("div", "verdict v-" + r.verdict);
-    var vi = el("span", "verdict-icon"); vi.appendChild(icon(r.verdict === "check" ? "alert-triangle" : r.verdict === "notes" ? "info" : "circle-check"));
+    var vi = el("span", "verdict-icon"); vi.appendChild(r.verdict === "check" ? flag() : icon(r.verdict === "notes" ? "info" : "circle-check"));
     verdict.appendChild(vi);
     var vt = el("div");
     vt.appendChild(el("p", "v-head", headline));
@@ -216,7 +296,7 @@
       var st = r.lineStatus[k] || "ok";
       var tr = el("tr", "st-" + st);
       var c1 = el("td"), item = el("span", "cmp-item");
-      var stIcon = el("span", "st"); stIcon.appendChild(icon(STATUS_ICON[st] || "check")); item.appendChild(stIcon);
+      var stIcon = el("span", "st"); stIcon.appendChild(mark(st)); item.appendChild(stIcon);
       item.appendChild(el("span", "cmp-code", o[0] ? o[0].code : v[0].code));
       c1.appendChild(item); tr.appendChild(c1);
       tr.appendChild(el("td", "n", o.length ? oq + " × " + money(o[0].unitCents) : "Not ordered"));
@@ -245,7 +325,7 @@
     var ul = el("ul", "checks");
     checks.forEach(function (c) {
       var li = el("li", c[1] ? "ck-ok" : "ck-bad");
-      var s = el("span", "st"); s.appendChild(icon(c[1] ? "check" : "alert-triangle")); li.appendChild(s);
+      var s = el("span", "st"); s.appendChild(mark(c[1] ? "ok" : "check")); li.appendChild(s);
       li.appendChild(el("span", "ck-name", c[0]));
       li.appendChild(el("span", "ck-detail", c[2]));
       ul.appendChild(li);
@@ -257,7 +337,7 @@
       var ol = el("ol", "issues");
       r.findings.forEach(function (f) {
         var li = el("li", "sev-" + f.severity);
-        var tag = el("span", "issue-tag"); tag.appendChild(icon(f.severity === "check" ? "alert-triangle" : "info")); tag.appendChild(document.createTextNode(f.severity === "check" ? "Check before paying" : "Note"));
+        var tag = el("span", "issue-tag"); tag.appendChild(mark(f.severity === "check" ? "check" : "note")); tag.appendChild(document.createTextNode(f.severity === "check" ? "Check before paying" : "Note"));
         li.appendChild(tag);
         li.appendChild(el("p", "issue-title", f.title));
         li.appendChild(el("p", "issue-detail", f.detail));
