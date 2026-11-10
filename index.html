@@ -179,7 +179,7 @@
               <p>It runs in your browser, and its security policy blocks it from connecting to anything. In Xero's May 2026 survey, 40% of New Zealand small businesses named data privacy and security as a reason they are not using AI, or not using it more.</p>
               <dl class="facts facts-tight">
                 <div><dt>6,000</dt><dd>IRD and bank cases that agree with python-stdnum</dd></div>
-                <div><dt>19</dt><dd>automated tests</dd></div>
+                <div><dt>22</dt><dd>automated tests</dd></div>
               </dl>
               <a class="btn btn-primary" href="privacy-checker.html">Open the privacy checker</a>
             </div>
@@ -189,8 +189,31 @@
                 <p class="mini-text">IRD <mark class="t-ird">49-098-576</mark>, NHI <mark class="t-nhi">ZAA0067</mark>. Refund to <mark class="t-bank">01-0902-0068389-00</mark>. Email <mark class="t-email">sam@example.co.nz</mark>.</p>
               </div>
               <div class="mini-pane">
-                <p class="mini-label">Cleaned copy</p>
-                <p class="mini-text">IRD [IRD NUMBER], NHI [NHI NUMBER]. Refund to [BANK ACCOUNT]. Email [EMAIL].</p>
+                <p class="mini-label">Redacted copy for the AI</p>
+                <p class="mini-text">IRD [IRD_1], NHI [NHI_1]. Refund to [BANK_ACCOUNT_1]. Email [EMAIL_1].</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="card card-feature" aria-labelledby="invoice-h">
+            <div class="feature-copy">
+              <h3 id="invoice-h">Invoice checker</h3>
+              <p>Matching supplier invoices to purchase orders was part of my job at Häfele. This demo checks each bill against its order, line by line, and says what a person must look at before it is paid.</p>
+              <p>It checks price, quantity, missing and extra lines, GST and totals. Every number on the invoice can be changed, and the result updates as you type. The suppliers and orders are made up.</p>
+              <dl class="facts facts-tight">
+                <div><dt>4</dt><dd>sample bills, one that matches</dd></div>
+                <div><dt>29</dt><dd>automated tests</dd></div>
+              </dl>
+              <a class="btn btn-primary" href="invoice-checker.html">Open the invoice checker</a>
+            </div>
+            <div class="feature-demo" aria-hidden="true">
+              <div class="mini-pane">
+                <p class="mini-label">Invoice SHI-7731 against order 4500012904</p>
+                <p class="mini-text">RUN-500: ordered at $15.60, invoiced at $16.10. That is $40.00 more over 80 units.<br>LED-2M: 50 ordered, 60 invoiced.</p>
+              </div>
+              <div class="mini-pane">
+                <p class="mini-label">Result</p>
+                <p class="mini-text">2 things to check before paying. $225.00 to raise with the supplier, before GST.</p>
               </div>
             </div>
           </article>

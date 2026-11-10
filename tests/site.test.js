@@ -7,7 +7,7 @@ const path = require("node:path");
 
 const ROOT = path.join(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(ROOT, file), "utf8");
-const PAGES = ["index.html", "privacy-checker.html", "3d/index.html"];
+const PAGES = ["index.html", "privacy-checker.html", "invoice-checker.html", "3d/index.html"];
 const css = read("assets/css/site.css");
 
 // ---------- colour contrast (WCAG 2) ----------
@@ -156,18 +156,25 @@ test("3d page: falls back to the flat view, and loads the 3D code only when it w
   assert.ok(fs.existsSync(path.join(ROOT, "3d/vendor/LICENSE-three.txt")));
 });
 
-test("privacy checker page: a security policy blocks every connection, so pasted text cannot leave", () => {
-  const html = read("privacy-checker.html");
-  const csp = (html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/) || [])[1] || "";
-  assert.match(csp, /connect-src 'none'/);
-  assert.match(csp, /form-action 'none'/);
-  assert.match(csp, /default-src 'self'/);
-  assert.ok(!/<script>[^<]/.test(html), "no inline scripts, which the policy would block");
-  assert.ok(!/ style="/.test(html), "no inline styles, which the policy would block");
-});
+for (const page of ["privacy-checker.html", "invoice-checker.html"]) {
+  test(`${page}: a security policy blocks every connection, so typed text cannot leave`, () => {
+    const html = read(page);
+    const csp = (html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/) || [])[1] || "";
+    assert.match(csp, /connect-src 'none'/);
+    assert.match(csp, /form-action 'none'/);
+    assert.match(csp, /default-src 'self'/);
+    assert.ok(!/<script>[^<]/.test(html), "no inline scripts, which the policy would block");
+    assert.ok(!/ style="/.test(html), "no inline styles, which the policy would block");
+  });
+}
 
-test("the invoice checker is gone from every page", () => {
-  for (const page of PAGES) assert.ok(!/invoice-checker/.test(read(page)), page);
+test("both tools are linked from the home page and from each tool's nav", () => {
+  assert.match(read("index.html"), /href="privacy-checker.html"/);
+  assert.match(read("index.html"), /href="invoice-checker.html"/);
+  for (const page of ["privacy-checker.html", "invoice-checker.html"]) {
+    assert.match(read(page), /href="privacy-checker.html"/, page);
+    assert.match(read(page), /href="invoice-checker.html"/, page);
+  }
 });
 
 test("at most one image per page skips lazy loading, and it is marked high priority", () => {

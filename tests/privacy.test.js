@@ -126,3 +126,25 @@ test("scanning does not change the text, and finds the same things twice", () =>
   assert.deepEqual(texts(SAMPLE), texts(copy));
   assert.equal(SAMPLE, copy);
 });
+
+test("numbered placeholders: the same value always gets the same number", () => {
+  const text = "IRD 49-098-576 and again 49 098 576. Mobile 021 123 4567, office (09) 123 4567, mobile 021-123-4567.";
+  const r = P.redact(text, P.scan(text));
+  assert.equal(r.text, "IRD [IRD_1] and again [IRD_1]. Mobile [PHONE_1], office [PHONE_2], mobile [PHONE_1].");
+  assert.deepEqual(Object.keys(r.map), ["[IRD_1]", "[PHONE_1]", "[PHONE_2]"]);
+});
+
+test("putting details back: an AI reply with the placeholders gets the real details", () => {
+  const r = P.redact(SAMPLE, P.scan(SAMPLE));
+  const reply = "Done. I have updated the file for [IRD_1] and will email [email_1] today. Bank [BANK_ACCOUNT_1] is noted. [PHONE_9] is unknown.";
+  const back = P.restore(reply, r.map);
+  assert.match(back.text, /file for 49-098-576 and will email sam\.example@example\.co\.nz today\. Bank 01-0902-0068389-00/);
+  assert.equal(back.restored, 3);
+  assert.deepEqual(back.unknown, ["[PHONE_9]"]);
+});
+
+test("the redacted copy has nothing left to find, and restoring it gives the original back", () => {
+  const r = P.redact(SAMPLE, P.scan(SAMPLE));
+  assert.equal(P.scan(r.text).length, 0);
+  assert.equal(P.restore(r.text, r.map).text, SAMPLE);
+});

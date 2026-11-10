@@ -118,16 +118,17 @@
   // Each returns matches {type, start, end, text, why}. Higher priority wins where matches overlap.
 
   var TYPES = {
-    ird: { label: "IRD number", tag: "[IRD NUMBER]", priority: 9 },
-    bank: { label: "Bank account", tag: "[BANK ACCOUNT]", priority: 9 },
-    nhi: { label: "NHI number", tag: "[NHI NUMBER]", priority: 9 },
-    card: { label: "Card number", tag: "[CARD NUMBER]", priority: 8 },
-    licence: { label: "Driver licence", tag: "[DRIVER LICENCE]", priority: 7 },
-    passport: { label: "Passport number", tag: "[PASSPORT NUMBER]", priority: 7 },
-    dob: { label: "Date of birth", tag: "[DATE OF BIRTH]", priority: 6 },
-    email: { label: "Email address", tag: "[EMAIL]", priority: 5 },
-    phone: { label: "Phone number", tag: "[PHONE]", priority: 4 }
+    ird: { label: "IRD number", tag: "[IRD NUMBER]", token: "IRD", group: "id", priority: 9 },
+    bank: { label: "Bank account", tag: "[BANK ACCOUNT]", token: "BANK_ACCOUNT", group: "money", priority: 9 },
+    nhi: { label: "NHI number", tag: "[NHI NUMBER]", token: "NHI", group: "id", priority: 9 },
+    card: { label: "Card number", tag: "[CARD NUMBER]", token: "CARD", group: "money", priority: 8 },
+    licence: { label: "Driver licence", tag: "[DRIVER LICENCE]", token: "DRIVER_LICENCE", group: "id", priority: 7 },
+    passport: { label: "Passport number", tag: "[PASSPORT NUMBER]", token: "PASSPORT", group: "id", priority: 7 },
+    dob: { label: "Date of birth", tag: "[DATE OF BIRTH]", token: "DATE_OF_BIRTH", group: "contact", priority: 6 },
+    email: { label: "Email address", tag: "[EMAIL]", token: "EMAIL", group: "contact", priority: 5 },
+    phone: { label: "Phone number", tag: "[PHONE]", token: "PHONE", group: "contact", priority: 4 }
   };
+  var GROUPS = { id: "Identity numbers", money: "Money", contact: "Contact details" };
 
   function each(re, text, fn) {
     re.lastIndex = 0;
@@ -224,6 +225,41 @@
     return out + text.slice(at);
   }
 
+
+  function sameValue(f) { return f.type + ":" + f.text.replace(/[\s\-()]/g, "").toLowerCase(); }
+
+  /* redact(text, findings) -> {text, map, items}
+     Each detail becomes a numbered placeholder such as [IRD_1]. The same value always gets the same
+     placeholder, so an AI's answer still makes sense and the details can be put back afterwards. */
+  function redact(text, findings) {
+    var counters = {}, byValue = {}, map = {}, out = "", at = 0;
+    var items = findings.slice().sort(function (a, b) { return a.start - b.start; }).map(function (f) {
+      var key = sameValue(f);
+      if (!byValue[key]) {
+        var t = TYPES[f.type].token;
+        counters[t] = (counters[t] || 0) + 1;
+        byValue[key] = "[" + t + "_" + counters[t] + "]";
+        map[byValue[key]] = f.text;
+      }
+      return Object.assign({}, f, { token: byValue[key] });
+    });
+    items.forEach(function (f) { out += text.slice(at, f.start) + f.token; at = f.end; });
+    return { text: out + text.slice(at), map: map, items: items };
+  }
+
+  /* restore(text, map) -> {text, restored, unknown}
+     Puts the original details back into text that contains the placeholders, such as an AI's reply. */
+  function restore(text, map) {
+    var restored = 0, unknown = [];
+    var out = String(text).replace(/\[\s*([A-Za-z_]+_\d+)\s*\]/g, function (whole, inner) {
+      var token = "[" + inner.toUpperCase() + "]";
+      if (Object.prototype.hasOwnProperty.call(map, token)) { restored++; return map[token]; }
+      unknown.push(whole);
+      return whole;
+    });
+    return { text: out, restored: restored, unknown: unknown };
+  }
+
   return {
     TYPES: TYPES,
     irdIsValid: irdIsValid,
@@ -231,6 +267,9 @@
     bankIsValid: bankIsValid,
     luhnIsValid: luhnIsValid,
     scan: scan,
-    clean: clean
+    clean: clean,
+    redact: redact,
+    restore: restore,
+    GROUPS: GROUPS
   };
 });

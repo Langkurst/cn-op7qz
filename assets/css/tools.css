@@ -1,0 +1,305 @@
+/*
+  Product styles for the two tools (privacy checker and invoice checker).
+  Desktop app sizing: 14 to 15 px text, 36 px controls, hairline borders, colour means a state only.
+  Uses the colour tokens from site.css, so both themes work.
+*/
+
+/* ---------- page intro ---------- */
+.tool-intro { display: grid; gap: 1.75rem; padding: clamp(2.25rem, 5vw, 3.5rem) 0 1.75rem; align-items: end; }
+.tool-intro h1 { font-size: clamp(2.6rem, 6vw, 4rem); }
+.tool-lede { color: var(--muted); font-size: 1.1rem; max-width: 40rem; margin-top: .9rem; }
+.trust { display: grid; gap: .55rem; font-size: .9rem; color: var(--muted); }
+.trust li { display: flex; gap: .65rem; align-items: flex-start; }
+.trust strong { color: var(--text); font-weight: 600; }
+.trust-icon { flex: none; display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--surface); border: 1px solid var(--line); color: var(--accent); }
+.trust-icon svg, .app svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.app-note { padding: 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+
+/* ---------- the app window ---------- */
+.app { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow-lg); overflow: hidden; font-size: .9rem; line-height: 1.5; }
+.js .app.needs-js { display: block; }
+.app h2, .app h3 { font-family: var(--sans); letter-spacing: -.01em; }
+.app-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; padding: .6rem .75rem; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.app-actions { display: flex; align-items: center; gap: .6rem; margin-left: auto; }
+
+.seg { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+.seg button {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 2.15rem; padding: 0 .8rem; border: 0; border-radius: 7px;
+  background: transparent; color: var(--muted); font: 550 .84rem/1 var(--sans); cursor: pointer; white-space: nowrap;
+}
+.seg button:hover { color: var(--text); }
+.seg button[aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 0 0 1px var(--line); }
+.seg-n { display: inline-grid; place-items: center; width: 1.15rem; height: 1.15rem; border-radius: 50%; font-size: .68rem; font-weight: 700; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
+.seg button[aria-selected="true"] .seg-n { background: var(--btn); color: var(--btn-ink); border-color: var(--btn); }
+
+.status-pill { font-size: .8rem; font-weight: 550; padding: .2rem .65rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: var(--surface); white-space: nowrap; }
+.status-pill.is-done { color: var(--ok); background: var(--ok-bg); border-color: color-mix(in srgb, var(--ok) 35%, transparent); }
+.status-pill.is-warn { color: var(--check); background: var(--check-bg); border-color: color-mix(in srgb, var(--check) 35%, transparent); }
+
+.ui-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .45rem; min-height: 2.25rem; padding: 0 .85rem;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text);
+  font: 550 .84rem/1 var(--sans); cursor: pointer; white-space: nowrap; text-decoration: none;
+}
+.ui-btn:hover { border-color: var(--line-strong); }
+.ui-btn-primary { background: var(--btn); border-color: var(--btn); color: var(--btn-ink); }
+.ui-btn-primary:hover { border-color: var(--btn); background: color-mix(in srgb, var(--btn) 88%, var(--bg)); }
+.ui-btn-ghost { border-color: transparent; background: transparent; color: var(--muted); }
+.ui-btn-ghost:hover { background: var(--surface-2); border-color: transparent; color: var(--text); }
+.ui-btn-good { background: var(--ok); border-color: var(--ok); color: var(--surface); }
+.ui-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.app-body { display: grid; }
+.app-main { min-width: 0; }
+.panel-tools { display: flex; align-items: center; justify-content: space-between; gap: .5rem; min-height: 2.9rem; padding: .35rem .6rem .35rem 1.1rem; border-bottom: 1px solid var(--line); }
+.panel-tools-split { border-top: 1px solid var(--line); }
+.panel-tools-end { display: flex; gap: .25rem; }
+.panel-label { font-size: .8rem; font-weight: 600; color: var(--muted); }
+
+.app-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1.5rem; padding: .6rem 1.1rem; border-top: 1px solid var(--line); background: var(--surface-2); color: var(--muted); font-size: .78rem; }
+.foot-lock { display: inline-flex; align-items: center; gap: .4rem; }
+.foot-lock svg { width: .9rem; height: .9rem; }
+
+/* ---------- editor with highlights drawn behind the text ---------- */
+.editor { position: relative; font: 400 .95rem/1.75 var(--sans); }
+.editor:focus-within { box-shadow: inset 0 0 0 2px var(--accent); }
+.editor-backdrop, .editor-input {
+  padding: 1.25rem 1.4rem; letter-spacing: normal; word-spacing: normal; tab-size: 4;
+  /* Both layers must draw every glyph at the same width, or the highlights drift from the words. */
+  font-family: var(--sans); font-size: .95rem; line-height: 1.75; font-weight: 400;
+  font-feature-settings: normal; font-variant: normal; font-kerning: normal; text-rendering: auto;
+}
+.editor-backdrop { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.editor-marks { white-space: pre-wrap; overflow-wrap: break-word; color: transparent; }
+.editor-input {
+  position: relative; z-index: 1; display: block; width: 100%; min-height: 21rem; margin: 0; border: 0; outline: none; resize: none; overflow: hidden;
+  background: transparent; color: var(--text); font: inherit; white-space: pre-wrap; overflow-wrap: break-word; caret-color: var(--text);
+}
+.editor-input::placeholder { color: var(--muted); opacity: 1; }
+.editor-plain .editor-input { min-height: 8rem; }
+
+.g-id { --hc: var(--check); --hb: var(--check-bg); }
+.g-money { --hc: var(--note); --hb: var(--note-bg); }
+.g-contact { --hc: var(--ok); --hb: var(--ok-bg); }
+/* No padding, margin or border on highlights: any extra width pushes every later highlight off its word. */
+.editor-marks mark { padding: 0; margin: 0; border: 0; font: inherit; letter-spacing: inherit; }
+mark.hl { color: transparent; background: var(--hb); border-radius: 3px; box-shadow: 0 0 0 2px var(--hb), inset 0 -2px 0 color-mix(in srgb, var(--hc) 60%, transparent); }
+mark.hl.is-kept { background: transparent; box-shadow: inset 0 -1px 0 var(--line-strong); }
+
+.doc { min-height: 21rem; padding: 1.25rem 1.4rem; font: 400 .95rem/1.85 var(--sans); white-space: pre-wrap; overflow-wrap: break-word; }
+#restored.doc { min-height: 8rem; }
+.doc:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--accent); border-radius: 0; }
+.doc-empty, .doc-note { color: var(--muted); font-size: .85rem; white-space: normal; }
+.doc-note { margin-top: 1rem; padding-top: .75rem; border-top: 1px dashed var(--line); }
+.tok {
+  display: inline-block; padding: 0 .4rem; border-radius: 5px; line-height: 1.55; vertical-align: baseline;
+  font: 600 .74rem/1.55 var(--mono); letter-spacing: .02em; color: var(--hc); background: var(--hb);
+  border: 1px solid color-mix(in srgb, var(--hc) 30%, transparent);
+}
+.tok-sm { font-size: .68rem; padding: 0 .3rem; }
+mark.back { color: var(--text); background: var(--ok-bg); border-radius: 3px; box-shadow: 0 0 0 2px var(--ok-bg); }
+
+/* ---------- findings panel ---------- */
+.app-side { padding: .9rem 1.1rem 1.1rem; background: var(--surface); border-top: 1px solid var(--line); }
+.side-head { display: flex; align-items: center; gap: .5rem; }
+.side-head h2 { font-size: .95rem; font-weight: 650; }
+.side-count { font-size: .75rem; font-weight: 650; padding: .05rem .5rem; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); color: var(--muted); }
+.side-hint { color: var(--muted); font-size: .78rem; margin: .25rem 0 0; }
+.side-empty { color: var(--muted); font-size: .85rem; margin-top: 1rem; }
+.grp { margin-top: 1rem; }
+.grp-head { display: flex; align-items: center; gap: .45rem; font-size: .75rem; font-weight: 650; color: var(--muted); margin-bottom: .2rem; }
+.grp-dot { width: .5rem; height: .5rem; border-radius: 50%; background: var(--hc); }
+.grp-n { margin-left: auto; font-weight: 600; }
+.hit { display: flex; gap: .75rem; align-items: flex-start; justify-content: space-between; padding: .65rem 0; border-top: 1px solid var(--line); }
+.hit-body { display: grid; gap: .15rem; min-width: 0; }
+.hit-top { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.hit-label { font-size: .84rem; font-weight: 600; }
+.hit-value { font: 500 .8rem/1.4 var(--mono); color: var(--text); overflow-wrap: anywhere; }
+.hit-why { font-size: .74rem; color: var(--muted); line-height: 1.4; }
+.hit.is-kept .hit-body { opacity: .5; }
+.kept-pill { font-size: .68rem; font-weight: 650; padding: 0 .4rem; border-radius: 5px; color: var(--muted); border: 1px dashed var(--line-strong); }
+.editor-plain .editor-input { min-height: 7.5rem; }
+
+.switch { flex: none; position: relative; width: 2.1rem; height: 1.25rem; margin-top: .1rem; border: 0; border-radius: 999px; background: var(--line-strong); cursor: pointer; transition: background-color .15s ease; }
+.switch::after { content: ""; position: absolute; top: .15rem; left: .15rem; width: .95rem; height: .95rem; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 2px rgba(0, 0, 0, .25); transition: transform .15s ease; }
+.switch[aria-checked="true"] { background: var(--accent); }
+.switch[aria-checked="true"]::after { transform: translateX(.85rem); }
+
+/* ---------- invoice checker ---------- */
+/* The invoice app is wider than the text column: three panes need the room. Never wider than the screen. */
+.app-wide { margin-inline: min(0px, calc(50% - min(50vw - 1.5rem, 42rem))); }
+.app-title { display: flex; align-items: baseline; gap: .6rem; padding-left: .4rem; }
+.app-title strong { font-size: .95rem; font-weight: 650; }
+.app-title .muted { font-size: .8rem; }
+.tol { display: inline-flex; align-items: center; gap: .4rem; font-size: .8rem; color: var(--muted); font-weight: 550; }
+.tol input { width: 3.2rem; min-height: 2rem; padding: 0 .5rem; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); color: var(--text); font: 550 .84rem/1 var(--sans); text-align: right; font-variant-numeric: tabular-nums; }
+.tol input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.tol input[aria-invalid="true"] { border-color: var(--check); }
+.status-pill.is-held { color: var(--text); background: var(--surface-2); border-style: dashed; border-color: var(--line-strong); }
+.status-pill.is-note { color: var(--note); background: var(--note-bg); border-color: color-mix(in srgb, var(--note) 35%, transparent); }
+
+/* minmax(0, 1fr): without it the scrolling inbox strip on phones stretches the column past the screen. */
+/* min-height holds the space the script fills, so nothing below jumps when the bills appear.
+   40rem is shorter than the shortest bill at any width (683 px at 1440 wide), so it never adds a gap. */
+.inv-body { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 40rem; }
+.ico { flex: none; display: inline-grid; place-items: center; width: 1.1rem; height: 1.1rem; }
+.app .ico svg { width: 1.05rem; height: 1.05rem; stroke-width: 2; }
+.ico-ok { color: var(--ok); }
+.ico-check { color: var(--check); }
+.ico-note { color: var(--note); }
+
+/* Inbox */
+.inbox { background: var(--surface); border-bottom: 1px solid var(--line); }
+.inbox ul { display: flex; gap: .5rem; padding: .6rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.inbox li { flex: 0 0 15.5rem; scroll-snap-align: start; }
+.bill {
+  display: grid; gap: .45rem; width: 100%; padding: .7rem .8rem; text-align: left; cursor: pointer;
+  border: 1px solid transparent; border-radius: 10px; background: transparent; color: var(--text); font: inherit;
+}
+.bill:hover { background: var(--surface-2); }
+.bill.is-current { background: var(--surface-2); border-color: var(--line-strong); box-shadow: inset 3px 0 0 var(--accent); }
+.bill { gap: .15rem; }
+.bill-bottom { display: flex; align-items: center; justify-content: space-between; gap: .6rem; min-width: 0; margin-top: .35rem; }
+.bill-sup { font-weight: 600; font-size: .86rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bill-amt { font-weight: 650; font-size: .92rem; font-variant-numeric: tabular-nums; }
+.bill-no { color: var(--muted); font-size: .76rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bill .status-pill { font-size: .7rem; padding: .1rem .5rem; }
+
+/* The invoice, drawn as a sheet of paper on a desk */
+.inv-doc { min-width: 0; padding: 1.25rem; background: var(--bg); }
+.paper {
+  max-width: 46rem; margin: 0 auto; padding: 1.75rem 1.9rem 1.4rem; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 8px 24px -12px rgba(0, 0, 0, .18);
+  font-size: .86rem;
+}
+.paper-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; padding-bottom: 1.1rem; border-bottom: 2px solid var(--text); }
+.paper-sup { font-weight: 700; font-size: 1rem; letter-spacing: -.01em; }
+.paper-sub { color: var(--muted); font-size: .76rem; margin-top: .15rem; }
+.paper-title { font-family: var(--serif); font-size: 1.7rem; line-height: 1; white-space: nowrap; }
+.paper-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem 1.5rem; padding: 1rem 0 1.2rem; }
+.paper-meta div { display: grid; gap: .1rem; }
+.paper-meta dt { color: var(--muted); font-size: .7rem; font-weight: 650; text-transform: uppercase; letter-spacing: .06em; }
+.paper-meta dd { font-weight: 550; font-variant-numeric: tabular-nums; }
+
+.paper-lines { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.paper-lines th { padding: .45rem .5rem; border-bottom: 1px solid var(--line-strong); color: var(--muted); font-size: .7rem; font-weight: 650; text-transform: uppercase; letter-spacing: .06em; text-align: left; }
+.paper-lines td { padding: .5rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.paper-lines th:first-child, .paper-lines td:first-child { padding-left: 0; }
+.paper-lines th:last-child, .paper-lines td:last-child { padding-right: 0; }
+.paper-lines .n { text-align: right; white-space: nowrap; }
+.paper-lines tr.is-check td:first-child { box-shadow: inset 3px 0 0 var(--check); padding-left: .6rem; }
+.paper-lines tr.is-note td:first-child { box-shadow: inset 3px 0 0 var(--note); padding-left: .6rem; }
+.line-code { display: block; font: 600 .74rem/1.3 var(--mono); color: var(--muted); }
+.line-desc { display: block; line-height: 1.35; }
+.line-amt { font-weight: 600; }
+
+/* Numbers on the invoice look printed until you point at them, then show they can be edited. */
+.cell {
+  width: 100%; max-width: 6.5rem; min-height: 1.9rem; padding: 0 .4rem; margin: 0 -.4rem 0 0;
+  border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--text);
+  font: 550 .86rem/1 var(--sans); font-variant-numeric: tabular-nums; text-align: right;
+  border-bottom-style: dashed; border-bottom-color: var(--line-strong);
+}
+.cell:hover { border-color: var(--line-strong); background: var(--surface-2); }
+.cell:focus { outline: none; border-style: solid; border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+.cell[aria-invalid="true"] { border-color: var(--check); border-style: solid; background: var(--check-bg); }
+.paper-lines td:nth-child(2) .cell { max-width: 4.5rem; }
+.cell-text { max-width: 9rem; text-align: left; margin: 0 0 0 -.4rem; font-weight: 550; }
+
+.paper-totals { display: grid; gap: .1rem; width: min(100%, 17rem); margin: .9rem 0 0 auto; font-variant-numeric: tabular-nums; }
+.paper-totals div { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .15rem 0; }
+.paper-totals dt { color: var(--muted); }
+.paper-totals dd { flex: 0 0 7rem; text-align: right; }
+.paper-totals .is-total { margin-top: .35rem; padding-top: .55rem; border-top: 2px solid var(--text); }
+.paper-totals .is-total dt { color: var(--text); font-weight: 650; }
+.paper-totals .is-total .cell { font-size: 1rem; font-weight: 700; }
+.paper-hint { margin-top: 1.4rem; padding-top: .8rem; border-top: 1px dashed var(--line); color: var(--muted); font-size: .76rem; }
+
+/* Match panel */
+.inv-panel { padding: 1rem 1.1rem 1.2rem; background: var(--surface); border-top: 1px solid var(--line); }
+.verdict-box { display: flex; gap: .7rem; align-items: flex-start; padding: .85rem .9rem; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); }
+.verdict-box .ico { width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--surface); border: 1px solid currentColor; }
+.verdict-box .ico svg { width: .95rem; height: .95rem; }
+.v-check { background: var(--check-bg); border-color: color-mix(in srgb, var(--check) 35%, transparent); }
+.v-notes { background: var(--note-bg); border-color: color-mix(in srgb, var(--note) 35%, transparent); }
+.v-ok { background: var(--ok-bg); border-color: color-mix(in srgb, var(--ok) 35%, transparent); }
+.v-head { font-weight: 650; font-size: .92rem; line-height: 1.35; }
+.v-sub { color: var(--muted); font-size: .8rem; margin-top: .15rem; }
+
+.pn-h { margin: 1.25rem 0 .45rem; font-size: .72rem !important; font-weight: 650; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+.cmp-wrap { overflow-x: auto; }
+.cmp { width: 100%; border-collapse: collapse; font-size: .8rem; font-variant-numeric: tabular-nums; }
+.cmp th { padding: .35rem .4rem; color: var(--muted); font-size: .72rem; font-weight: 600; text-align: left; border-bottom: 1px solid var(--line-strong); }
+.cmp td { padding: .45rem .4rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cmp th:first-child, .cmp td:first-child { padding-left: 0; }
+.cmp th:last-child, .cmp td:last-child { padding-right: 0; }
+.cmp .n { text-align: right; white-space: nowrap; }
+.cmp-item { display: inline-flex; align-items: center; gap: .35rem; }
+.cmp-code { font: 600 .74rem/1.3 var(--mono); white-space: nowrap; }
+.cmp tr.st-ok td:not(:first-child) { color: var(--muted); }
+.cmp-diff { font-weight: 600; }
+.cmp-diff.up { color: var(--check); }
+.cmp-diff.down { color: var(--note); }
+
+.checks li { display: grid; grid-template-columns: auto 6.2rem minmax(0, 1fr); align-items: center; gap: .5rem; padding: .4rem 0; border-bottom: 1px solid var(--line); font-size: .82rem; }
+.ck-name { font-weight: 600; }
+.ck-detail { color: var(--muted); font-size: .78rem; text-align: right; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.checks li.is-bad .ck-detail { color: var(--check); font-weight: 550; }
+
+.issues { display: grid; gap: .5rem; }
+.issues li { padding: .65rem .75rem; border-radius: 8px; border: 1px solid var(--line); border-left: 3px solid var(--check); background: var(--surface); }
+.issues li.sev-note { border-left-color: var(--note); }
+.issue-tag { display: inline-block; font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--check); }
+.sev-note .issue-tag { color: var(--note); }
+.issue-title { font-weight: 600; font-size: .85rem; margin-top: .1rem; }
+.issue-detail { color: var(--muted); font-size: .79rem; margin-top: .15rem; line-height: 1.45; }
+
+.decide { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.decide .ui-btn { min-height: 2.5rem; }
+.decide .ui-btn[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--accent); }
+.decide-note { color: var(--muted); font-size: .74rem; margin-top: .5rem; text-align: center; }
+
+@media (min-width: 56rem) {
+  .inv-body { grid-template-columns: minmax(0, 1fr) 23rem; }
+  .inbox { grid-column: 1 / -1; }
+  .inbox ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .35rem; overflow: visible; }
+  .inv-panel { border-top: 0; border-left: 1px solid var(--line); }
+}
+@media (min-width: 78rem) {
+  .inv-body { grid-template-columns: 16rem minmax(0, 1fr) 24rem; }
+  .inbox { grid-column: auto; border-bottom: 0; border-right: 1px solid var(--line); }
+  .inbox ul { display: grid; gap: .25rem; padding: .6rem; overflow: visible; }
+  .inv-doc { padding: 1.75rem; }
+}
+@media (max-width: 35rem) {
+  .inv-doc { padding: .75rem; }
+  .paper { padding: 1.1rem 1rem 1rem; }
+  .paper-title { font-size: 1.3rem; }
+  .paper-lines th:nth-child(4), .paper-lines td:nth-child(4) { display: none; }
+  .tol { margin-right: auto; }
+  .cmp td.n:not(.cmp-diff) { white-space: normal; }
+  .checks li { grid-template-columns: auto 5.5rem minmax(0, 1fr); }
+}
+
+/* ---------- notes under the tool ---------- */
+.tool-notes { display: grid; gap: 2rem; margin-top: 3rem; }
+.tool-notes h2 { font-family: var(--sans); font-size: 1rem; font-weight: 650; margin-bottom: .6rem; }
+.tool-notes li, .tool-notes p { color: var(--muted); font-size: .92rem; }
+.tool-notes li { padding: .35rem 0; border-bottom: 1px solid var(--line); }
+.tool-notes strong { color: var(--text); font-weight: 600; }
+
+@media (min-width: 56rem) {
+  .tool-intro { grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); gap: 3rem; }
+  .app-body { grid-template-columns: minmax(0, 1fr) 20rem; }
+  .app-main { border-right: 1px solid var(--line); }
+  .app-side { border-top: 0; }
+  .tool-notes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+}
+@media (max-width: 35rem) {
+  .seg { width: 100%; }
+  .seg button { flex: 1; justify-content: center; padding: 0 .4rem; font-size: .78rem; }
+  .seg-n { display: none; }
+  .app-actions { width: 100%; justify-content: space-between; }
+  .editor-backdrop, .editor-input, .doc { padding: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) { .switch, .switch::after { transition: none; } }
