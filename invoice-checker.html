@@ -17,28 +17,29 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
-  <link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/ledger/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/ledger/instrument-serif-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/ledger/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/ledger/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <script src="assets/js/theme.js"></script>
   <link rel="stylesheet" href="assets/css/system.css">
   <link rel="stylesheet" href="assets/css/invoice.css">
 </head>
-<body>
+<body class="ledger-page">
   <a class="skip" href="#app">Skip to the invoice checker</a>
 
-  <header class="top">
-    <div class="frame top-inner">
+  <header class="masthead">
+    <div class="frame masthead-inner">
       <a class="brand" href="invoice-checker.html" aria-current="page">
-        <span class="brand-mark" aria-hidden="true"><svg class="i"><use href="assets/img/icons.svg#file-text"/></svg></span>
-        <span>Invoice checker</span>
+        <span class="brand-name">Invoice checker</span>
         <span class="brand-by">by Christopher Nottle</span>
       </a>
-      <nav class="top-nav" aria-label="Site">
+      <nav class="site-nav" aria-label="Site">
         <a href="index.html#work">Portfolio</a>
         <a href="privacy-checker.html">NZ Redact</a>
         <a href="#rules">The rules</a>
       </nav>
-      <div class="top-end">
+      <div class="masthead-end">
         <button type="button" class="icon-btn" id="theme" aria-label="Switch to dark theme"><svg class="i"><use href="assets/img/icons.svg#moon"/></svg></button>
         <a class="btn" href="index.html#contact">Contact</a>
       </div>
@@ -47,30 +48,34 @@
 
   <main id="main">
     <div class="print-only" id="print-head"></div>
-    <section class="hero frame" aria-labelledby="hero-h">
-      <p class="kicker"><span class="dot" aria-hidden="true"></span>Demo with made-up bills</p>
-      <h1 id="hero-h">Check every bill against its order before it is paid.</h1>
-      <p class="lede">Matching supplier invoices to purchase orders was part of my job as a Purchaser at Häfele. This demo does the matching line by line, checks the invoice against Inland Revenue's tax invoice rules, and says what a person needs to look at.</p>
-      <ul class="assure" aria-label="What it checks">
-        <li><svg class="i"><use href="assets/img/icons.svg#scale"/></svg><span><strong>Line by line.</strong> Price, quantity, missing and extra lines, GST and totals.</span></li>
-        <li><svg class="i"><use href="assets/img/icons.svg#shield-check"/></svg><span><strong>Tax invoice rules.</strong> GST number with a valid check digit, the date, and your details over $1,000.</span></li>
-        <li><svg class="i"><use href="assets/img/icons.svg#lock"/></svg><span><strong>Nothing leaves the page.</strong> Plain rules, no AI, and 62 automated tests.</span></li>
-      </ul>
+    <section class="intro frame" aria-labelledby="hero-h">
+      <p class="label">Demo with made-up bills</p>
+      <h1 id="hero-h">Each invoice is matched to its purchase order, <em>line by line.</em></h1>
+      <div class="intro-grid">
+        <p class="lede">Matching supplier invoices to purchase orders was part of my job as a Purchaser at Häfele. This demo also checks each invoice against Inland Revenue's tax invoice rules, and lists what a person needs to look at before it is paid.</p>
+        <dl class="facts" aria-label="What it checks">
+          <div><dt>Against the order</dt><dd>Price, quantity, missing and extra lines, GST and totals.</dd></div>
+          <div><dt>Tax invoice rules</dt><dd>GST number with a valid check digit, the date, and your details over $1,000.</dd></div>
+          <div><dt>Nothing leaves the page</dt><dd>Plain rules, no AI, and 70 automated tests.</dd></div>
+        </dl>
+      </div>
     </section>
 
     <div class="frame">
       <noscript><p class="note">This demo needs JavaScript. It runs entirely in your browser.</p></noscript>
 
-      <section class="window app" id="app" aria-label="Invoice checker">
+      <section class="ledger app" id="app" aria-label="Invoice checker">
         <div class="app-bar">
-          <div class="app-title"><svg class="i"><use href="assets/img/icons.svg#inbox"/></svg><strong>Bills to pay</strong><span id="inbox-summary"></span></div>
+          <div class="app-title"><strong>Bills to pay</strong><span id="inbox-summary"></span></div>
           <div class="bar-end">
             <label class="tol" for="tolerance">Price tolerance <input id="tolerance" type="text" inputmode="decimal" value="0" aria-describedby="tol-help"><span aria-hidden="true">%</span></label>
             <label class="tol" for="tolerance-cents">Ignore differences under <input id="tolerance-cents" type="text" inputmode="decimal" value="5" aria-describedby="tol-help"> cents</label>
             <span class="visually-hidden" id="tol-help">A price difference inside either tolerance is noted but does not hold the bill.</span>
-            <button type="button" class="btn btn-ghost" id="keys-open" aria-haspopup="dialog"><span>Shortcuts</span></button>
-            <button type="button" class="btn btn-ghost" id="reset"><svg class="i"><use href="assets/img/icons.svg#rotate-ccw"/></svg><span>Reset</span></button>
-            <button type="button" class="btn btn-ink" id="new-check" aria-haspopup="dialog"><svg class="i"><use href="assets/img/icons.svg#plus"/></svg><span>New check</span></button>
+            <span class="bar-buttons">
+              <button type="button" class="btn btn-ghost" id="keys-open" aria-haspopup="dialog"><span>Shortcuts</span></button>
+              <button type="button" class="btn btn-ghost" id="reset"><svg class="i"><use href="assets/img/icons.svg#rotate-ccw"/></svg><span>Reset</span></button>
+              <button type="button" class="btn" id="new-check" aria-haspopup="dialog"><svg class="i"><use href="assets/img/icons.svg#plus"/></svg><span>New check</span></button>
+            </span>
           </div>
         </div>
 
@@ -147,38 +152,38 @@
       </dialog>
     </div>
 
-    <section class="section frame" id="rules" aria-labelledby="rules-h">
-      <div class="section-head">
-        <p class="label-mono">The rules</p>
-        <h2 id="rules-h">What holds a bill, and what is only a note</h2>
-      </div>
-      <div class="grid-cards">
-        <div>
-          <h3>Against the order</h3>
-          <ul>
-            <li><strong>Order number and supplier</strong> must match the purchase order.</li>
-            <li><strong>A higher price</strong> holds the bill. A lower one is a note.</li>
-            <li><strong>More than ordered</strong> holds the bill. Fewer is a note, as the rest may come later.</li>
-            <li><strong>Extra or repeated lines</strong> hold the bill. A missing line is a note.</li>
-            <li><strong>A possible duplicate</strong> holds the bill: the same supplier with the same invoice number, or the same total within 5 days.</li>
-            <li><strong>Small price differences</strong> are a note when they are under the cents tolerance or inside the percent tolerance.</li>
-          </ul>
+    <section class="rules frame" id="rules" aria-labelledby="rules-h">
+      <p class="label">The rules</p>
+      <h2 id="rules-h">What holds a bill, and what is only a note</h2>
+      <div class="rules-grid">
+        <div class="rules-main">
+          <div class="rule-block">
+            <h3>Against the order</h3>
+            <ul>
+              <li><strong>Order number and supplier</strong> must match the purchase order.</li>
+              <li><strong>A higher price</strong> holds the bill. A lower one is a note.</li>
+              <li><strong>More than ordered</strong> holds the bill. Fewer is a note, as the rest may come later.</li>
+              <li><strong>Extra or repeated lines</strong> hold the bill. A missing line is a note.</li>
+              <li><strong>A possible duplicate</strong> holds the bill: the same supplier with the same invoice number, or the same total within 5 days.</li>
+              <li><strong>Small price differences</strong> are a note when they are under the cents tolerance or inside the percent tolerance.</li>
+            </ul>
+          </div>
+          <div class="rule-block">
+            <h3>Tax invoice rules</h3>
+            <ul>
+              <li><strong>GST</strong> must be 15% of the subtotal, to within a cent, and the <strong>totals</strong> must add up.</li>
+              <li><strong>Over $200:</strong> the supplier's GST number, which must pass the IRD check digit.</li>
+              <li><strong>Over $1,000:</strong> your business name and one identifier, such as an address or NZBN.</li>
+              <li><strong>Every invoice:</strong> the date it was issued.</li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <h3>Tax invoice rules</h3>
-          <ul>
-            <li><strong>GST</strong> must be 15% of the subtotal, to within a cent, and the <strong>totals</strong> must add up.</li>
-            <li><strong>Over $200:</strong> the supplier's GST number, which must pass the IRD check digit.</li>
-            <li><strong>Over $1,000:</strong> your business name and one identifier, such as an address or NZBN.</li>
-            <li><strong>Every invoice:</strong> the date it was issued.</li>
-          </ul>
-        </div>
-        <div>
+        <div class="rules-side">
           <h3>What it does not do</h3>
           <ul>
             <li>It does not check the goods receipt, so it is a two-way match, not a three-way match.</li>
             <li>It does not read PDF invoices. The numbers are typed in.</li>
-            <li>Money is held in whole cents, so the sums are exact. 62 automated tests cover the rules, the extra features and every sample bill.</li>
+            <li>Money is held in whole cents, so the sums are exact. 70 automated tests cover the rules, the extra features and every sample bill.</li>
           </ul>
         </div>
       </div>
