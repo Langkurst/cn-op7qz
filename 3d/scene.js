@@ -16,7 +16,8 @@ const IN = { x: 0, z: 0 };     // the pile still to check
 const OUT = { x: 1.7, z: 0.34 };  // the checked pile
 const STAMP = [0.08, 0.30];    // part of the scroll between two sheets where the stamp lands
 const FILE = [0.34, 0.96];     // part where the sheet is lifted across
-const SANS = '"Geist", "Segoe UI", system-ui, -apple-system, Arial, sans-serif';
+const SANS = '"Inter", "Segoe UI", system-ui, -apple-system, Arial, sans-serif';
+const SERIF = '"Instrument Serif", Georgia, serif';
 const MONO = '"Geist Mono", ui-monospace, Consolas, monospace';
 
 const clamp01 = (v) => Math.min(Math.max(v, 0), 1);
@@ -80,9 +81,9 @@ function paperTexture(p, i, n, aniso) {
 
   let y = 290;
   g.fillStyle = "#141413";
-  g.font = `650 84px ${SANS}`;
-  spacing(g, -3);
-  for (const l of wrap(g, p.title, TW)) { g.fillText(l, M, y); y += 90; }
+  g.font = `400 104px ${SERIF}`;
+  spacing(g, -1);
+  for (const l of wrap(g, p.title, TW)) { g.fillText(l, M, y); y += 96; }
   spacing(g, 0);
   y += 26;
   g.fillStyle = "#2c2a26";
@@ -108,7 +109,7 @@ function paperTexture(p, i, n, aniso) {
   if (p.rows.length) {                        // ruled rows: label on the left, value on the right
     y += 18;
     for (const [a, b] of p.rows) {
-      g.fillStyle = "#3a3732";
+      g.fillStyle = "#26241f";
       g.font = `500 40px ${SANS}`;
       g.fillText(a || "", M, y);
       g.fillStyle = "#141413";
@@ -122,12 +123,12 @@ function paperTexture(p, i, n, aniso) {
     }
   }
   if (p.figure) {
-    g.fillStyle = "#1d5f67";
-    g.font = `650 88px ${SANS}`;
-    spacing(g, -3);
+    g.fillStyle = "#1c1b18";
+    g.font = `400 112px ${SERIF}`;
+    spacing(g, -1);
     const fl = wrap(g, p.figure, TW);
-    let fy = 1296 - (fl.length - 1) * 96;
-    for (const l of fl) { g.fillText(l, M, fy); fy += 96; }
+    let fy = 1300 - (fl.length - 1) * 104;
+    for (const l of fl) { g.fillText(l, M, fy); fy += 104; }
     spacing(g, 0);
   }
   g.fillStyle = "rgba(20,20,19,0.14)";
@@ -146,7 +147,7 @@ function stampTexture(aniso) {
   const c = document.createElement("canvas");
   c.width = 640; c.height = 240;
   const g = c.getContext("2d");
-  const ink = "rgba(29,127,114,0.95)";
+  const ink = "rgba(178,58,31,0.92)";   // stamp red, the one accent
   g.strokeStyle = ink;
   g.lineWidth = 14;
   g.beginPath();
@@ -286,7 +287,7 @@ export async function start(canvas) {
   const root = document.documentElement;
   // Draw the sheets only once the fonts are ready, so the printed text uses Geist, not a fallback.
   if (document.fonts && document.fonts.load) {
-    await Promise.all([`650 84px ${SANS}`, `400 40px ${SANS}`, `500 28px ${MONO}`].map((f) => document.fonts.load(f).catch(() => null)));
+    await Promise.all([`400 104px ${SERIF}`, `450 40px ${SANS}`, `500 28px ${MONO}`].map((f) => document.fonts.load(f).catch(() => null)));
   }
   const papers = readPapers();
   const n = papers.length;

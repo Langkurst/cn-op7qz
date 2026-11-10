@@ -17,28 +17,28 @@
   <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-  <link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <script src="assets/js/theme.js"></script>
   <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
   <a class="skip" href="#main">Skip to the main content</a>
-  <div class="page-lines" aria-hidden="true"></div>
 
   <header class="site-head">
     <div class="wrap">
-      <a class="site-name" href="#top"><span class="mark" aria-hidden="true">CN</span><span class="name-text">Christopher Nottle</span></a>
+      <a class="site-name" href="#top">Christopher Nottle</a>
       <nav class="site-nav" aria-label="Sections">
         <ul>
           <li><a href="#work">Work</a></li>
           <li><a href="#ai">How I work with AI</a></li>
           <li><a href="#experience">Experience</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
       <div class="head-end">
-        <button type="button" class="btn btn-quiet theme-toggle" data-theme-toggle>Dark theme</button>
-        <a class="btn btn-primary btn-small" href="#contact">Contact</a>
+        <button type="button" class="theme-toggle" data-theme-toggle>Dark theme</button>
       </div>
     </div>
   </header>
@@ -47,25 +47,31 @@
 
     <!-- ============ First screen: who, what, and the evidence ============ -->
     <section class="hero" id="top" aria-labelledby="hero-h">
+      <div class="wrap">
+        <h1 id="hero-h">Christopher Nottle</h1>
+      </div>
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="hero-place"><span class="dot-live" aria-hidden="true"></span><span class="name-kicker">Christopher Nottle</span> <span class="sep" aria-hidden="true">·</span> Auckland <span class="sep" aria-hidden="true">·</span> Available now</p>
-          <h1 id="hero-h">Careful, tested AI tools for the way a business really runs.</h1>
-          <p class="hero-text">I spent nearly seven years running purchasing in SAP at Häfele New Zealand, so I know how orders, suppliers and invoices really work. Now I build AI tools for that kind of work. I direct AI coding agents: they write the code, and I decide what gets built, set the rules and test it.</p>
+          <p class="hero-text">I spent nearly seven years running purchasing in SAP at Häfele New Zealand. Since October 2026 I have built four tools and products by directing AI coding agents. They write the code, and I decide what each one does and test it.</p>
+          <dl class="figures ledger">
+            <div><dt class="figure-n">NZ$500k</dt><dd>of orders placed in a busy fortnight at Häfele, at the most</dd></div>
+            <div><dt class="figure-n">4</dt><dd>public tools and products since October 2026</dd></div>
+            <div><dt class="figure-n">4,500+</dt><dd>automated tests across them</dd></div>
+            <div><dt class="figure-n">95%</dt><dd>of personal details found by NZ Redact in a blind test, before AI sees the text</dd></div>
+          </dl>
+          <p class="hero-place">Auckland, New Zealand. Available now.</p>
           <div class="reach">
-            <a class="btn btn-primary" href="#work">See the work</a>
-            <button type="button" class="btn needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email">Copy email</button>
-            <a class="btn" href="Christopher_Nottle_CV.pdf" download>CV (PDF)</a>
-            <a class="btn btn-quiet" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
+            <button type="button" class="btn btn-primary needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email">Copy email</button>
+            <span class="email" id="email">chris.a.nottle@gmail.com</span>
             <span class="visually-hidden" role="status" data-copy-status></span>
           </div>
-          <p class="email-line"><span class="email email-plain" id="email">chris.a.nottle@gmail.com</span></p>
+          <p class="text-links"><a href="Christopher_Nottle_CV.pdf" download>CV (PDF)</a> <a href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a> <a href="#work">The work</a></p>
         </div>
 
         <figure class="hero-visual">
           <!-- Drawn in HTML rather than a screenshot, so it stays sharp and readable at any size and in both themes. -->
           <div class="demo" aria-hidden="true">
-            <div class="demo-bar"><span class="dots"><i></i><i></i><i></i></span><span class="demo-title">NZ Redact</span><span class="demo-pill">6 details removed</span></div>
+            <div class="demo-bar"><span class="demo-title">NZ Redact</span><span class="demo-status">6 details removed</span></div>
             <div class="demo-body">
               <div class="demo-text">
                 <p class="demo-label">Your text</p>
@@ -92,23 +98,13 @@
         </figure>
       </div>
 
-      <div class="wrap">
-        <dl class="figures">
-          <div><dt class="figure-n">Nearly 7</dt><dd>years in SAP at Häfele: purchasing, suppliers and invoices</dd></div>
-          <div><dt class="figure-n">4</dt><dd>tools and products built by directing AI coding agents, all public</dd></div>
-          <div><dt class="figure-n">4,500+</dt><dd>automated tests across them</dd></div>
-          <div><dt class="figure-n">95%</dt><dd>of personal details found by NZ Redact in a blind test, before AI sees the text</dd></div>
-        </dl>
-      </div>
     </section>
 
     <!-- ============ Work ============ -->
     <section class="section" id="work" aria-labelledby="work-h">
       <div class="wrap">
         <div class="section-head" data-reveal>
-          <p class="eyebrow">Selected work</p>
-          <h2 id="work-h">Four projects, and what each shows an employer</h2>
-          <p>For each one: the problem, what I asked for, what the AI did, and the measured result.</p>
+          <h2 id="work-h">Work</h2>
         </div>
 
         <article class="case" data-reveal id="nz-redact" aria-labelledby="redact-h">
@@ -259,8 +255,7 @@
     <section class="section" id="ai" aria-labelledby="ai-h">
       <div class="wrap two-col">
         <div class="section-head" data-reveal>
-          <p class="eyebrow">How I work with AI</p>
-          <h2 id="ai-h">The AI drafts. I decide.</h2>
+          <h2 id="ai-h">How I work with AI</h2>
           <p class="rule">It does not buy, publish, send or permanently delete without my say. Passwords and keys stay out of logs and saved files.</p>
           <p class="gap-top">I use Claude and ChatGPT every day. Claude is connected to my Gmail, Google Calendar, Google Drive and 11 other services, and I have set up 10 saved skills for repeat work, such as release checklists and plain-English wording checks.</p>
         </div>
@@ -291,8 +286,7 @@
     <section class="section" id="experience" aria-labelledby="experience-h">
       <div class="wrap two-col">
         <div class="section-head" data-reveal>
-          <p class="eyebrow">Experience</p>
-          <h2 id="experience-h">Where I have worked</h2>
+          <h2 id="experience-h">Experience</h2>
           <p><a href="Christopher_Nottle_CV.pdf" download>Download the full CV (PDF)</a></p>
         </div>
         <div>
@@ -343,10 +337,9 @@
     <!-- ============ Straight answers ============ -->
     <section class="section section-tight" id="not-yet" aria-labelledby="not-yet-h">
       <div class="wrap">
-        <div class="panel-muted two-col" data-reveal>
+        <div class="panel-muted two-col">
           <div class="section-head" data-reveal>
             <h2 id="not-yet-h">What I have not done yet</h2>
-            <p>I would rather say these plainly.</p>
           </div>
           <ul class="plain-list">
             <li>I am not a developer. AI coding agents write the code. I decide what gets built, set the rules and test it.</li>
@@ -361,7 +354,7 @@
     <!-- ============ Contact ============ -->
     <section class="section" id="contact" aria-labelledby="contact-h">
       <div class="wrap">
-        <div class="band" data-reveal>
+        <div class="band">
           <div>
             <h2 id="contact-h">Contact</h2>
             <p class="contact-line">I am in Auckland and available now for remote, hybrid or on-site work. I am a New Zealand and British citizen.</p>
@@ -369,8 +362,8 @@
           <div class="reach">
             <span class="email" id="email-2">chris.a.nottle@gmail.com</span>
             <button type="button" class="btn btn-primary needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email-2">Copy email</button>
-            <a class="btn" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
-            <a class="btn" href="Christopher_Nottle_CV.pdf" download>Download CV (PDF)</a>
+            <a class="btn btn-quiet" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
+            <a class="btn btn-quiet" href="Christopher_Nottle_CV.pdf" download>CV (PDF)</a>
             <span class="visually-hidden" role="status" data-copy-status></span>
           </div>
         </div>
