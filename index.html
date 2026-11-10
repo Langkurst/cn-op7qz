@@ -174,14 +174,14 @@
         <div class="bento">
           <article class="card card-feature" aria-labelledby="privacy-h">
             <div class="feature-copy">
-              <h3 id="privacy-h">NZ privacy checker</h3>
-              <p>Paste a note before it goes into ChatGPT, Claude or another AI tool. It finds IRD, NHI, bank account, card, licence and passport numbers, phone numbers, emails and dates of birth, and gives you a cleaned copy.</p>
-              <p>It runs in your browser, and its security policy blocks it from connecting to anything. In Xero's May 2026 survey, 40% of New Zealand small businesses named data privacy and security as a reason they are not using AI, or not using it more.</p>
+              <h3 id="privacy-h">NZ Redact</h3>
+              <p>A free, open-source tool that takes New Zealand personal details out of text before it goes into an AI tool, then puts them back into the answer. It finds IRD, NHI, bank, card, licence and passport numbers, phones, emails, dates of birth, street addresses and labelled names.</p>
+              <p>The rules follow Inland Revenue's and Health New Zealand's own specifications. It runs on your device, works offline, and its security policy blocks it from connecting to anything. In Xero's May 2026 survey, 40% of New Zealand small businesses named data privacy and security as a reason they are not using AI, or not using it more.</p>
               <dl class="facts facts-tight">
-                <div><dt>6,000</dt><dd>IRD and bank cases that agree with python-stdnum</dd></div>
-                <div><dt>22</dt><dd>automated tests</dd></div>
+                <div><dt>95%</dt><dd>of numbers, dates, emails, phones and addresses found in a blind test</dd></div>
+                <div><dt>40</dt><dd>automated tests</dd></div>
               </dl>
-              <a class="btn btn-primary" href="privacy-checker.html">Open the privacy checker</a>
+              <p class="feature-links"><a class="btn btn-primary" href="https://langkurst.github.io/nz-redact/">Open NZ Redact</a> <a class="btn" href="https://github.com/Langkurst/nz-redact">Source on GitHub</a></p>
             </div>
             <div class="feature-demo" aria-hidden="true">
               <div class="mini-pane">
@@ -199,10 +199,10 @@
             <div class="feature-copy">
               <h3 id="invoice-h">Invoice checker</h3>
               <p>Matching supplier invoices to purchase orders was part of my job at Häfele. This demo checks each bill against its order, line by line, and says what a person must look at before it is paid.</p>
-              <p>It checks price, quantity, missing and extra lines, GST and totals. Every number on the invoice can be changed, and the result updates as you type. The suppliers and orders are made up.</p>
+              <p>It checks price, quantity, missing and extra lines, GST and totals, and Inland Revenue's tax invoice rules, including the supplier's GST number check digit. Every number on the invoice can be changed, and the review updates as you type. The suppliers and orders are made up.</p>
               <dl class="facts facts-tight">
                 <div><dt>4</dt><dd>sample bills, one that matches</dd></div>
-                <div><dt>29</dt><dd>automated tests</dd></div>
+                <div><dt>31</dt><dd>automated tests</dd></div>
               </dl>
               <a class="btn btn-primary" href="invoice-checker.html">Open the invoice checker</a>
             </div>

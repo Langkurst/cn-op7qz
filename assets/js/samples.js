@@ -2,6 +2,7 @@
   Sample orders and invoices for the checker demo.
   Everything here is made up: the suppliers, the order numbers, the items and the prices.
   Prices are in whole cents. To add a sample, copy one block and change the numbers.
+  GST numbers are made up but pass the IRD check digit, except SHI-7802's, which fails it on purpose.
   The tests in tests/matcher.test.js check what each sample should flag ("expect").
 */
 (function (root, factory) {
@@ -24,6 +25,7 @@
       },
       invoice: {
         number: "INV-20418", supplier: "Example Fittings Ltd", orderNumber: "4500012871",
+        gstNumber: "124-587-301", issued: "3 November 2026", due: "20 December 2026", buyer: { name: "Example Kitchens Ltd", identifier: "GST 112-345-671" },
         lines: [
           { code: "HNG-110", description: "Concealed hinge, 110 degree", qty: 200, unitCents: 285 },
           { code: "RUN-450", description: "Drawer runner, 450 mm, pair", qty: 60, unitCents: 1420 },
@@ -47,6 +49,7 @@
       },
       invoice: {
         number: "SHI-7731", supplier: "Sample Hardware Imports Ltd", orderNumber: "4500012904",
+        gstNumber: "136-900-420", issued: "5 November 2026", due: "20 December 2026", buyer: { name: "Example Kitchens Ltd", identifier: "GST 112-345-671" },
         lines: [
           { code: "RUN-500", description: "Drawer runner, 500 mm, pair", qty: 80, unitCents: 1610 },
           { code: "LED-2M", description: "LED strip, 2 m, warm white", qty: 60, unitCents: 1850 },
@@ -70,6 +73,7 @@
       },
       invoice: {
         number: "INV-20466", supplier: "Example Fittings Ltd", orderNumber: "4500012933",
+        gstNumber: "124-587-301", issued: "6 November 2026", due: "20 December 2026", buyer: { name: "Example Kitchens Ltd", identifier: "GST 112-345-671" },
         lines: [
           { code: "HNG-110", description: "Concealed hinge, 110 degree", qty: 300, unitCents: 285 },
           { code: "HDL-160", description: "Bar handle, 160 mm, matt black", qty: 100, unitCents: 710 },
@@ -92,13 +96,14 @@
       },
       invoice: {
         number: "SHI-7802", supplier: "Sample Hardware Imports Ltd", orderNumber: "4500012985",
+        gstNumber: "136-900-425", issued: "7 November 2026", due: "20 December 2026", buyer: { name: "Example Kitchens Ltd", identifier: "GST 112-345-671" },
         lines: [
           { code: "RUN-450", description: "Drawer runner, 450 mm, pair", qty: 100, unitCents: 1420 },
           { code: "HNG-110", description: "Concealed hinge, 110 degree", qty: 500, unitCents: 285 }
         ],
         subtotalCents: 284500, gstCents: 39830, totalCents: 327175
       },
-      expect: ["order-number", "gst", "total"]
+      expect: ["order-number", "gst", "total", "tax-gst-number"]
     }
   ];
 });

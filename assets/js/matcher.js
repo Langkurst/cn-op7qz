@@ -12,6 +12,23 @@
 
   var GST_PERCENT = 15;      // New Zealand GST
   var GST_ROUNDING_CENTS = 1; // a supplier may round GST up or down by one cent
+  // Inland Revenue's taxable supply information rules (from 1 April 2023): what a tax invoice must show.
+  var TSI_GST_NUMBER_OVER_CENTS = 20000;   // over $200: the supplier's GST number
+  var TSI_BUYER_OVER_CENTS = 100000;       // over $1,000: the buyer's name and one identifier
+
+  // GST numbers use the IRD number check digit (Inland Revenue's 2026 to 2027 specification).
+  function gstNumberIsValid(raw) {
+    var n = String(raw).replace(/[\s-]/g, "");
+    if (!/^\d{8,9}$/.test(n)) return false;
+    var value = parseInt(n, 10);
+    if (value < 10000000 || value > 200000000) return false;
+    var body = n.slice(0, -1);
+    while (body.length < 8) body = "0" + body;
+    function digit(w) { var s = 0; for (var i = 0; i < 8; i++) s += w[i] * Number(body[i]); return ((-s % 11) + 11) % 11; }
+    var c = digit([3, 2, 7, 6, 5, 4, 3, 2]);
+    if (c === 10) c = digit([7, 4, 3, 2, 5, 2, 7, 6]);
+    return c !== 10 && String(c) === n[n.length - 1];
+  }
 
   // "1,234.50" or 1234.5 -> 123450. Returns NaN when the text is not a plain amount.
   function toCents(value) {
@@ -240,6 +257,28 @@
       }
     }
 
+    // 6. Tax invoice details (Inland Revenue's taxable supply information). Checked when the invoice
+    //    record carries these fields. Without them the GST on the invoice cannot be claimed back.
+    if ("gstNumber" in invoice && Number.isFinite(total)) {
+      var gstNo = String(invoice.gstNumber || "").trim();
+      if (total > TSI_GST_NUMBER_OVER_CENTS && !gstNo) {
+        add("tax-gst-number", "check", null, "No GST number on the invoice",
+          "Over $200, a tax invoice must show the supplier's GST number. Without it, the GST on this invoice cannot be claimed back. Ask the supplier for a corrected invoice.");
+      } else if (gstNo && !gstNumberIsValid(gstNo)) {
+        add("tax-gst-number", "check", null, "The GST number is not valid",
+          "GST numbers use the same check digit as IRD numbers, and " + gstNo + " fails it. It may be mistyped. Confirm it with the supplier before claiming the GST.");
+      }
+      if (!String(invoice.issued || "").trim()) {
+        add("tax-date", "check", null, "No invoice date", "A tax invoice must show the date it was issued.");
+      }
+      var buyer = invoice.buyer || {};
+      if (total > TSI_BUYER_OVER_CENTS && !(options && options.buyerNotGstRegistered) &&
+          (!String(buyer.name || "").trim() || !String(buyer.identifier || "").trim())) {
+        add("tax-buyer", "check", null, "Your details are missing",
+          "Over $1,000, a tax invoice to a GST-registered business must show the buyer's name and one identifier, such as an address, phone number, NZBN or GST number.");
+      }
+    }
+
     // Checks first, then notes. Within each, the order they were found in.
     var sorted = findings.filter(function (f) { return f.severity === "check"; })
       .concat(findings.filter(function (f) { return f.severity === "note"; }));
@@ -268,6 +307,7 @@
     formatMoney: formatMoney,
     formatQuantity: formatQuantity,
     lineTotalCents: lineTotalCents,
+    gstNumberIsValid: gstNumberIsValid,
     check: check
   };
 });

@@ -234,7 +234,8 @@ test("checking does not change the order or the invoice", () => {
 });
 
 test("every rule has the severity the page says it has", () => {
-  const HOLD = ["order-number", "supplier", "invalid-number", "duplicate-line", "extra-line", "quantity-over", "price-higher", "subtotal", "gst", "total"];
+  const HOLD = ["order-number", "supplier", "invalid-number", "duplicate-line", "extra-line", "quantity-over", "price-higher", "subtotal", "gst", "total",
+    "tax-gst-number", "tax-date", "tax-buyer"];
   const NOTE = ["quantity-short", "price-lower", "price-within-allowance", "missing-line"];
   const seen = {};
   const record = (r) => r.findings.forEach((f) => { (seen[f.rule] = seen[f.rule] || new Set()).add(f.severity); });
@@ -249,6 +250,9 @@ test("every rule has the severity the page says it has", () => {
   record(C.check(order, invoice, { priceTolerancePercent: 1 }));
   const two = pair(); two.invoice.subtotalCents = 11001; two.invoice.gstCents = 1650; two.invoice.totalCents = 12651;
   record(C.check(two.order, two.invoice));     // subtotal
+  const three = JSON.parse(JSON.stringify(samples[0]));
+  three.invoice.issued = ""; three.invoice.buyer = { name: "Example Kitchens Ltd", identifier: "" };
+  record(C.check(three.order, three.invoice)); // tax-date, tax-buyer
   for (const rule of HOLD) assert.deepEqual([...(seen[rule] || [])], ["check"], rule);
   for (const rule of NOTE) assert.deepEqual([...(seen[rule] || [])], ["note"], rule);
   assert.deepEqual(Object.keys(seen).sort(), [...HOLD, ...NOTE].sort());
@@ -267,4 +271,29 @@ test("the figures quoted on the home page match the second sample", () => {
   assert.equal(find(r, "price-higher").amountCents, 4000);
   assert.equal(find(r, "quantity-over").amountCents, 18500);
   assert.equal(r.queryCents, 22500);
+});
+
+test("tax invoice details: Inland Revenue's thresholds and the GST number check digit", () => {
+  const base = () => JSON.parse(JSON.stringify(samples[0]));
+  const rulesOf = (s, opt) => C.check(s.order, s.invoice, opt).findings.map((f) => f.rule).filter((r) => r.startsWith("tax-"));
+  assert.deepEqual(rulesOf(base()), [], "the matching sample has everything a tax invoice needs");
+  const noGst = base(); noGst.invoice.gstNumber = "";
+  assert.deepEqual(rulesOf(noGst), ["tax-gst-number"]);
+  const bad = base(); bad.invoice.gstNumber = "124-587-302";
+  assert.deepEqual(rulesOf(bad), ["tax-gst-number"]);
+  assert.match(C.check(bad.order, bad.invoice).findings[0].detail, /124-587-302 fails it/);
+  const noBuyer = base(); delete noBuyer.invoice.buyer;
+  assert.deepEqual(rulesOf(noBuyer), ["tax-buyer"]);
+  assert.deepEqual(rulesOf(noBuyer, { buyerNotGstRegistered: true }), [], "not needed when the buyer is not GST registered");
+  // A small invoice: $200 or less needs no GST number, $1,000 or less needs no buyer details.
+  const small = { order: { number: "1", supplier: "A", lines: [{ code: "X", description: "x", qty: 1, unitCents: 17000 }] },
+    invoice: { number: "2", supplier: "A", orderNumber: "1", gstNumber: "", issued: "1 Nov", lines: [{ code: "X", description: "x", qty: 1, unitCents: 17000 }],
+      subtotalCents: 17000, gstCents: 2550, totalCents: 19550 } };
+  assert.deepEqual(rulesOf(small), []);
+  assert.ok(C.gstNumberIsValid("49-098-576") && !C.gstNumberIsValid("49-098-577"));
+});
+
+test("invoices without tax invoice fields are not held for them", () => {
+  const { order, invoice } = pair();
+  assert.deepEqual(C.check(order, invoice).findings.filter((f) => f.rule.startsWith("tax-")), []);
 });

@@ -168,12 +168,18 @@ for (const page of ["privacy-checker.html", "invoice-checker.html"]) {
   });
 }
 
-test("both tools are linked from the home page and from each tool's nav", () => {
-  assert.match(read("index.html"), /href="privacy-checker.html"/);
+test("both tools are linked from the home page, and the old privacy address forwards to NZ Redact", () => {
+  assert.match(read("index.html"), /href="https:\/\/langkurst\.github\.io\/nz-redact\/"/);
+  assert.match(read("index.html"), /href="https:\/\/github\.com\/Langkurst\/nz-redact"/);
   assert.match(read("index.html"), /href="invoice-checker.html"/);
-  for (const page of ["privacy-checker.html", "invoice-checker.html"]) {
-    assert.match(read(page), /href="privacy-checker.html"/, page);
-    assert.match(read(page), /href="invoice-checker.html"/, page);
+  assert.match(read("privacy-checker.html"), /http-equiv="refresh" content="0; url=https:\/\/langkurst\.github\.io\/nz-redact\/"/);
+  assert.match(read("invoice-checker.html"), /href="privacy-checker.html"/);
+});
+
+test("no tool branding on the tool pages or in the README", () => {
+  for (const f of ["invoice-checker.html", "privacy-checker.html", "README.md", "assets/js/invoice-page.js", "assets/js/matcher.js", "assets/js/samples.js", "assets/css/system.css", "assets/css/invoice.css"]) {
+    const m = read(f).match(/claude|anthropic|co-authored-by|ai agent|ai coding|coding agent|copilot/i);
+    assert.equal(m, null, `${f}: "${m && m[0]}"`);
   }
 });
 

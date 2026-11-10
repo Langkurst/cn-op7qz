@@ -420,3 +420,6 @@ mark[class^="t-"] { background: var(--cb); box-shadow: inset 0 -2px 0 var(--c); 
   .hero-visual { padding: 0; }
 }
 
+
+/* Two buttons side by side under a tool card */
+.feature-links { display: flex; flex-wrap: wrap; gap: .5rem; }

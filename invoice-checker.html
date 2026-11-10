@@ -3,63 +3,62 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; form-action 'none'; base-uri 'none'">
   <title>Invoice checker | Christopher Nottle</title>
-  <meta name="description" content="A bill review demo: each supplier invoice is matched to its purchase order, line by line, with GST and totals checked. Made-up sample data. Plain rules, no AI.">
+  <meta name="description" content="A bill review demo with made-up data: each supplier invoice is matched to its purchase order line by line, and checked against Inland Revenue's tax invoice rules.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
-  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <script src="assets/js/theme.js"></script>
-  <link rel="stylesheet" href="assets/css/site.css">
-  <link rel="stylesheet" href="assets/css/tools.css">
+  <link rel="stylesheet" href="assets/css/system.css">
+  <link rel="stylesheet" href="assets/css/invoice.css">
 </head>
 <body>
   <a class="skip" href="#app">Skip to the invoice checker</a>
-  <div class="page-lines" aria-hidden="true"></div>
 
-  <header class="site-head">
-    <div class="wrap">
-      <a class="site-name" href="index.html"><span class="mark" aria-hidden="true">CN</span><span class="name-text">Christopher Nottle</span></a>
-      <nav class="site-nav" aria-label="Site">
-        <ul>
-          <li><a href="index.html#work">Work</a></li>
-          <li><a href="privacy-checker.html">Privacy checker</a></li>
-          <li><a href="invoice-checker.html" aria-current="page">Invoice checker</a></li>
-        </ul>
+  <header class="top">
+    <div class="frame top-inner">
+      <a class="brand" href="invoice-checker.html" aria-current="page">
+        <span class="brand-mark" aria-hidden="true"><svg class="i"><use href="assets/img/icons.svg#file-text"/></svg></span>
+        <span>Invoice checker</span>
+        <span class="brand-by">by Christopher Nottle</span>
+      </a>
+      <nav class="top-nav" aria-label="Site">
+        <a href="index.html#work">Portfolio</a>
+        <a href="privacy-checker.html">NZ Redact</a>
+        <a href="#rules">The rules</a>
       </nav>
-      <div class="head-end">
-        <button type="button" class="btn btn-quiet theme-toggle" data-theme-toggle>Dark theme</button>
-        <a class="btn btn-primary btn-small" href="index.html#contact">Contact</a>
+      <div class="top-end">
+        <button type="button" class="icon-btn" id="theme" aria-label="Switch to dark theme"><svg class="i"><use href="assets/img/icons.svg#moon"/></svg></button>
+        <a class="btn" href="index.html#contact">Contact</a>
       </div>
     </div>
   </header>
 
   <main id="main">
-    <div class="wrap">
-      <div class="tool-intro">
-        <div>
-          <p class="eyebrow">Demo, made-up sample data</p>
-          <h1>Invoice checker</h1>
-          <p class="tool-lede">Matching supplier invoices to purchase orders was part of my job as a Purchaser at Häfele. This demo checks each bill against its order, line by line, and says what a person must look at before it is paid.</p>
-        </div>
-        <ul class="trust" aria-label="How it works">
-          <li><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10.5l3.5 3.5L16 5.5"/></svg></span><span><strong>Price, quantity, lines, GST and totals</strong> are all checked.</span></li>
-          <li><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 6h14M3 10h14M3 14h9"/></svg></span><span><strong>Edit any number</strong> on the invoice and the result updates.</span></li>
-          <li><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 3v14M3 10h14"/></svg></span><span><strong>No AI inside.</strong> Plain rules with 29 automated tests.</span></li>
-        </ul>
-      </div>
+    <section class="hero frame" aria-labelledby="hero-h">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Demo with made-up bills</p>
+      <h1 id="hero-h">Check every bill against its order before it is paid.</h1>
+      <p class="lede">Matching supplier invoices to purchase orders was part of my job as a Purchaser at Häfele. This demo does the matching line by line, checks the invoice against Inland Revenue's tax invoice rules, and says what a person needs to look at.</p>
+      <ul class="assure" aria-label="What it checks">
+        <li><svg class="i"><use href="assets/img/icons.svg#scale"/></svg><span><strong>Line by line.</strong> Price, quantity, missing and extra lines, GST and totals.</span></li>
+        <li><svg class="i"><use href="assets/img/icons.svg#shield-check"/></svg><span><strong>Tax invoice rules.</strong> GST number with a valid check digit, the date, and your details over $1,000.</span></li>
+        <li><svg class="i"><use href="assets/img/icons.svg#lock"/></svg><span><strong>Nothing leaves the page.</strong> Plain rules, no AI, and 31 automated tests.</span></li>
+      </ul>
+    </section>
 
-      <noscript><p class="app-note">This demo needs JavaScript. It runs entirely in your browser.</p></noscript>
+    <div class="frame">
+      <noscript><p class="note">This demo needs JavaScript. It runs entirely in your browser.</p></noscript>
 
-      <section class="app app-wide needs-js" id="app" aria-label="Invoice checker">
+      <section class="window app" id="app" aria-label="Invoice checker">
         <div class="app-bar">
-          <div class="app-title"><strong>Bills to pay</strong><span class="muted" id="inbox-summary"></span></div>
-          <div class="app-actions">
-            <label class="tol" for="tolerance">Price tolerance <input id="tolerance" type="text" inputmode="decimal" value="0" aria-describedby="tol-help"> %</label>
+          <div class="app-title"><svg class="i"><use href="assets/img/icons.svg#inbox"/></svg><strong>Bills to pay</strong><span id="inbox-summary"></span></div>
+          <div class="bar-end">
+            <label class="tol" for="tolerance">Price tolerance <input id="tolerance" type="text" inputmode="decimal" value="0" aria-describedby="tol-help"><span aria-hidden="true">%</span></label>
             <span class="visually-hidden" id="tol-help">A price difference inside this tolerance is noted but does not hold the bill.</span>
-            <button type="button" class="ui-btn ui-btn-ghost" id="reset">Reset sample data</button>
+            <button type="button" class="btn btn-ghost" id="reset"><svg class="i"><use href="assets/img/icons.svg#rotate-ccw"/></svg><span>Reset</span></button>
           </div>
         </div>
 
@@ -67,58 +66,65 @@
           <nav class="inbox" aria-label="Bills">
             <ul id="inbox"></ul>
           </nav>
-
-          <div class="inv-doc">
-            <div class="paper" id="paper"></div>
+          <div class="desk">
+            <article class="paper" id="paper" aria-label="The invoice"></article>
           </div>
-
-          <aside class="inv-panel" id="panel" aria-label="Match against the purchase order"></aside>
+          <aside class="review" id="panel" aria-label="Match against the purchase order"></aside>
         </div>
         <p class="visually-hidden" id="inv-live" role="status"></p>
 
         <div class="app-foot">
-          <span>Made-up suppliers, orders and prices. Nothing is sent or stored.</span>
-          <span>Sample data built November 2026.</span>
+          <span>Made-up suppliers, orders, prices and GST numbers. Nothing is sent or stored.</span>
+          <span>Approve and Hold only change this page.</span>
         </div>
       </section>
+    </div>
 
-      <div class="tool-notes">
-        <section aria-labelledby="rules-h">
-          <h2 id="rules-h">The rules</h2>
+    <section class="section frame" id="rules" aria-labelledby="rules-h">
+      <div class="section-head">
+        <p class="label-mono">The rules</p>
+        <h2 id="rules-h">What holds a bill, and what is only a note</h2>
+      </div>
+      <div class="grid-cards">
+        <div>
+          <h3>Against the order</h3>
           <ul>
             <li><strong>Order number and supplier</strong> must match the purchase order.</li>
-            <li><strong>Price</strong> above the order price holds the bill. A lower price is a note.</li>
-            <li><strong>Quantity</strong> above the order holds the bill. Fewer is a note, because the rest may come later.</li>
-            <li><strong>Lines</strong> not on the order, or the same item twice, hold the bill. A missing line is a note.</li>
-            <li><strong>GST</strong> must be 15% of the subtotal, to within one cent, and <strong>totals</strong> must add up.</li>
+            <li><strong>A higher price</strong> holds the bill. A lower one is a note.</li>
+            <li><strong>More than ordered</strong> holds the bill. Fewer is a note, as the rest may come later.</li>
+            <li><strong>Extra or repeated lines</strong> hold the bill. A missing line is a note.</li>
           </ul>
-        </section>
-        <section aria-labelledby="not-h">
-          <h2 id="not-h">What it does not do</h2>
+        </div>
+        <div>
+          <h3>Tax invoice rules</h3>
+          <ul>
+            <li><strong>GST</strong> must be 15% of the subtotal, to within a cent, and the <strong>totals</strong> must add up.</li>
+            <li><strong>Over $200:</strong> the supplier's GST number, which must pass the IRD check digit.</li>
+            <li><strong>Over $1,000:</strong> your business name and one identifier, such as an address or NZBN.</li>
+            <li><strong>Every invoice:</strong> the date it was issued.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What it does not do</h3>
           <ul>
             <li>It does not check the goods receipt, so it is a two-way match, not a three-way match.</li>
             <li>It does not read PDF invoices. The numbers are typed in.</li>
-            <li>Approve and Hold only change this page. Nothing is paid or sent.</li>
+            <li>Money is held in whole cents, so the sums are exact. 31 automated tests cover the rules and every sample bill.</li>
           </ul>
-        </section>
-        <section aria-labelledby="how-h">
-          <h2 id="how-h">How it was built</h2>
-          <p>An AI coding agent wrote the code to my rules. Money is held in whole cents so the sums are exact, and 29 automated tests cover the rules and each sample.</p>
-        </section>
+        </div>
       </div>
-    </div>
+    </section>
   </main>
 
-  <footer class="site-foot">
-    <div class="wrap">
-      <span>Christopher Nottle, Auckland, New Zealand</span>
-      <span>No cookies and no tracking.</span>
+  <footer class="foot">
+    <div class="frame foot-inner">
+      <p>Christopher Nottle, Auckland, New Zealand.</p>
+      <p><a href="index.html">Portfolio</a> <span aria-hidden="true">·</span> No cookies and no tracking.</p>
     </div>
   </footer>
 
   <script src="assets/js/matcher.js"></script>
   <script src="assets/js/samples.js"></script>
   <script src="assets/js/invoice-page.js"></script>
-  <script src="assets/js/site.js"></script>
 </body>
 </html>

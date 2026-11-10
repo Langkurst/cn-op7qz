@@ -3,164 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
-  <title>NZ privacy checker | Christopher Nottle</title>
-  <meta name="description" content="Remove New Zealand personal details from text before you paste it into an AI tool, then put them back into the AI's answer. Runs in your browser. Nothing is sent anywhere.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; form-action 'none'; base-uri 'none'">
+  <meta http-equiv="refresh" content="0; url=https://langkurst.github.io/nz-redact/">
+  <title>NZ Redact has moved | Christopher Nottle</title>
   <meta name="robots" content="noindex, nofollow">
   <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
-  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <script src="assets/js/theme.js"></script>
-  <link rel="stylesheet" href="assets/css/site.css">
-  <link rel="stylesheet" href="assets/css/tools.css">
+  <link rel="stylesheet" href="assets/css/system.css">
 </head>
 <body>
-  <a class="skip" href="#app">Skip to the checker</a>
-  <div class="page-lines" aria-hidden="true"></div>
-
-  <header class="site-head">
-    <div class="wrap">
-      <a class="site-name" href="index.html"><span class="mark" aria-hidden="true">CN</span><span class="name-text">Christopher Nottle</span></a>
-      <nav class="site-nav" aria-label="Site">
-        <ul>
-          <li><a href="index.html#work">Work</a></li>
-          <li><a href="privacy-checker.html" aria-current="page">Privacy checker</a></li>
-          <li><a href="invoice-checker.html">Invoice checker</a></li>
-        </ul>
-      </nav>
-      <div class="head-end">
-        <button type="button" class="btn btn-quiet theme-toggle" data-theme-toggle>Dark theme</button>
-        <a class="btn btn-primary btn-small" href="index.html#contact">Contact</a>
-      </div>
-    </div>
-  </header>
-
   <main id="main">
-    <div class="wrap">
-      <div class="tool-intro">
-        <div>
-          <p class="eyebrow">Tool</p>
-          <h1>NZ privacy checker</h1>
-          <p class="tool-lede">Take New Zealand personal details out of a note before it goes into an AI tool. Then paste the AI's answer back in, and the real details are put back.</p>
-        </div>
-        <ul class="trust" aria-label="How it handles your text">
-          <li><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M6 9V6.5a4 4 0 0 1 8 0V9"/><rect x="4" y="9" width="12" height="8.5" rx="2"/></svg></span><span><strong>Stays in your browser.</strong> The page cannot connect to anything.</span></li>
-          <li><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10.5l3.5 3.5L16 5.5"/></svg></span><span><strong>Checked rules.</strong> 6,000 IRD and bank cases agree with python-stdnum.</span></li>
-          <li><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 3v14M3 10h14"/></svg></span><span><strong>No AI inside.</strong> The same text always gives the same result.</span></li>
-        </ul>
-      </div>
-
-      <noscript><p class="app-note">This tool needs JavaScript. It runs entirely in your browser.</p></noscript>
-
-      <section class="app needs-js" id="app" aria-label="NZ privacy checker">
-        <div class="app-bar">
-          <div class="seg" role="tablist" aria-label="Step">
-            <button type="button" role="tab" id="tab-check" aria-controls="panel-check" aria-selected="true"><span class="seg-n">1</span>Check</button>
-            <button type="button" role="tab" id="tab-copy" aria-controls="panel-copy" aria-selected="false"><span class="seg-n">2</span>Redacted copy</button>
-            <button type="button" role="tab" id="tab-back" aria-controls="panel-back" aria-selected="false"><span class="seg-n">3</span>Put details back</button>
-          </div>
-          <div class="app-actions">
-            <span class="status-pill" id="status" role="status">Nothing yet</span>
-            <button type="button" class="ui-btn ui-btn-primary" id="copy-redacted" disabled>
-              <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9" height="10" rx="2"/><path d="M13 7V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1"/></svg>
-              <span>Copy redacted text</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="app-body">
-          <div class="app-main">
-            <div class="panel" id="panel-check" role="tabpanel" aria-labelledby="tab-check">
-              <div class="panel-tools">
-                <span class="panel-label">Your text</span>
-                <span class="panel-tools-end">
-                  <button type="button" class="ui-btn ui-btn-ghost" id="example">Load example</button>
-                  <button type="button" class="ui-btn ui-btn-ghost" id="clear">Clear</button>
-                </span>
-              </div>
-              <div class="editor">
-                <div class="editor-backdrop" aria-hidden="true"><div class="editor-marks" id="marks"></div></div>
-                <label class="visually-hidden" for="input">Text to check</label>
-                <textarea class="editor-input" id="input" spellcheck="false" placeholder="Paste an email, a note or a spreadsheet extract. Nothing leaves this page."></textarea>
-              </div>
-            </div>
-
-            <div class="panel" id="panel-copy" role="tabpanel" aria-labelledby="tab-copy" hidden>
-              <div class="panel-tools">
-                <span class="panel-label">Redacted copy, ready to paste into an AI tool</span>
-              </div>
-              <div class="doc" id="redacted" tabindex="0"></div>
-            </div>
-
-            <div class="panel" id="panel-back" role="tabpanel" aria-labelledby="tab-back" hidden>
-              <div class="panel-tools">
-                <span class="panel-label">Paste the AI's answer</span>
-              </div>
-              <div class="editor editor-plain">
-                <label class="visually-hidden" for="reply">The AI's answer, with placeholders such as [IRD_1]</label>
-                <textarea class="editor-input" id="reply" spellcheck="false" placeholder="Paste the answer here. Placeholders such as [IRD_1] are swapped back to the real details."></textarea>
-              </div>
-              <div class="panel-tools panel-tools-split">
-                <span class="panel-label">With the details put back</span>
-                <button type="button" class="ui-btn" id="copy-restored" disabled>Copy</button>
-              </div>
-              <div class="doc" id="restored" tabindex="0"></div>
-            </div>
-          </div>
-
-          <aside class="app-side" aria-labelledby="found-h">
-            <div class="side-head">
-              <h2 id="found-h">Found</h2>
-              <span class="side-count" id="count">0</span>
-            </div>
-            <p class="side-hint">Switch an item off to leave it in the text.</p>
-            <div id="groups"></div>
-          </aside>
-        </div>
-
-        <div class="app-foot">
-          <span id="chars">0 characters</span>
-          <span class="foot-lock"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 9V6.5a4 4 0 0 1 8 0V9"/><rect x="4" y="9" width="12" height="8.5" rx="2"/></svg>Processed on this device. The link between placeholders and real details is lost when you close the tab.</span>
-        </div>
-      </section>
-
-      <div class="tool-notes">
-        <section aria-labelledby="finds-h">
-          <h2 id="finds-h">What it finds</h2>
-          <ul>
-            <li><strong>IRD numbers</strong> with Inland Revenue's check digit.</li>
-            <li><strong>Bank accounts</strong> with the published bank checksums.</li>
-            <li><strong>NHI numbers</strong> in both Health New Zealand formats, including the one from July 2027.</li>
-            <li><strong>Card numbers</strong> that pass the card check, and <strong>driver licence and passport numbers</strong> next to those words.</li>
-            <li><strong>Dates of birth, email addresses and NZ phone numbers.</strong></li>
-          </ul>
-        </section>
-        <section aria-labelledby="limits-h">
-          <h2 id="limits-h">What it does not do</h2>
-          <ul>
-            <li>It does not find names, street addresses or health details written in sentences. Read the redacted copy before you paste it.</li>
-            <li>It checks a bank account's checksum, not the bank branch register.</li>
-            <li>The expanded NHI rule follows the published description. It is not yet checked against Health New Zealand's full standard.</li>
-          </ul>
-        </section>
-        <section aria-labelledby="built-h">
-          <h2 id="built-h">How it was built</h2>
-          <p>An AI coding agent wrote the code to my rules. 22 automated tests cover the rules, including 6,000 cases checked against python-stdnum, an independent open-source library, and the six example NHI numbers Health New Zealand publishes. The example text uses sample numbers from official documentation.</p>
-        </section>
-      </div>
-    </div>
+    <section class="hero frame" aria-labelledby="moved-h">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>The privacy checker is now NZ Redact</p>
+      <h1 id="moved-h">NZ Redact has its own home now.</h1>
+      <p class="lede">The privacy checker became NZ Redact, a free and open-source tool. If the page does not open by itself, use the link below.</p>
+      <p class="lede"><a class="btn btn-ink" href="https://langkurst.github.io/nz-redact/">Open NZ Redact</a> <a class="btn" href="index.html">Back to the portfolio</a></p>
+    </section>
   </main>
-
-  <footer class="site-foot">
-    <div class="wrap">
-      <span>Christopher Nottle, Auckland, New Zealand</span>
-      <span>No cookies and no tracking. This page cannot connect to anything.</span>
-    </div>
-  </footer>
-
-  <script src="assets/js/privacy.js"></script>
-  <script src="assets/js/privacy-page.js"></script>
-  <script src="assets/js/site.js"></script>
 </body>
 </html>
