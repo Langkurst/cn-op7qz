@@ -38,6 +38,7 @@
   </header>
 
   <main id="main">
+    <div class="print-only" id="print-head"></div>
     <section class="hero frame" aria-labelledby="hero-h">
       <p class="kicker"><span class="dot" aria-hidden="true"></span>Demo with made-up bills</p>
       <h1 id="hero-h">Check every bill against its order before it is paid.</h1>
@@ -45,7 +46,7 @@
       <ul class="assure" aria-label="What it checks">
         <li><svg class="i"><use href="assets/img/icons.svg#scale"/></svg><span><strong>Line by line.</strong> Price, quantity, missing and extra lines, GST and totals.</span></li>
         <li><svg class="i"><use href="assets/img/icons.svg#shield-check"/></svg><span><strong>Tax invoice rules.</strong> GST number with a valid check digit, the date, and your details over $1,000.</span></li>
-        <li><svg class="i"><use href="assets/img/icons.svg#lock"/></svg><span><strong>Nothing leaves the page.</strong> Plain rules, no AI, and 31 automated tests.</span></li>
+        <li><svg class="i"><use href="assets/img/icons.svg#lock"/></svg><span><strong>Nothing leaves the page.</strong> Plain rules, no AI, and 62 automated tests.</span></li>
       </ul>
     </section>
 
@@ -57,9 +58,18 @@
           <div class="app-title"><svg class="i"><use href="assets/img/icons.svg#inbox"/></svg><strong>Bills to pay</strong><span id="inbox-summary"></span></div>
           <div class="bar-end">
             <label class="tol" for="tolerance">Price tolerance <input id="tolerance" type="text" inputmode="decimal" value="0" aria-describedby="tol-help"><span aria-hidden="true">%</span></label>
-            <span class="visually-hidden" id="tol-help">A price difference inside this tolerance is noted but does not hold the bill.</span>
+            <label class="tol" for="tolerance-cents">Ignore differences under <input id="tolerance-cents" type="text" inputmode="decimal" value="5" aria-describedby="tol-help"> cents</label>
+            <span class="visually-hidden" id="tol-help">A price difference inside either tolerance is noted but does not hold the bill.</span>
+            <button type="button" class="btn btn-ghost" id="keys-open" aria-haspopup="dialog"><span>Shortcuts</span></button>
             <button type="button" class="btn btn-ghost" id="reset"><svg class="i"><use href="assets/img/icons.svg#rotate-ccw"/></svg><span>Reset</span></button>
+            <button type="button" class="btn btn-ink" id="new-check" aria-haspopup="dialog"><svg class="i"><use href="assets/img/icons.svg#plus"/></svg><span>New check</span></button>
           </div>
+        </div>
+
+        <div class="gst-box">
+          <label for="gst-check">Check a GST number</label>
+          <input id="gst-check" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="Example: 124-587-301" aria-describedby="gst-result">
+          <p id="gst-result" role="status" data-state="empty">Type or paste a GST number to check it.</p>
         </div>
 
         <div class="inv-body">
@@ -72,12 +82,61 @@
           <aside class="review" id="panel" aria-label="Match against the purchase order"></aside>
         </div>
         <p class="visually-hidden" id="inv-live" role="status"></p>
+        <p class="visually-hidden" id="copy-live" role="status"></p>
 
         <div class="app-foot">
           <span>Made-up suppliers, orders, prices and GST numbers. Nothing is sent or stored.</span>
           <span>Approve and Hold only change this page.</span>
         </div>
       </section>
+
+      <dialog class="sheet" id="entry" aria-labelledby="entry-h">
+        <form id="entry-form" novalidate>
+          <div class="sheet-head">
+            <h2 id="entry-h">New check</h2>
+            <button type="button" class="icon-btn" id="entry-close" aria-label="Close"><svg class="i"><use href="assets/img/icons.svg#x"/></svg></button>
+          </div>
+          <p class="sheet-note">Enter one purchase order and its invoice. Nothing you enter here is saved or sent. It stays in this page until you reload it.</p>
+          <div class="fields">
+            <label class="field" for="entry-supplier"><span>Supplier</span><input id="entry-supplier" type="text" autocomplete="off"></label>
+            <label class="field" for="entry-gst"><span>Supplier GST number</span><input id="entry-gst" type="text" autocomplete="off" inputmode="numeric" spellcheck="false"></label>
+            <label class="field" for="entry-invoice"><span>Invoice number</span><input id="entry-invoice" type="text" autocomplete="off"></label>
+            <label class="field" for="entry-date"><span>Invoice date</span><input id="entry-date" type="date"></label>
+            <label class="field" for="entry-order"><span>Purchase order number</span><input id="entry-order" type="text" autocomplete="off"></label>
+            <label class="field" for="entry-buyer"><span>Your business name</span><input id="entry-buyer" type="text" autocomplete="off"></label>
+            <label class="field wide" for="entry-buyer-id"><span>Your address, NZBN or GST number</span><input id="entry-buyer-id" type="text" autocomplete="off"></label>
+          </div>
+          <div id="entry-grid" role="group" aria-labelledby="entry-lines-h" aria-describedby="entry-paste-help">
+            <h3 class="pn-h" id="entry-lines-h"><span class="label-mono">Lines</span></h3>
+            <p class="sheet-note" id="entry-paste-help">Paste rows copied from a spreadsheet into any cell. The columns are item, ordered quantity, order price, invoiced quantity and invoice price. Leave the invoiced cells empty for an item that was not invoiced.</p>
+            <div class="eg-head" aria-hidden="true"><span>Item</span><span>Ordered qty</span><span>Order price</span><span>Invoiced qty</span><span>Invoice price</span><span></span></div>
+            <div id="entry-rows"></div>
+            <button type="button" class="btn btn-ghost" id="entry-add"><svg class="i"><use href="assets/img/icons.svg#plus"/></svg><span>Add line</span></button>
+          </div>
+          <p class="sheet-note">The subtotal, GST and total are worked out from the invoiced lines. You can change them on the invoice afterwards. Reset removes bills you have entered.</p>
+          <p class="entry-error" id="entry-error" role="alert"></p>
+          <div class="sheet-actions">
+            <button type="button" class="btn" id="entry-cancel">Cancel</button>
+            <button type="submit" class="btn btn-ink">Check bill</button>
+          </div>
+        </form>
+      </dialog>
+
+      <dialog class="sheet sheet-sm" id="keys" aria-labelledby="keys-h">
+        <div class="sheet-head">
+          <h2 id="keys-h">Keyboard shortcuts</h2>
+          <button type="button" class="icon-btn" id="keys-close" aria-label="Close"><svg class="i"><use href="assets/img/icons.svg#x"/></svg></button>
+        </div>
+        <dl class="keys">
+          <div><dt><kbd>j</kbd> <kbd>Down</kbd></dt><dd>Next bill</dd></div>
+          <div><dt><kbd>k</kbd> <kbd>Up</kbd></dt><dd>Previous bill</dd></div>
+          <div><dt><kbd>a</kbd></dt><dd>Approve the bill</dd></div>
+          <div><dt><kbd>h</kbd></dt><dd>Hold the bill</dd></div>
+          <div><dt><kbd>?</kbd></dt><dd>Show this list</dd></div>
+          <div><dt><kbd>Esc</kbd></dt><dd>Close this list</dd></div>
+        </dl>
+        <p class="sheet-note">The keys do nothing while you are typing in a box.</p>
+      </dialog>
     </div>
 
     <section class="section frame" id="rules" aria-labelledby="rules-h">
@@ -93,6 +152,8 @@
             <li><strong>A higher price</strong> holds the bill. A lower one is a note.</li>
             <li><strong>More than ordered</strong> holds the bill. Fewer is a note, as the rest may come later.</li>
             <li><strong>Extra or repeated lines</strong> hold the bill. A missing line is a note.</li>
+            <li><strong>A possible duplicate</strong> holds the bill: the same supplier with the same invoice number, or the same total within 5 days.</li>
+            <li><strong>Small price differences</strong> are a note when they are under the cents tolerance or inside the percent tolerance.</li>
           </ul>
         </div>
         <div>
@@ -109,7 +170,7 @@
           <ul>
             <li>It does not check the goods receipt, so it is a two-way match, not a three-way match.</li>
             <li>It does not read PDF invoices. The numbers are typed in.</li>
-            <li>Money is held in whole cents, so the sums are exact. 31 automated tests cover the rules and every sample bill.</li>
+            <li>Money is held in whole cents, so the sums are exact. 62 automated tests cover the rules, the extra features and every sample bill.</li>
           </ul>
         </div>
       </div>
@@ -120,11 +181,13 @@
     <div class="frame foot-inner">
       <p>Christopher Nottle, Auckland, New Zealand.</p>
       <p><a href="index.html">Portfolio</a> <span aria-hidden="true">·</span> No cookies and no tracking.</p>
+      <p class="support">Free to use. If it saved you time, you can support my work on <a href="https://ko-fi.com/keaclip" target="_blank" rel="noopener noreferrer">Ko-fi</a>.</p>
     </div>
   </footer>
 
   <script src="assets/js/matcher.js"></script>
   <script src="assets/js/samples.js"></script>
+  <script src="assets/js/entry.js"></script>
   <script src="assets/js/invoice-page.js"></script>
 </body>
 </html>

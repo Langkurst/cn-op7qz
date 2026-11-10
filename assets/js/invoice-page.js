@@ -4,16 +4,18 @@
 */
 (function () {
   "use strict";
-  var C = window.InvoiceChecker, SAMPLES = window.InvoiceSamples;
-  if (!C || !SAMPLES) return;
+  var C = window.InvoiceChecker, SAMPLES = window.InvoiceSamples, E = window.InvoiceEntry;
+  if (!C || !SAMPLES || !E) return;
   var $ = function (id) { return document.getElementById(id); };
   var inboxEl = $("inbox"), paperEl = $("paper"), panelEl = $("panel"), tolEl = $("tolerance"), summaryEl = $("inbox-summary"), liveEl = $("inv-live");
+  var tolCentsEl = $("tolerance-cents"), copyLiveEl = $("copy-live"), printHeadEl = $("print-head"), appEl = $("app");
+  var DEFAULT_CENTS = 5, COPIED_MS = 1500;
   var ICONS = "assets/img/icons.svg#";
 
   // Made-up supplier addresses for the invoice heading.
   var ADDRESS = { "Example Fittings Ltd": "Unit 4, 18 Example Road, Penrose, Auckland", "Sample Hardware Imports Ltd": "220 Sample Street, Hornby, Christchurch" };
 
-  var bills, selected = 1, tolerance = 0;
+  var bills, selected = 1, tolerance = 0, toleranceCents = DEFAULT_CENTS, enteredCount = 0;
   function fresh() {
     return SAMPLES.map(function (s) { return { id: s.id, order: JSON.parse(JSON.stringify(s.order)), invoice: JSON.parse(JSON.stringify(s.invoice)), decision: null }; });
   }
@@ -32,7 +34,18 @@
   function money(c) { return C.formatMoney(c); }
   function asText(c) { return Number.isFinite(c) ? C.formatMoney(c) : ""; }
   function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
-  function result(b) { return C.check(b.order, b.invoice, { priceTolerancePercent: tolerance }); }
+  // Bills in this session that look like another bill: same supplier and invoice number, or total and date.
+  function duplicateMap() {
+    return C.findDuplicates(bills.map(function (b) {
+      return { id: b.id, supplier: b.invoice.supplier, number: b.invoice.number, issued: b.invoice.issued, totalCents: b.invoice.totalCents };
+    }));
+  }
+  function result(b, dupes) {
+    return C.check(b.order, b.invoice, {
+      priceTolerancePercent: tolerance, priceToleranceCents: toleranceCents,
+      duplicates: (dupes || duplicateMap())[b.id] || []
+    });
+  }
   var STATUS_ICON = { check: "alert-triangle", note: "info", ok: "check" };
 
   function statusOf(b) {
@@ -99,7 +112,7 @@
     row("GST number", input("Supplier GST number", inv.gstNumber || "", function (v) { inv.gstNumber = v; }, "cell-text", "text"));
     row("Issued", input("Date issued", inv.issued || "", function (v) { inv.issued = v; renderInbox(); }, "cell-text", "text"));
     row("Your order", input("Order number quoted on the invoice", inv.orderNumber || "", function (v) { inv.orderNumber = v; }, "cell-text", "text"));
-    row("Due", inv.due || "");
+    row("Due", inv.due || "Not given");
     var billTo = el("span");
     var buyer = inv.buyer || {};
     billTo.appendChild(el("strong", null, buyer.name || "Not shown"));
@@ -117,7 +130,7 @@
       var tr = el("tr"); tr.dataset.code = String(line.code).toUpperCase();
       var item = el("td");
       item.appendChild(el("span", "line-code", line.code));
-      item.appendChild(el("span", "line-desc", line.description));
+      if (line.description && line.description !== line.code) item.appendChild(el("span", "line-desc", line.description));
       var q = el("td", "n"); q.appendChild(input("Quantity for " + line.code, String(line.qty), function (v) { line.qty = C.toQuantity(v); }, "cell-qty"));
       var p = el("td", "n"); p.appendChild(input("Unit price for " + line.code, asText(line.unitCents), function (v) { line.unitCents = C.toCents(v); }));
       var a = el("td", "n line-amt"); a.dataset.idx = idx;
@@ -138,7 +151,7 @@
     paperEl.appendChild(totals);
     var foot = el("div", "paper-foot");
     foot.appendChild(el("span", null, "Every number and the GST number can be changed. The review updates as you type."));
-    foot.appendChild(el("span", null, "Sample data"));
+    foot.appendChild(el("span", null, b.entered ? "Entered by you" : "Sample data"));
     paperEl.appendChild(foot);
     refreshPaper();
   }
@@ -169,7 +182,7 @@
 
     var headline = r.verdict === "check" ? plural(r.checkCount, "thing", "things") + " to check before paying"
       : r.verdict === "notes" ? "Ready to pay, with " + plural(r.noteCount, "note", "notes") : "Matches the order. Ready to pay.";
-    var live = headline + (b.decision ? ". " + statusOf(b).text : "");
+    var live = inv.supplier + ", " + inv.number + ": " + headline + (b.decision ? ". " + statusOf(b).text : "");
     if (liveEl.textContent !== live) liveEl.textContent = live;
 
     var verdict = el("div", "verdict v-" + r.verdict);
@@ -226,6 +239,7 @@
       ["Total", !has("total"), Number.isFinite(inv.subtotalCents + inv.gstCents) ? "Should be " + money(inv.subtotalCents + inv.gstCents) : "Cannot add up"],
       ["GST number", !has("tax-gst-number"), inv.gstNumber ? (has("tax-gst-number") ? "Fails the check digit" : "Valid check digit") : "Not shown"],
       ["Date", !has("tax-date"), inv.issued || "Not shown"],
+      ["Duplicates", !has("duplicate-invoice"), has("duplicate-invoice") ? "Possible duplicate" : "None found"],
       ["Your details", !has("tax-buyer"), buyer.name ? buyer.name : "Not shown"]
     ];
     var ul = el("ul", "checks");
@@ -252,6 +266,19 @@
       panelEl.appendChild(ol);
     }
 
+    var helpers = el("div", "helpers" + (r.verdict === "check" ? "" : " single"));
+    if (r.verdict === "check") {
+      var copy = el("button", "btn"); copy.type = "button"; copy.id = "copy-query";
+      paintCopy(copy, false);
+      copy.addEventListener("click", function () { copyQuery(copy, b, r); });
+      helpers.appendChild(copy);
+    }
+    var print = el("button", "btn"); print.type = "button"; print.id = "print-summary";
+    print.appendChild(icon("printer")); print.appendChild(el("span", null, "Print summary"));
+    print.addEventListener("click", function () { window.print(); });
+    helpers.appendChild(print);
+    panelEl.appendChild(helpers);
+
     var actions = el("div", "decide");
     var hold = el("button", "btn", b.decision === "held" ? "On hold" : "Hold");
     hold.type = "button"; hold.id = "hold"; hold.insertBefore(icon("pause"), hold.firstChild);
@@ -265,6 +292,53 @@
     panelEl.appendChild(actions);
     panelEl.appendChild(el("p", "decide-note", "Approve and Hold only change this page. Nothing is paid."));
   }
+
+  // ---------- copy a query for the supplier, and print ----------
+  function paintCopy(btn, copied) {
+    btn.textContent = "";
+    btn.classList.toggle("is-copied", copied);
+    var label = el("span", "copy-label");
+    label.appendChild(icon(copied ? "check" : "copy"));
+    label.appendChild(document.createTextNode(copied ? "Copied" : "Copy query for supplier"));
+    btn.appendChild(label);
+  }
+  function copyText(text) {
+    function old() {
+      return new Promise(function (resolve, reject) {
+        var box = document.createElement("textarea");
+        box.value = text; box.setAttribute("readonly", ""); box.className = "visually-hidden";
+        document.body.appendChild(box); box.select();
+        var ok = false;
+        try { ok = document.execCommand("copy"); } catch (e) {}
+        document.body.removeChild(box);
+        if (ok) resolve(); else reject(new Error("copy failed"));
+      });
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text).catch(old);
+    return old();
+  }
+  var copyTimer = 0, copyClearTimer = 0;
+  function copyQuery(btn, b, r) {
+    var text = C.supplierQuery(b.order, b.invoice, r);
+    copyText(text).then(function () {
+      paintCopy(btn, true);
+      copyLiveEl.textContent = "Query for the supplier copied to the clipboard.";
+      clearTimeout(copyTimer); clearTimeout(copyClearTimer);
+      copyTimer = setTimeout(function () { if (btn.isConnected) paintCopy(btn, false); }, COPIED_MS);
+      copyClearTimer = setTimeout(function () { copyLiveEl.textContent = ""; }, 4000);
+    }, function () {
+      copyLiveEl.textContent = "The query could not be copied. Use Print summary instead.";
+    });
+  }
+  // The heading that only shows on paper.
+  window.addEventListener("beforeprint", function () {
+    var b = bills[selected], r = result(b), inv = b.invoice;
+    printHeadEl.textContent = "";
+    printHeadEl.appendChild(el("h2", null, "Invoice check summary"));
+    printHeadEl.appendChild(el("p", null, inv.supplier + ", invoice " + inv.number + (inv.issued ? ", dated " + inv.issued : "") + ", against order " + b.order.number));
+    printHeadEl.appendChild(el("p", null, (r.verdict === "check" ? plural(r.checkCount, "thing", "things") + " to check before paying" : r.verdict === "notes" ? "Ready to pay, with " + plural(r.noteCount, "note", "notes") : "Matches the order") +
+      (b.decision ? ". " + statusOf(b).text : "") + ". Printed " + new Date().toLocaleDateString("en-NZ", { day: "numeric", month: "long", year: "numeric" }) + "."));
+  });
 
   // A decision toggles, and focus stays on the button that was pressed after the panel redraws.
   function decide(kind, id) {
@@ -282,7 +356,139 @@
     tolerance = Number.isNaN(n) ? 0 : n;
     renderInbox(); renderPanel(); refreshPaper();
   });
-  $("reset").addEventListener("click", function () { bills = fresh(); tolerance = 0; tolEl.value = "0"; renderAll(); });
+  tolCentsEl.addEventListener("input", function () {
+    var empty = tolCentsEl.value.trim() === "";
+    var n = empty ? 0 : C.toQuantity(tolCentsEl.value);
+    tolCentsEl.setAttribute("aria-invalid", String(Number.isNaN(n)));
+    toleranceCents = Number.isNaN(n) ? 0 : n;
+    renderInbox(); renderPanel(); refreshPaper();
+  });
+  $("reset").addEventListener("click", function () {
+    bills = fresh(); tolerance = 0; tolEl.value = "0"; toleranceCents = DEFAULT_CENTS; tolCentsEl.value = String(DEFAULT_CENTS);
+    tolEl.setAttribute("aria-invalid", "false"); tolCentsEl.setAttribute("aria-invalid", "false");
+    selected = Math.min(selected, bills.length - 1);
+    renderAll();
+  });
+
+  // ---------- check a GST number ----------
+  var gstBox = $("gst-check"), gstResult = $("gst-result");
+  gstBox.addEventListener("input", function () {
+    var d = C.describeGstNumber(gstBox.value);
+    gstResult.textContent = d.text;
+    gstResult.setAttribute("data-state", d.state);
+    gstBox.setAttribute("aria-invalid", String(d.state === "invalid"));
+  });
+
+  // ---------- enter your own bill ----------
+  var entryDlg = $("entry"), entryForm = $("entry-form"), rowsEl = $("entry-rows"), errorEl = $("entry-error");
+  var FIELD_IDS = ["entry-supplier", "entry-gst", "entry-invoice", "entry-date", "entry-order", "entry-buyer", "entry-buyer-id"];
+  var HEADS = ["Item", "Ordered qty", "Order price", "Invoiced qty", "Invoice price"];
+  var START_ROWS = 3;
+  function emptyGrid(n) { var g = []; for (var i = 0; i < n; i++) g.push(new Array(E.COLUMNS).fill("")); return g; }
+  function readGrid() {
+    return Array.prototype.map.call(rowsEl.children, function (row) {
+      return Array.prototype.map.call(row.querySelectorAll("input"), function (x) { return x.value; });
+    });
+  }
+  function drawGrid(grid) {
+    rowsEl.textContent = "";
+    grid.forEach(function (cells, r) {
+      var row = el("div", "eg-row");
+      for (var c = 0; c < E.COLUMNS; c++) {
+        var cell = el("label", "eg-cell" + (c === 0 ? " eg-item" : " num"));
+        cell.appendChild(el("span", null, HEADS[c]));
+        var x = el("input"); x.type = "text"; x.value = cells[c] || ""; x.autocomplete = "off";
+        if (c > 0) x.inputMode = "decimal";
+        x.setAttribute("aria-label", "Line " + (r + 1) + ", " + HEADS[c].toLowerCase());
+        x.dataset.r = r; x.dataset.c = c;
+        cell.appendChild(x); row.appendChild(cell);
+      }
+      var del = el("button", "icon-btn eg-del"); del.type = "button"; del.setAttribute("aria-label", "Remove line " + (r + 1));
+      del.appendChild(icon("x"));
+      del.addEventListener("click", function () {
+        var g = readGrid(); g.splice(r, 1);
+        if (!g.length) g = emptyGrid(1);
+        drawGrid(g);
+        var next = rowsEl.querySelectorAll(".eg-row")[Math.min(r, g.length - 1)];
+        next.querySelector("input").focus();
+      });
+      row.appendChild(del);
+      rowsEl.appendChild(row);
+    });
+  }
+  // Pasting rows copied from a spreadsheet fills the grid from the cell you pasted into.
+  rowsEl.addEventListener("paste", function (e) {
+    var t = e.target;
+    if (!t || t.tagName !== "INPUT" || !e.clipboardData) return;
+    var text = e.clipboardData.getData("text/plain");
+    var cells = E.parsePaste(text);
+    if (cells.length < 2 && (cells[0] || []).length < 2) return; // one value: paste as usual
+    e.preventDefault();
+    var r = +t.dataset.r, c = +t.dataset.c;
+    drawGrid(E.fillGrid(readGrid(), r, c, text, E.COLUMNS));
+    rowsEl.querySelectorAll(".eg-row")[r].querySelectorAll("input")[c].focus();
+    errorEl.textContent = "";
+  });
+  $("entry-add").addEventListener("click", function () {
+    var g = readGrid(); g.push(new Array(E.COLUMNS).fill(""));
+    drawGrid(g);
+    rowsEl.lastElementChild.querySelector("input").focus();
+  });
+  function clearEntry() {
+    FIELD_IDS.forEach(function (id) { $(id).value = ""; });
+    drawGrid(emptyGrid(START_ROWS));
+    errorEl.textContent = "";
+  }
+  drawGrid(emptyGrid(START_ROWS));
+  $("new-check").addEventListener("click", function () { errorEl.textContent = ""; entryDlg.showModal(); $("entry-supplier").focus(); });
+  $("entry-close").addEventListener("click", function () { entryDlg.close(); });
+  $("entry-cancel").addEventListener("click", function () { entryDlg.close(); });
+  entryForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var made = E.buildBill({
+      supplier: $("entry-supplier").value, gstNumber: $("entry-gst").value, invoiceNumber: $("entry-invoice").value,
+      date: $("entry-date").value, orderNumber: $("entry-order").value, buyerName: $("entry-buyer").value,
+      buyerIdentifier: $("entry-buyer-id").value, rows: readGrid()
+    });
+    if (!made.ok) { errorEl.textContent = made.errors.join("\n"); return; }
+    enteredCount++;
+    bills.push({ id: "mine-" + enteredCount, order: made.bill.order, invoice: made.bill.invoice, decision: null, entered: true });
+    selected = bills.length - 1;
+    clearEntry();
+    entryDlg.close();
+    renderAll();
+    focusBill(selected);
+  });
+
+  // ---------- keyboard ----------
+  var keysDlg = $("keys");
+  $("keys-open").addEventListener("click", function () { keysDlg.showModal(); });
+  $("keys-close").addEventListener("click", function () { keysDlg.close(); });
+  keysDlg.addEventListener("click", function (e) {
+    var box = keysDlg.getBoundingClientRect();
+    if (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom) keysDlg.close();
+  });
+  function isTyping(t) {
+    var tag = t && t.tagName;
+    return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || !!(t && t.isContentEditable);
+  }
+  function focusBill(i) { var list = inboxEl.querySelectorAll(".bill"); if (list[i]) list[i].focus(); }
+  function moveTo(i) {
+    if (i < 0 || i > bills.length - 1 || i === selected) return;
+    selected = i; renderAll(); focusBill(i);
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (isTyping(e.target)) return;
+    if (document.querySelector("dialog[open]")) return;
+    var k = e.key;
+    var inApp = appEl.contains(document.activeElement);
+    if (k === "j" || (k === "ArrowDown" && inApp)) { e.preventDefault(); moveTo(selected + 1); }
+    else if (k === "k" || (k === "ArrowUp" && inApp)) { e.preventDefault(); moveTo(selected - 1); }
+    else if (k === "a" && !e.repeat) { e.preventDefault(); decide("approved", "approve"); }
+    else if (k === "h" && !e.repeat) { e.preventDefault(); decide("held", "hold"); }
+    else if (k === "?") { e.preventDefault(); keysDlg.showModal(); }
+  });
 
   // Theme switch (the choice is kept in this browser only, shared with the rest of the site).
   var themeBtn = $("theme");
