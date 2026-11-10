@@ -1,0 +1,102 @@
+/*
+  3D portfolio styles. The page reads fully without the 3D scene:
+  html.three  = the WebGL desk is running behind the text
+  html.flat   = no 3D (reduced motion, no WebGL, data saver, or the visitor chose it); paper cards show instead
+*/
+:root {
+  color-scheme: dark;
+  --bg: #0b1012;
+  --panel: rgba(14, 20, 22, .86);
+  --line: #2c393e;
+  --line-strong: #6f858c;
+  --text: #e9eff0;
+  --muted: #a6b6bb;
+  --accent: #6fd3c1;
+  --accent-ink: #06211d;
+  --paper: #f2eee4;
+  --paper-ink: #14232a;
+  --paper-muted: #4a5a60;
+  --paper-accent: #1d5f67;
+  --sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1.0625rem/1.6 var(--sans); overflow-x: hidden; }
+h1, h2 { font-family: var(--display); line-height: 1.12; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); font-weight: 650; letter-spacing: -.02em; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 650; }
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--accent); text-underline-offset: .18em; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+.skip { position: absolute; left: 1rem; top: -4rem; z-index: 20; padding: .6rem 1rem; background: var(--accent); color: var(--accent-ink); border-radius: 6px; font-weight: 600; text-decoration: none; }
+.skip:focus { top: 1rem; }
+
+/* ---------- the scene sits behind everything ---------- */
+#scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .9s ease; pointer-events: none; }
+html.three #scene.ready { opacity: 1; }
+html.flat #scene { display: none; }
+
+/* ---------- top bar ---------- */
+.bar { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; gap: .25rem 1.25rem; flex-wrap: wrap; padding: .6rem clamp(1rem, 3vw, 2rem); background: linear-gradient(rgba(11, 16, 18, .92), rgba(11, 16, 18, 0)); }
+.bar-name { font-family: var(--display); font-weight: 650; color: var(--text); text-decoration: none; margin-right: auto; padding: .35rem 0; }
+.bar-link { color: var(--muted); font-size: .95rem; padding: .35rem 0; }
+.bar-link:hover { color: var(--text); }
+.bar-btn, .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: .5rem 1rem; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(11, 16, 18, .6); color: var(--text); font: 600 .95rem/1.2 var(--sans); text-decoration: none; cursor: pointer; }
+.bar-btn { min-height: 2.25rem; padding: .3rem .75rem; font-size: .88rem; }
+.bar-btn:hover, .btn:hover { border-color: var(--text); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.needs-js { display: none; }
+html.three .needs-js, html.flat.js .needs-js { display: inline-flex; }
+
+/* ---------- each stop is one sheet ---------- */
+main { position: relative; z-index: 1; }
+.stop { min-height: 100vh; min-height: 100svh; display: grid; align-items: center; padding: 5rem clamp(1rem, 4vw, 3.5rem) 3rem; gap: 2rem; }
+.panel { width: min(31rem, 100%, max(24rem, 40vw)); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: clamp(1.25rem, 2.5vw, 2rem); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.kicker, .meta { color: var(--muted); font-size: .95rem; }
+.kicker { margin-bottom: .5rem; }
+.meta { margin: .4rem 0 1rem; }
+.lede { font-family: var(--display); font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.35; margin: .8rem 0 1rem; }
+.rule { font-family: var(--display); font-size: 1.2rem; line-height: 1.4; margin-top: 1rem; }
+.panel p:not(.kicker):not(.meta):not(.lede):not(.rule):not(.cue) { color: #c9d5d8; }
+.links { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; align-items: center; margin-top: 1.1rem; }
+.reach { display: flex; flex-wrap: wrap; gap: .6rem .7rem; align-items: center; margin-top: 1.4rem; }
+.email { font-family: var(--mono); font-size: .95rem; padding: .45rem .7rem; border: 1px solid var(--line); border-radius: 8px; background: rgba(11, 16, 18, .7); user-select: all; overflow-wrap: anywhere; }
+.cue { margin-top: 1.6rem; color: var(--muted); font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; }
+.plain { list-style: none; margin: 1rem 0 0; padding: 0; }
+.plain li { padding: .7rem 0 .7rem 1.2rem; border-top: 1px solid var(--line); position: relative; color: #c9d5d8; }
+.plain li::before { content: ""; position: absolute; left: 0; top: 1.35rem; width: .55rem; height: 2px; background: var(--line-strong); }
+
+/* ---------- paper cards: the source of the 3D sheets' text, and the flat view ---------- */
+html.three .paper { display: none; }
+.paper { justify-self: center; width: min(19rem, 100%); aspect-ratio: 1 / 1.414; background: var(--paper); color: var(--paper-ink); border-radius: 3px; padding: 1.4rem 1.3rem; box-shadow: 0 1px 0 rgba(255, 255, 255, .4) inset, 0 18px 40px rgba(0, 0, 0, .45); transform: rotate(-1.5deg); display: flex; flex-direction: column; font-size: .92rem; }
+.stop:nth-of-type(even) .paper { transform: rotate(1.2deg); }
+.paper p { margin: 0; }
+.p-label { text-transform: uppercase; letter-spacing: .14em; font-size: .7rem; font-weight: 600; color: var(--paper-muted); border-bottom: 1px solid #cfc8b8; padding-bottom: .6rem; margin-bottom: 1rem !important; }
+.p-title { font-family: var(--display); font-weight: 700; font-size: 1.35rem; line-height: 1.15; margin-bottom: .8rem !important; }
+.p-line { color: #2c3b41; line-height: 1.45; margin-bottom: .35rem !important; }
+.p-figure { margin-top: auto !important; font-family: var(--display); font-weight: 700; font-size: 1.5rem; color: var(--paper-accent); }
+
+.foot { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 2rem; padding: 1.5rem clamp(1rem, 4vw, 3.5rem) 2.5rem; color: var(--muted); font-size: .88rem; background: rgba(11, 16, 18, .9); border-top: 1px solid var(--line); }
+
+/* wide screens: text on the left, the desk (or the paper) on the right */
+@media (min-width: 56rem) {
+  .stop { grid-template-columns: minmax(0, 31rem) minmax(0, 1fr); }
+  html.three .stop { grid-template-columns: minmax(0, 31rem); }
+}
+
+/* narrow screens: in 3D the desk shows at the top, and the text scrolls over the lower part */
+@media (max-width: 55.99rem) {
+  html.three .stop { align-items: end; padding-top: 55vh; padding-top: 55svh; }
+  html.three .stop:first-child { padding-top: 40vh; padding-top: 40svh; }
+  .stop { padding-left: 1rem; padding-right: 1rem; }
+  .paper { order: -1; width: min(15rem, 80%); }
+}
+
+@media (pointer: coarse) { .bar-btn { min-height: 2.75rem; } }
+@media (prefers-reduced-motion: reduce) { #scene { transition: none; } }

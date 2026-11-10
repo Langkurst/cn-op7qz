@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Christopher Nottle | 3D portfolio</title>
+  <meta name="description" content="Christopher Nottle, Auckland. Business systems, AI and automation, shown as a pile of documents checked one by one.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="../assets/img/favicon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="boot.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the main content</a>
+  <canvas id="scene" aria-hidden="true"></canvas>
+
+  <header class="bar">
+    <a class="bar-name" href="#top">Christopher Nottle</a>
+    <a class="bar-link" href="../index.html">Plain version</a>
+    <button type="button" class="bar-btn needs-js" data-view-toggle>Flat view</button>
+  </header>
+
+  <main id="main">
+    <section class="stop" id="top" aria-labelledby="name">
+      <div class="panel">
+        <p class="kicker">Auckland, New Zealand</p>
+        <h1 id="name">Christopher Nottle</h1>
+        <p class="lede">Business systems, AI and automation.</p>
+        <p>I spent nearly seven years as a Purchaser at Häfele New Zealand, in SAP every day. Since then I have built two products by directing AI coding agents. The agents write the code. I decide what gets built, set the rules and test it.</p>
+        <div class="reach">
+          <span class="email" id="email">chris.a.nottle@gmail.com</span>
+          <button type="button" class="btn needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email">Copy email</button>
+          <a class="btn" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
+          <a class="btn" href="../Christopher_Nottle_CV.pdf" download>Download CV (PDF)</a>
+          <span class="visually-hidden" role="status" data-copy-status></span>
+        </div>
+        <p class="cue" aria-hidden="true">Scroll</p>
+      </div>
+      <div class="paper" aria-hidden="true">
+        <p class="p-label">Profile</p>
+        <p class="p-title">Christopher Nottle</p>
+        <p class="p-line">Business systems, AI and automation</p>
+        <p class="p-line">Auckland, New Zealand</p>
+      </div>
+    </section>
+
+    <section class="stop" aria-labelledby="hafele-h">
+      <div class="panel">
+        <h2 id="hafele-h">Purchaser, Häfele New Zealand</h2>
+        <p class="meta">January 2018 to November 2024</p>
+        <p>I bought stock from Häfele's companies in Australia and Germany, and earlier from Asia. I used SAP every day for purchase orders, requisitions, material records and supplier prices, and placed orders of up to around NZ$500,000 in a busy fortnight. I trained new purchasing staff.</p>
+        <p>Before that I did IT support for the whole business of about 50 staff.</p>
+      </div>
+      <div class="paper" aria-hidden="true">
+        <p class="p-label">Purchase order</p>
+        <p class="p-title">Häfele New Zealand</p>
+        <p class="p-line">Purchaser, 2018 to 2024</p>
+        <p class="p-line">SAP every day</p>
+        <p class="p-line">Orders up to around NZ$500,000 in a busy fortnight</p>
+        <p class="p-figure">Nearly 7 years</p>
+      </div>
+    </section>
+
+    <section class="stop" aria-labelledby="keaclip-h">
+      <div class="panel">
+        <h2 id="keaclip-h">KeaClip</h2>
+        <p class="meta">Windows app, 12 public releases</p>
+        <p>A free Windows app for saving, trimming and sharing video and audio, with no ads, account or tracking. I wrote the 49-section brief and decided what shipped. AI coding agents wrote the code, the website and the user guide.</p>
+        <p>The last two releases could not publish unless every test and a 41-check installer self-test passed. At the latest release, 1,433 automated tests passed and none failed.</p>
+        <p class="links"><a href="https://langkurst.github.io/KeaClip/" rel="noopener">KeaClip website</a> <a href="https://github.com/Langkurst/KeaClip/releases" rel="noopener">All 12 releases</a></p>
+      </div>
+      <div class="paper" aria-hidden="true">
+        <p class="p-label">Release notes</p>
+        <p class="p-title">KeaClip</p>
+        <p class="p-line">Free Windows app</p>
+        <p class="p-line">12 public releases in 15 days</p>
+        <p class="p-line">Installs without admin rights</p>
+        <p class="p-figure">1,433 tests passing</p>
+      </div>
+    </section>
+
+    <section class="stop" aria-labelledby="swimsorted-h">
+      <div class="panel">
+        <h2 id="swimsorted-h">SwimSorted</h2>
+        <p class="meta">Website and demo live. No customers yet.</p>
+        <p>My own app for pool technicians, started in October 2026 and built on my work servicing pools. A technician enters a water test and the app works out each dose. Every dose has a safety limit, and the doses were checked against PoolMath on 26 cases.</p>
+        <p>More than 3,000 automated tests back it. I make the product decisions and test it myself. AI coding agents write the code. Company sign-ups open in December 2026.</p>
+        <p class="links"><a href="https://swimsorted.co.nz" rel="noopener">swimsorted.co.nz</a></p>
+      </div>
+      <div class="paper" aria-hidden="true">
+        <p class="p-label">Test report</p>
+        <p class="p-title">SwimSorted</p>
+        <p class="p-line">App for pool technicians</p>
+        <p class="p-line">Doses checked against PoolMath on 26 cases</p>
+        <p class="p-line">No customers yet</p>
+        <p class="p-figure">3,000+ tests</p>
+      </div>
+    </section>
+
+    <section class="stop" aria-labelledby="checker-h">
+      <div class="panel">
+        <h2 id="checker-h">Purchase order and invoice checker</h2>
+        <p class="meta">Demo on made-up sample data, built November 2026</p>
+        <p>It compares a supplier invoice with its purchase order in your browser. It flags differences in price, quantity, lines, GST and totals, explains each one, and marks the ones a person must check before paying. The rules are plain and there is no AI in it. An AI coding agent wrote the code.</p>
+        <p class="links"><a class="btn btn-primary" href="../invoice-checker.html">Try the invoice checker</a></p>
+      </div>
+      <div class="paper" aria-hidden="true">
+        <p class="p-label">Supplier invoice</p>
+        <p class="p-title">Invoice SHI-7731</p>
+        <p class="p-line">Against order 4500012904</p>
+        <p class="p-line">2 to check before paying, 1 note</p>
+        <p class="p-line">Made-up sample data</p>
+        <p class="p-figure">$225.00 to query</p>
+      </div>
+    </section>
+
+    <section class="stop" aria-labelledby="ai-h">
+      <div class="panel">
+        <h2 id="ai-h">How I work with AI</h2>
+        <p class="rule">The AI drafts and recommends. It does not buy, publish, send or permanently delete without my say.</p>
+        <p>On SwimSorted, the AI twice recommended buying a domain before anyone had checked the name. I held off and asked for the check. It found the name registered as a trade mark in Australia, so I renamed the product.</p>
+        <p>On KeaClip, the AI advised adding cloud storage. I told it I must never be charged. It added hard limits, with tests, before the first upload.</p>
+      </div>
+      <div class="paper" aria-hidden="true">
+        <p class="p-label">House rules</p>
+        <p class="p-title">Working with AI</p>
+        <p class="p-line">The AI drafts and recommends.</p>
+        <p class="p-line">It does not buy, publish, send or permanently delete without my say.</p>
+      </div>
+    </section>
+
+    <section class="stop" aria-labelledby="notyet-h">
+      <div class="panel">
+        <h2 id="notyet-h">What I have not done yet</h2>
+        <ul class="plain">
+          <li>I am not a developer. AI coding agents write the code.</li>
+          <li>I have not set AI up for another business yet.</li>
+          <li>SwimSorted has no customers yet.</li>
+          <li>No person has reviewed the code in my projects. Every review in the project records is an AI checking an AI's work.</li>
+        </ul>
+      </div>
+      <div class="paper" aria-hidden="true">
+        <p class="p-label">Open items</p>
+        <p class="p-title">Not done yet</p>
+        <p class="p-line">Not a developer</p>
+        <p class="p-line">No AI set-up for another business yet</p>
+        <p class="p-line">No customers yet</p>
+      </div>
+    </section>
+
+    <section class="stop" aria-labelledby="contact-h">
+      <div class="panel">
+        <h2 id="contact-h">Contact</h2>
+        <p>I am in Auckland and available now for remote, hybrid or on-site work.</p>
+        <div class="reach">
+          <span class="email" id="email-2">chris.a.nottle@gmail.com</span>
+          <button type="button" class="btn needs-js" data-copy="chris.a.nottle@gmail.com" aria-describedby="email-2">Copy email</button>
+          <a class="btn" href="https://www.linkedin.com/in/chris-nottle" rel="noopener">LinkedIn</a>
+          <a class="btn" href="../Christopher_Nottle_CV.pdf" download>Download CV (PDF)</a>
+          <span class="visually-hidden" role="status" data-copy-status></span>
+        </div>
+        <p class="links"><a href="../index.html">Plain version of this site</a></p>
+      </div>
+      <div class="paper" aria-hidden="true">
+        <p class="p-label">Contact</p>
+        <p class="p-title">Christopher Nottle</p>
+        <p class="p-line">chris.a.nottle@gmail.com</p>
+        <p class="p-line">linkedin.com/in/chris-nottle</p>
+        <p class="p-line">Auckland, available now</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Christopher Nottle, Auckland, New Zealand. Updated November 2026.</span>
+    <span>No cookies and no tracking. 3D drawn with three.js (MIT licence).</span>
+  </footer>
+</body>
+</html>

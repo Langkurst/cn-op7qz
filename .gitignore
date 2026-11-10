@@ -1,0 +1,6 @@
+# Kept on this PC only: editing notes and the CV script hold local file paths.
+EDITING.md
+tools/
+assets/fonts/
+node_modules/
+*.log
