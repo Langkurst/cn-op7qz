@@ -8,15 +8,16 @@
 */
 import * as THREE from "./vendor/three.module.min.js";
 
-const W = 0.9;                 // sheet width (A4 proportions)
+const W = 1.0;                 // sheet width (A4 proportions)
 const H = W * 1.414;
 const SEG_X = 28;              // columns of vertices, so the sheet can curl smoothly
 const GAP = 0.0055;            // paper thickness in the piles
 const IN = { x: 0, z: 0 };     // the pile still to check
-const OUT = { x: 1.55, z: 0.32 }; // the checked pile
+const OUT = { x: 1.7, z: 0.34 };  // the checked pile
 const STAMP = [0.08, 0.30];    // part of the scroll between two sheets where the stamp lands
 const FILE = [0.34, 0.96];     // part where the sheet is lifted across
-const SANS = '"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif';
+const SANS = '"Geist", "Segoe UI", system-ui, -apple-system, Arial, sans-serif';
+const MONO = '"Geist Mono", ui-monospace, Consolas, monospace';
 
 const clamp01 = (v) => Math.min(Math.max(v, 0), 1);
 const smooth = (v) => v * v * (3 - 2 * v);
@@ -33,6 +34,8 @@ function readPapers() {
     label: (el.querySelector(".p-label")?.textContent || "").trim(),
     title: (el.querySelector(".p-title")?.textContent || "").trim(),
     lines: [...el.querySelectorAll(".p-line")].map((l) => l.textContent.trim()),
+    rows: [...el.querySelectorAll(".p-row")].map((r) => [...r.children].map((c) => c.textContent.trim())),
+    chips: [...el.querySelectorAll(".p-chip")].map((c) => ({ text: c.textContent.trim(), kind: c.classList.contains("money") ? "money" : c.classList.contains("contact") ? "contact" : "id" })),
     figure: (el.querySelector(".p-figure")?.textContent || "").trim(),
   }));
 }
@@ -57,48 +60,81 @@ function paperTexture(p, i, n, aniso) {
   g.fillStyle = "#f2eee4";
   g.fillRect(0, 0, c.width, c.height);
   const rnd = seeded(i * 97 + 13);
-  for (let k = 0; k < 9000; k++) {           // paper fibre
+  for (let k = 0; k < 4000; k++) {           // paper fibre
     g.fillStyle = rnd() > 0.5 ? "rgba(120,105,80,0.035)" : "rgba(255,255,255,0.06)";
     g.fillRect(rnd() * 1024, rnd() * 1448, 1 + rnd() * 2, 1 + rnd() * 2);
   }
-  const M = 96, R = 1024 - M, TW = R - M;
-  g.fillStyle = "#4a5a60";
-  g.font = `600 30px ${SANS}`;
-  spacing(g, 5);
-  g.fillText(p.label.toUpperCase(), M, 140);
+  // Printed like a real document: a mono header, a heavy title, ruled rows with values, and one big figure.
+  const M = 92, R = 1024 - M, TW = R - M;
+  const CHIP = { id: ["#fff0d9", "#efc27f", "#8a4b00"], money: ["#e7eeff", "#a7bdf0", "#234da8"], contact: ["#e2f3e7", "#97cfa9", "#1f6b3a"] };
+  g.fillStyle = "#55524b";
+  g.font = `500 28px ${MONO}`;
+  spacing(g, 4);
+  g.fillText(p.label.toUpperCase(), M, 132);
   g.textAlign = "right";
-  g.fillText(`${i + 1} / ${n}`, R, 140);
+  g.fillText(`${String(i + 1).padStart(2, "0")} / ${String(n).padStart(2, "0")}`, R, 132);
   g.textAlign = "left";
   spacing(g, 0);
-  g.fillStyle = "#cfc8b8";
-  g.fillRect(M, 172, TW, 3);
+  g.fillStyle = "#141413";
+  g.fillRect(M, 160, TW, 4);
 
-  let y = 292;
-  g.fillStyle = "#14232a";
-  g.font = `700 80px ${SANS}`;
-  for (const l of wrap(g, p.title, TW)) { g.fillText(l, M, y); y += 92; }
-  y += 34;
-  g.fillStyle = "#2c3b41";
-  g.font = `400 42px ${SANS}`;
+  let y = 290;
+  g.fillStyle = "#141413";
+  g.font = `650 84px ${SANS}`;
+  spacing(g, -3);
+  for (const l of wrap(g, p.title, TW)) { g.fillText(l, M, y); y += 90; }
+  spacing(g, 0);
+  y += 26;
+  g.fillStyle = "#2c2a26";
+  g.font = `450 44px ${SANS}`;
   for (const line of p.lines) {
-    for (const l of wrap(g, line, TW)) { g.fillText(l, M, y); y += 60; }
-    y += 18;
+    for (const l of wrap(g, line, TW)) { g.fillText(l, M, y); y += 56; }
+    y += 14;
   }
-  g.fillStyle = "rgba(20,35,42,0.07)";       // faint printed form lines
-  for (let k = 0; k < 5; k++) {
-    const ry = Math.max(y + 50, 930) + k * 48;
-    if (ry < 1170) g.fillRect(M, ry, TW * (0.5 + 0.45 * rnd()), 14);
+  if (p.chips.length) {                       // placeholder chips, as NZ Redact shows them
+    let x = M;
+    g.font = `500 30px ${MONO}`;
+    for (const c of p.chips) {
+      const w = g.measureText(c.text).width + 32;
+      if (x + w > R) { x = M; y += 64; }
+      const [bg, line, ink] = CHIP[c.kind];
+      g.fillStyle = bg; g.strokeStyle = line; g.lineWidth = 3;
+      g.beginPath(); g.roundRect(x, y - 38, w, 52, 8); g.fill(); g.stroke();
+      g.fillStyle = ink; g.fillText(c.text, x + 16, y);
+      x += w + 14;
+    }
+    y += 52;
+  }
+  if (p.rows.length) {                        // ruled rows: label on the left, value on the right
+    y += 18;
+    for (const [a, b] of p.rows) {
+      g.fillStyle = "#3a3732";
+      g.font = `500 40px ${SANS}`;
+      g.fillText(a || "", M, y);
+      g.fillStyle = "#141413";
+      g.font = `600 40px ${MONO}`;
+      g.textAlign = "right";
+      g.fillText(b || "", R, y);
+      g.textAlign = "left";
+      g.fillStyle = "rgba(20,20,19,0.18)";
+      for (let dx = M; dx < R; dx += 14) g.fillRect(dx, y + 22, 7, 2);
+      y += 84;
+    }
   }
   if (p.figure) {
     g.fillStyle = "#1d5f67";
-    g.font = `700 92px ${SANS}`;
+    g.font = `650 88px ${SANS}`;
+    spacing(g, -3);
     const fl = wrap(g, p.figure, TW);
-    let fy = 1300 - (fl.length - 1) * 100;
-    for (const l of fl) { g.fillText(l, M, fy); fy += 100; }
+    let fy = 1296 - (fl.length - 1) * 96;
+    for (const l of fl) { g.fillText(l, M, fy); fy += 96; }
+    spacing(g, 0);
   }
-  g.fillStyle = "#7b8587";
-  g.font = `400 26px ${SANS}`;
-  g.fillText("Christopher Nottle, Auckland", M, 1392);
+  g.fillStyle = "rgba(20,20,19,0.14)";
+  g.fillRect(M, 1340, TW, 2);
+  g.fillStyle = "#6b675f";
+  g.font = `400 24px ${MONO}`;
+  g.fillText("Christopher Nottle · Auckland", M, 1390);
 
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
@@ -218,17 +254,21 @@ function setStamp(s, opacity, scale) {
   s.stamp.position.y = cy * (1 - scale);
 }
 
-export function start(canvas) {
+export async function start(canvas) {
   const root = document.documentElement;
+  // Draw the sheets only once the fonts are ready, so the printed text uses Geist, not a fallback.
+  if (document.fonts && document.fonts.load) {
+    await Promise.all([`650 84px ${SANS}`, `400 40px ${SANS}`, `500 28px ${MONO}`].map((f) => document.fonts.load(f).catch(() => null)));
+  }
   const papers = readPapers();
   const n = papers.length;
   if (!n) throw new Error("no sheets found");
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  renderer.toneMapping = THREE.NeutralToneMapping;   // keeps printed ink dark; the filmic curve washed it out
+  renderer.toneMappingExposure = 1.0;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const aniso = renderer.capabilities.getMaxAnisotropy();
@@ -240,7 +280,7 @@ export function start(canvas) {
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 40);
 
   scene.add(new THREE.HemisphereLight(0xc9d6d8, 0x2a2622, 1.1));
-  const lamp = new THREE.SpotLight(0xffd6a0, 130, 12, Math.PI / 5.5, 0.75, 1.4);
+  const lamp = new THREE.SpotLight(0xffeedd, 120, 12, Math.PI / 5.5, 0.75, 1.4);
   lamp.position.set(-1.1, 4.1, 1.7);
   lamp.target.position.set(0.78, 0, 0.15);
   lamp.castShadow = true;
@@ -262,8 +302,14 @@ export function start(canvas) {
 
   const stampTex = stampTexture(aniso);
   const rnd = seeded(2026);
+  // One sheet at a time, with a pause between, so drawing nine textures never blocks the page for long.
+  const textures = [];
+  for (let i = 0; i < n; i++) {
+    textures.push(paperTexture(papers[i], i, n, aniso));
+    await new Promise((r) => setTimeout(r, 0));
+  }
   const sheets = papers.map((p, i) => {
-    const s = makeSheet(paperTexture(p, i, n, aniso), stampTex);
+    const s = makeSheet(textures[i], stampTex);
     s.yawIn = (rnd() - 0.5) * 0.16;
     s.yawOut = 0.07 + (rnd() - 0.5) * 0.1;
     s.dxIn = (rnd() - 0.5) * 0.05;
@@ -295,7 +341,7 @@ export function start(canvas) {
     camera.setViewOffset(fullW, fullH, dx > 0 ? 0 : 2 * Math.abs(dx), dy > 0 ? 0 : 2 * Math.abs(dy), w, h);
     camera.updateProjectionMatrix();
     const tanH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-    const spanW = 2.75, spanH = 1.45;            // both piles across, and their depth as seen from above at an angle
+    const spanW = 2.4, spanH = 1.5;             // the pile to check fills the frame; the filed pile sits at the edge            // both piles across, and their depth as seen from above at an angle
     const dist = Math.max(3.0,
       (spanW * fullH) / (2 * tanH * availW * 0.88),
       (spanH * fullH) / (2 * tanH * availH * 0.9));

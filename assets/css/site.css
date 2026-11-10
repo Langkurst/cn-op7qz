@@ -1,24 +1,19 @@
 /*
-  Christopher Nottle: portfolio styles. One file for the home page and the invoice checker.
+  Christopher Nottle: portfolio styles. Geist and Geist Mono, the same type as the tool pages.
   Light is the default; the dark set follows it. Contrast for every text and background pair
   is checked by tests/site.test.js. Fonts are saved in assets/fonts (OFL licence), so nothing
   loads from other sites.
 */
 
 @font-face {
-  font-family: "Inter";
-  src: url("../fonts/inter-latin-wght-normal.woff2") format("woff2");
+  font-family: "Geist";
+  src: url("../fonts/Geist-Variable.woff2") format("woff2");
   font-weight: 100 900; font-style: normal; font-display: block;
 }
 @font-face {
-  font-family: "Instrument Serif";
-  src: url("../fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
-  font-weight: 400; font-style: normal; font-display: block;
-}
-@font-face {
-  font-family: "Instrument Serif";
-  src: url("../fonts/instrument-serif-latin-400-italic.woff2") format("woff2");
-  font-weight: 400; font-style: italic; font-display: block;
+  font-family: "Geist Mono";
+  src: url("../fonts/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900; font-style: normal; font-display: block;
 }
 
 :root {
@@ -44,9 +39,9 @@
   --shadow: 0 1px 2px rgba(18, 21, 23, .05), 0 8px 24px -12px rgba(18, 21, 23, .12);
   --shadow-lg: 0 2px 4px rgba(18, 21, 23, .04), 0 30px 60px -24px rgba(18, 21, 23, .28);
 
-  --sans: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-  --serif: "Instrument Serif", "Iowan Old Style", Georgia, "Times New Roman", serif;
-  --mono: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  --sans: "Geist", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --serif: "Geist", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   --wrap: 75rem;
   --gutter: 1.5rem;
   --radius: 14px;
@@ -80,22 +75,22 @@
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 5rem; }
 body {
   margin: 0; background: var(--bg); color: var(--text);
-  font: 400 1.0625rem/1.65 var(--sans); font-feature-settings: "cv11", "ss01";
+  font: 400 1.0625rem/1.65 var(--sans);
   -webkit-font-smoothing: antialiased; overflow-wrap: break-word;
 }
 img, video, iframe { max-width: 100%; display: block; }
 img, video { height: auto; }
 
 h1, h2, h3 { margin: 0; text-wrap: balance; }
-h1, h2 { font-family: var(--serif); font-weight: 400; letter-spacing: -.01em; }
-h1 { font-size: clamp(3.1rem, 8.5vw, 6rem); line-height: .95; }
+h1, h2 { font-family: var(--serif); font-weight: 600; letter-spacing: -.045em; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); line-height: .98; }
 h2 { font-size: clamp(2.2rem, 4.4vw, 3.25rem); line-height: 1.02; }
 h3 { font-family: var(--sans); font-size: 1.2rem; font-weight: 600; letter-spacing: -.012em; line-height: 1.3; }
 p { margin: 0 0 1em; }
 p:last-child { margin-bottom: 0; }
 ul, ol, dl, dd { margin: 0; padding: 0; }
 ul, ol { list-style: none; }
-em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+em { font-style: normal; color: var(--accent); }
 
 a { color: var(--accent); text-underline-offset: .2em; text-decoration-thickness: 1px; }
 a:hover { text-decoration-thickness: 2px; }
@@ -201,7 +196,7 @@ main, .site-foot { position: relative; z-index: 1; }
 }
 .figures > div { padding: 1.3rem 1.2rem; }
 .figures > div + div { border-left: 1px solid var(--line); }
-.figure-n { display: block; font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1; color: var(--text); }
+.figure-n { display: block; font-family: var(--serif); font-weight: 600; letter-spacing: -.04em; font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1; color: var(--text); }
 .figures dd { color: var(--muted); font-size: .88rem; line-height: 1.45; margin-top: .5rem; }
 
 /* ---------- sections ---------- */
@@ -221,14 +216,14 @@ main, .site-foot { position: relative; z-index: 1; }
 .card .btn { margin-top: .5rem; }
 .card-copy > p { color: var(--muted); }
 .card-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem .8rem; margin-bottom: .9rem; }
-.card-title h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.8rem, 3vw, 2.3rem); letter-spacing: -.01em; line-height: 1.05; }
+.card-title h3 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.8rem, 3vw, 2.3rem); letter-spacing: -.035em; line-height: 1.05; }
 .card-title .pill-status { margin: 0; }
 .card-accent { background: var(--stage); }
 .links { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; margin-top: 1.25rem; }
 
 .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.75rem, 1fr)); gap: 0; margin: 1.5rem 0 0; border-top: 1px solid var(--line); }
 .facts > div { padding: 1rem 1rem 0 0; }
-.facts dt { font-family: var(--serif); font-size: 1.85rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.facts dt { font-family: var(--serif); font-weight: 600; letter-spacing: -.035em; font-size: 1.85rem; line-height: 1; font-variant-numeric: tabular-nums; }
 .facts dd { color: var(--muted); font-size: .85rem; line-height: 1.4; margin-top: .35rem; }
 
 .split { display: grid; gap: 0; margin-top: 1.5rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
@@ -245,7 +240,7 @@ main, .site-foot { position: relative; z-index: 1; }
 .shot-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
 
 /* ---------- how I work with AI ---------- */
-.rule { font-family: var(--serif); font-size: clamp(1.45rem, 2.6vw, 1.8rem) !important; line-height: 1.25; color: var(--text) !important; margin-top: 1.25rem !important; }
+.rule { font-family: var(--serif); font-weight: 500; letter-spacing: -.02em; font-size: clamp(1.45rem, 2.6vw, 1.8rem) !important; line-height: 1.25; color: var(--text) !important; margin-top: 1.25rem !important; }
 .cases { display: grid; gap: 1rem; }
 .case-item { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 1.25rem 1.4rem; box-shadow: var(--shadow); }
 .case-item time { display: inline-block; font-size: .8rem; font-weight: 600; color: var(--muted); padding: .12rem .6rem; border: 1px solid var(--line); border-radius: 999px; margin-bottom: .7rem; }
@@ -356,7 +351,7 @@ mark[class^="t-"] { background: var(--cb); box-shadow: inset 0 -2px 0 var(--c); 
 .hero-copy .reach { justify-content: flex-start; }
 .hero-place { display: inline-flex; align-items: center; gap: .55rem; color: var(--muted); font-size: .95rem; margin-bottom: 1rem; }
 .dot-live { width: .55rem; height: .55rem; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px var(--ok-bg); }
-.hero-copy h1 { font-size: clamp(3rem, 6.2vw, 4.7rem); white-space: nowrap; }
+.hero-copy h1 { font-size: clamp(2.4rem, 4.2vw, 3.5rem); white-space: nowrap; }
 .email-line { margin: 1rem 0 0; }
 .email-plain { border: 0; background: none; padding: 0; color: var(--muted); font-size: .9rem; }
 .hero-visual { position: relative; margin: 0; padding: 1.5rem 0 2rem; }
@@ -369,17 +364,18 @@ mark[class^="t-"] { background: var(--cb); box-shadow: inset 0 -2px 0 var(--c); 
   background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-lg); font-size: .82rem; color: var(--muted); line-height: 1.35;
   animation: arrive .6s cubic-bezier(.2, .7, .2, 1) both;
 }
-.float-n { font-family: var(--serif); font-size: 1.9rem; line-height: 1; color: var(--text); }
+.float-n { font-family: var(--serif); font-weight: 600; letter-spacing: -.04em; font-size: 1.9rem; line-height: 1; color: var(--text); }
 .float-a { left: -1.75rem; bottom: 6%; animation-delay: .35s; }
-.float-b { right: -1.75rem; top: -.25rem; animation-delay: .6s; }
+/* Sits just past the picture, but never past the edge of the screen. */
+.float-b { right: max(-1.75rem, calc(-1.25rem - max(0px, (100vw - 75rem) / 2))); top: -.25rem; animation-delay: .6s; }
 /* The one piece of motion on the site: the two figures settle into place once. */
 @keyframes arrive { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 /* ---------- case studies ---------- */
 .case { display: grid; gap: 2rem; align-items: start; padding: clamp(1.25rem, 3vw, 2.25rem); margin-bottom: 1.5rem; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); }
-.case-body h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 4vw, 3rem); line-height: 1; letter-spacing: -.01em; }
+.case-body h3 { font-family: var(--serif); font-weight: 600; font-size: clamp(2.2rem, 4vw, 3rem); line-height: 1; letter-spacing: -.035em; }
 .case-meta { display: flex; align-items: center; gap: .7rem; font-size: .85rem; color: var(--muted); margin-bottom: .8rem; }
-.case-num { font-family: var(--serif); font-size: 1.1rem; color: var(--accent); }
+.case-num { font-family: var(--mono); font-size: 1.1rem; color: var(--accent); }
 .case-lede { font-size: 1.1rem; color: var(--text); margin: .9rem 0 1.4rem; max-width: 38rem; }
 .case-grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
 .case-grid > div { background: var(--surface-2); padding: .95rem 1.1rem; }
@@ -388,9 +384,9 @@ mark[class^="t-"] { background: var(--cb); box-shadow: inset 0 -2px 0 var(--c); 
 .case .shot-actions .btn { text-decoration: none; }
 
 /* ---------- tools ---------- */
-.card-h { font-family: var(--serif); font-weight: 400; font-size: 1.75rem; line-height: 1.1; margin-bottom: .8rem; letter-spacing: -.01em; }
+.card-h { font-family: var(--serif); font-weight: 600; font-size: 1.75rem; line-height: 1.1; margin-bottom: .8rem; letter-spacing: -.035em; }
 .card-feature { display: grid; gap: 2rem; align-items: center; }
-.feature-copy h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 3.5vw, 2.6rem); line-height: 1.05; margin-bottom: .9rem; }
+.feature-copy h3 { font-family: var(--serif); font-weight: 600; font-size: clamp(2rem, 3.5vw, 2.6rem); line-height: 1.05; margin-bottom: .9rem; }
 .feature-copy > p { color: var(--muted); }
 .facts-tight { margin: 1.25rem 0 1.5rem; }
 .feature-demo { display: grid; gap: .75rem; }
