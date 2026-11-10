@@ -234,7 +234,7 @@ test("copy and print: buttons, a pre-mounted status region, a tick, 1.5 seconds,
   assert.match(page, /navigator\.clipboard/);
   assert.match(css, /@media print/);
   const print = css.slice(css.indexOf("@media print"));
-  assert.match(print, /\.inbox[^{]*\{[^}]*display:\s*none/);
+  assert.match(print, /\.bills[^{]*\{[^}]*display:\s*none/);
   assert.ok(!/toast/i.test(page + css + html), "no toast");
 });
 
@@ -242,7 +242,8 @@ test("copy and print: buttons, a pre-mounted status region, a tick, 1.5 seconds,
 test("gst box: a standalone field uses the same check digit code", () => {
   assert.match(html, /id="gst-check"/);
   assert.match(html, /id="gst-result"[^>]*role="status"|role="status"[^>]*id="gst-result"/);
-  assert.match(html, /Check a GST number/);
+  assert.match(html, /<h2 id="gst-h">GST number check<\/h2>/);
+  assert.match(html, /<label for="gst-check">GST number<\/label>/);
   assert.match(page, /describeGstNumber/);
   assert.match(read("assets/js/matcher.js"), /function describeGstNumber[\s\S]*?gstNumberIsValid\(n\)/);
   assert.equal(C.gstNumberIsValid("124-587-301"), true);
@@ -311,9 +312,8 @@ test("keyboard: j, k, arrows, a and h are handled, never while typing, and ? ope
 
 test("keyboard sheet: opacity and scale from 0.98 over 150 ms, off for reduced motion", () => {
   assert.match(css, /@keyframes sheet-in\s*\{[^}]*opacity:\s*0[^}]*scale\(\.98\)|@keyframes sheet-in\s*\{[^}]*scale\(0\.98\)/);
-  assert.match(css, /dialog\.sheet\[open\]\s*\{[^}]*animation:[^;}]*var\(--sheet\) var\(--ease-ledger\)/);
+  assert.match(css, /dialog\.sheet\[open\]\s*\{[^}]*animation:[^;}]*var\(--sheet\) var\(--ease\)/);
   assert.match(css, /--sheet:\s*\.15s/);
-  assert.match(css, /--ease-ledger:\s*cubic-bezier\(0?\.22,\s*1,\s*0?\.36,\s*1\)/);
   const reduced = css.match(/@media \(prefers-reduced-motion: reduce\)\s*\{([\s\S]*?)\n\}/);
   assert.ok(reduced, "no reduced-motion block");
   assert.match(reduced[1], /animation:\s*none/);
@@ -333,18 +333,28 @@ test("motion: keyframes animate transform and opacity only, and every transition
       const [prop, dur, curve] = part.trim().split(/\s+/);
       assert.ok(["opacity", "transform", "background-color", "border-color", "color"].includes(prop), `transition on ${prop}`);
       assert.equal(dur, "var(--quick)", `${prop} duration`);
-      assert.equal(curve, "var(--ease-ledger)", `${prop} curve`);
+      assert.equal(curve, "var(--ease)", `${prop} curve`);
     }
   }
   assert.match(css, /--quick:\s*\.12s/);
   assert.ok(!/cubic-bezier\(\.4,\s*0,\s*\.2,\s*1\)/.test(css), "the framework default curve");
   for (const m of cssCode.matchAll(/animation:\s*([^;]+);/g)) {
     if (/^none\b/.test(m[1].trim())) continue;
-    assert.match(m[1], /var\(--ease-ledger\)/, `animation without the signature curve: ${m[1]}`);
+    assert.match(m[1], /var\(--ease\)/, `animation without the page's curve: ${m[1]}`);
   }
 });
 
-// ---------- the ledger look, from INVOICE-DESIGN.md ----------
+test("motion: nothing moves when the page loads; opening a different bill fades its panels in, off for reduced motion", () => {
+  assert.match(page, /if \(paintedId !== b\.id\) \{\s*if \(paintedId !== null\) showOpening\(\);\s*paintedId = b\.id;\s*\}/, "the first bill is drawn without motion");
+  assert.match(page, /function showOpening\(\) \{[^}]*classList\.add\("is-opening"\)/);
+  assert.match(css, /\.open-bill\.is-opening > \.panel \{ animation: open-in var\(--open\) var\(--ease\); \}/);
+  const reduced = css.match(/@media \(prefers-reduced-motion: reduce\)\s*\{([\s\S]*?)\n\}/)[1];
+  assert.match(reduced, /\.open-bill\.is-opening > \.panel[^{]*\{ animation: none; \}|\.open-bill\.is-opening > \.panel \{ animation: none; \}/);
+  assert.ok(!/writeSchedule|writeIn|is-writing|scroll-behavior:\s*smooth/.test(page + css), "the old load-time write-in is gone");
+  assert.ok(!/\bstyle\.(cssText|setAttribute)|setAttribute\("style"/.test(page), "style attributes are blocked by the security policy");
+});
+
+// ---------- the look: ordinary accounts software, from INVOICE-DESIGN.md ----------
 function tokenBlock(selector) {
   const at = css.indexOf(selector + " {");
   assert.ok(at !== -1, selector);
@@ -366,103 +376,139 @@ const LIGHT = tokenBlock(":root");
 const DARK = { ...LIGHT, ...tokenBlock(':root[data-theme="dark"]') };
 
 for (const [name, t] of [["light", LIGHT], ["dark", DARK]]) {
-  test(`ledger colours: ${name} text is 4.5:1 or more, field borders 3:1, and nothing is pure black or white`, () => {
-    for (const fg of ["ink", "pencil", "graphite", "red-ink", "matched", "hold", "carbon"]) {
-      for (const bg of ["paper", "folio", "blotter"]) {
+  test(`colours: ${name} text and status words are 4.5:1 or more on every surface, and input borders 3:1`, () => {
+    // Surfaces: the app background, panels, table heads and the viewer, and the selected bill row.
+    for (const fg of ["text", "muted", "blue", "green", "amber", "grey"]) {
+      for (const bg of ["bg", "panel", "sunken", "blue-tint"]) {
         const r = contrast(t[fg], t[bg]);
         assert.ok(r >= 4.5, `${name}: ${fg} on ${bg} is ${r.toFixed(2)}:1`);
       }
     }
-    for (const [fg, bg] of [["matched", "matched-bg"], ["hold", "hold-bg"], ["carbon", "carbon-bg"], ["pill-ink", "pill"]]) {
+    // A flagged invoice line, the buttons, and the pressed Hold button.
+    for (const [fg, bg] of [["text", "amber-tint"], ["muted", "amber-tint"], ["amber", "amber-tint"], ["blue-ink", "blue"], ["blue-ink", "blue-hover"], ["green-ink", "green"], ["text", "grey-tint"]]) {
       const r = contrast(t[fg], t[bg]);
       assert.ok(r >= 4.5, `${name}: ${fg} on ${bg} is ${r.toFixed(2)}:1`);
     }
-    for (const bg of ["folio", "blotter", "paper"]) {
+    for (const bg of ["bg", "panel", "sunken"]) {
       const r = contrast(t.field, t[bg]);
-      assert.ok(r >= 3, `${name}: field border on ${bg} is ${r.toFixed(2)}:1`);
+      assert.ok(r >= 3, `${name}: input border on ${bg} is ${r.toFixed(2)}:1`);
     }
-    for (const [k, v] of Object.entries(t)) assert.ok(!/^#(000000|ffffff)$/i.test(v), `${k} is ${v}`);
+    assert.ok(!/^#000000$/i.test(t.text), "text is near-black, not pure black");
   });
 }
 
-test("ledger shape: hairlines, radii from the system only, no soft shadows", () => {
-  assert.match(css, /--hair:\s*\.5px/);
-  assert.match(css, /--rule:\s*rgba\(38,\s*38,\s*38,\s*\.12\)/);
-  for (const m of css.matchAll(/border-radius:\s*([^;]+);/g)) {
-    assert.match(m[1].trim(), /^(0|var\(--r-(cell|btn|sheet|pill)\))$/, `radius ${m[1]}`);
-  }
-  assert.match(css, /--r-cell:\s*3px/); assert.match(css, /--r-btn:\s*4px/); assert.match(css, /--r-sheet:\s*6px/);
-  for (const m of css.matchAll(/box-shadow:\s*([^;]+);/g)) {
-    for (const part of m[1].split(/,(?![^(]*\))/)) {
-      const px = part.replace(/rgba?\([^)]*\)|var\([^)]*\)/g, "").match(/-?[\d.]+px|\b0\b/g) || [];
-      const blur = px.length >= 3 ? parseFloat(px[2]) : 0;
-      assert.ok(blur <= 2, `soft shadow: ${part.trim()}`);
-    }
-  }
+test("colours: one business blue, a neutral grey app, statuses as coloured words without fills", () => {
+  // Light: a neutral grey background (no warm cast), white panels.
+  assert.equal(LIGHT.panel.toLowerCase(), "#ffffff");
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(LIGHT.bg.slice(i, i + 2), 16));
+  assert.ok(b >= r && Math.max(r, g, b) - Math.min(r, g, b) <= 8, `app background ${LIGHT.bg} is a neutral grey`);
+  // Blue is the only accent: links, focus and the primary button use it, and nothing else is coloured
+  // except the three status colours.
+  assert.match(cssCode, /:focus-visible \{ outline: 2px solid var\(--blue\);/);
+  assert.match(cssCode, /\.btn-primary \{[^}]*background: var\(--blue\);/);
+  assert.match(cssCode, /\na \{ color: var\(--blue\);/);
+  const hexes = new Set([...cssCode.matchAll(/#[0-9a-fA-F]{6}\b/g)].map((m) => m[0].toLowerCase()));
+  assert.ok(hexes.size <= 48, `${hexes.size} colours`);
+  // Status words: coloured text and an icon, no background, no border, no rounded chip.
+  const status = cssCode.match(/\.status \{([^}]*)\}/)[1];
+  assert.ok(!/background|border|border-radius|padding/.test(status), "a status is not a chip");
+  for (const m of cssCode.matchAll(/\.status\.is-[\w-]+[^{]*\{([^}]*)\}/g)) assert.ok(!/background|border/.test(m[1]), "a status has no fill");
+  assert.ok(!/\bpill\b|is-held[^{]*\{[^}]*dashed/.test(cssCode + page), "no pills");
+  for (const word of ['"Ready to pay"', '"Needs review"', '"On hold"', '"Approved"']) assert.ok(page.includes(word), word);
+  assert.match(page, /statusEl\(st\.cls, st\.icon, st\.text\)/);
 });
 
-test("ledger type: Instrument Serif headline at 56 to 112 px, Geist text, Geist Mono labels, all from this folder", () => {
-  // The page's own copies, so a change to the shared fonts cannot change this page.
-  for (const f of ["instrument-serif-latin-400-normal.woff2", "instrument-serif-latin-400-italic.woff2", "geist-latin-wght-normal.woff2", "geist-latin-ext-wght-normal.woff2", "GeistMono-Variable.woff2"]) {
-    assert.ok(fs.existsSync(path.join(ROOT, "assets/fonts/ledger", f)), f);
-    assert.ok(css.includes(`../fonts/ledger/${f}`), `${f} not declared`);
+test("shape: 1px borders, one 4px radius, and a shadow only on dialogs", () => {
+  for (const m of cssCode.matchAll(/(?:^|[\s;{])border(?:-(?:top|right|bottom|left))?:\s*([^;]+);/g)) {
+    const w = m[1].match(/(?:^|\s)([\d.]+px)/);
+    if (w) assert.equal(w[1], "1px", `border ${m[1]}`);
   }
-  for (const f of ["LICENSE-Geist.txt", "LICENSE-instrument-serif.txt"]) assert.match(fs.readFileSync(path.join(ROOT, "assets/fonts/ledger", f), "utf8"), /SIL Open Font License/);
-  for (const m of css.matchAll(/url\("\.\.\/fonts\/([^"]+)"\)/g)) assert.match(m[1], /^ledger\//, `${m[1]} is a shared font`);
-  assert.match(css, /\.intro h1 \{[^}]*font: 400 clamp\(56px, 9vw, 112px\)\/1 var\(--serif\);[^}]*letter-spacing: -\.02em/);
-  assert.match(css, /\.label, \.label-mono \{ font: 500 12px\/1\.2 var\(--mono\); letter-spacing: \.06em; text-transform: uppercase/);
-  assert.ok(!/\bInter\b/.test(css), "Inter is the NZ Redact face");
+  assert.ok(!/\bdouble\b|\bdashed\b|\bdotted\b/.test(cssCode), "no double, dashed or dotted rules");
+  assert.ok(!/text-decoration-style|text-decoration:[^;]*(dashed|dotted|wavy)/.test(cssCode), "no dashed underlines");
+  for (const m of cssCode.matchAll(/border-radius:\s*([^;]+);/g)) {
+    for (const part of m[1].trim().split(/\s+/)) assert.match(part, /^(0|var\(--radius\))$/, `radius ${m[1]}`);
+  }
+  assert.match(css, /--radius:\s*4px/);
+  const shadows = [...cssCode.matchAll(/([^{}]+)\{[^}]*box-shadow:/g)].map((m) => m[1].trim());
+  assert.deepEqual(shadows, ["dialog.sheet"], "only dialogs cast a shadow");
 });
 
-test("ledger tokens: every variable the page uses is set in invoice.css, so system.css can change freely", () => {
+test("type: the operating system's UI font, no web fonts, no mono, no italics, tabular figures for money", () => {
+  assert.match(css, /--font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;/);
+  assert.match(cssCode, /\nbody \{[^}]*font: 400 14px\/1\.5 var\(--font\);[^}]*font-variant-numeric: tabular-nums;/);
+  assert.ok(!/@font-face/.test(cssCode), "no font files");
+  assert.ok(!/monospace|ui-monospace|Consolas|Menlo|Courier/i.test(cssCode), "no mono face");
+  assert.ok(!/font-style:\s*italic|\bitalic\b/.test(cssCode), "no italics");
+  assert.ok(!/text-transform/.test(cssCode), "sentence case as written");
+  for (const m of cssCode.matchAll(/letter-spacing:\s*([^;]+);/g)) assert.match(m[1].trim(), /^(0|normal)$/, "normal letter-spacing");
+  for (const m of cssCode.matchAll(/font-family:\s*([^;]+);|(?:^|[\s;{])font:\s*([^;]+);/g)) {
+    const v = (m[1] || m[2]).trim();
+    assert.ok(v === "inherit" || /var\(--font\)$/.test(v), `a font other than the system one: ${v}`);
+  }
+  assert.ok(!/rel="preload"[^>]*as="font"|fonts\//.test(html), "the page loads no fonts");
+  assert.ok(!fs.existsSync(path.join(ROOT, "assets/fonts/ledger")), "the old ledger fonts are deleted");
+  assert.ok(!/system\.css|site\.css/.test(html), "the shared portfolio styles, with their own fonts, are not loaded");
+});
+
+test("tokens: every variable the page uses is set in invoice.css, so the shared styles can change freely", () => {
   const defined = new Set([...css.matchAll(/(--[\w-]+):/g)].map((m) => m[1]));
-  for (const m of css.matchAll(/var\((--[\w-]+)/g)) {
-    if (m[1] === "--w") continue; // set per cell by the page script
-    assert.ok(defined.has(m[1]), `${m[1]} is not set in invoice.css`);
-  }
+  for (const m of css.matchAll(/var\((--[\w-]+)/g)) assert.ok(defined.has(m[1]), `${m[1]} is not set in invoice.css`);
 });
 
-test("headline: names the line by line match against the purchase order, left-aligned, no centred hero or card row", () => {
-  const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1].replace(/<[^>]+>/g, "");
-  assert.match(h1, /purchase order/);
-  assert.match(h1, /line by line/);
-  for (const m of cssCode.matchAll(/([^{}]+)\{([^}]*)\}/g)) {
-    if (/\.intro|\.lede|\.facts|\.rules h2/.test(m[1])) assert.ok(!/text-align:\s*center|margin:[^;]*auto/.test(m[2]), `centred: ${m[1].trim()}`);
-  }
+test("layout: no hero; an app bar names the tool, and the bills table comes first with its toolbar above it", () => {
+  const header = html.slice(html.indexOf('<header class="topbar"'), html.indexOf("</header>"));
+  assert.match(header, /<h1 class="product">Invoice checker<\/h1>/);
+  assert.match(header, /Demo with made-up bills/);
+  const links = [...header.matchAll(/<a href="([^"]+)">([^<]+)<\/a>/g)].map((m) => m[2]);
+  assert.deepEqual(links, ["Portfolio", "NZ Redact", "How it checks"]);
+  assert.match(header, /href="#how"/);
+  const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
+  const firstSection = main.match(/<section\b[^>]*>/)[0];
+  assert.match(firstSection, /id="app"/, "the working screen is the first section");
+  assert.match(main.slice(0, main.indexOf('<section class="app"')), /^<main[^>]*>\s*<div class="print-only" id="print-head"><\/div>\s*<noscript>[\s\S]*?<\/noscript>\s*$/, "nothing before the app but the print heading");
+  const heads = [...html.matchAll(/<thead>\s*<tr>([\s\S]*?)<\/tr>/g)][0][1];
+  assert.deepEqual([...heads.matchAll(/<th[^>]*>([^<]+)<\/th>/g)].map((m) => m[1]), ["Supplier", "Invoice number", "Date", "Total", "Status"]);
+  assert.match(html, /<tbody id="inbox"><\/tbody>/);
+  const toolbar = html.slice(html.indexOf('<div class="toolbar">'), html.indexOf("<table"));
+  const order = ["new-check", "tolerance", "tolerance-cents", "keys-open", "reset"].map((id) => toolbar.indexOf(`id="${id}"`));
+  assert.ok(order.every((i, n) => i !== -1 && (n === 0 || i > order[n - 1])), "toolbar: New check, Price tolerance, Ignore differences under, Shortcuts, Reset");
+  assert.ok(html.indexOf('id="open-bill"') > html.indexOf('id="inbox"'), "the open bill is below the table");
+  assert.ok(html.indexOf('id="paper"') < html.indexOf('id="panel"'), "the invoice comes before its check results");
+  assert.ok(!/class="(intro|lede|facts|hero|label|label-mono)\b/.test(html) && !/\.(intro|lede|facts|hero|label-mono)\b/.test(cssCode), "no hero parts");
   assert.ok(!/grid-cards|repeat\(3,/.test(html + css), "a row of three equal cards");
 });
 
-// ---------- the ledger animation ----------
-const scheduleSrc = page.match(/function writeSchedule\(lineCount\) \{[^]*?\n  \}/)[0];
-const writeSchedule = new Function(`${scheduleSrc}; return writeSchedule;`)();
-
-test("ledger animation: values are written in order, and each tick or flag lands 80 to 150 ms after its value", () => {
-  for (const n of [1, 3, 4, 12, 40]) {
-    const plan = writeSchedule(n);
-    assert.equal(plan.rows.length, n);
-    let last = -1;
-    for (const row of plan.rows) {
-      for (const t of row.cells) { assert.ok(t > last, `cells out of order at ${t}`); last = t; }
-      const gap = row.mark - row.cells[3];
-      assert.ok(gap >= 80 && gap <= 150, `mark ${gap} ms after its value`);
-      last = row.cells[0];
-    }
-    assert.ok(plan.totals[0].value > plan.rows[n - 1].cells[3], "totals after the lines");
-    for (const t of plan.totals) assert.ok(t.mark - t.value >= 80 && t.mark - t.value <= 150, "total mark gap");
-    assert.ok(plan.end <= 1600, `${n} lines take ${plan.end} ms`);
-  }
+test("check results: a table of lines, the needs-a-person list, the actions, and the amount to raise as a sentence", () => {
+  for (const h of ['["Line", ""]', '["Ordered", "n"]', '["Invoiced", "n"]', '["Difference", "n"]', '["Result", ""]']) assert.ok(page.includes(h), h);
+  assert.match(page, /"Needs a person"/);
+  assert.match(page, /"Raise " \+ money\(r\.queryCents\) \+ " with the supplier before GST\."/);
+  assert.ok(!/v-amount|to raise with the supplier/.test(page + css), "no big amount over a caption");
+  const order = ['id = "copy-query"', 'id = "print-summary"', 'id = "hold"', 'id = "approve"'].map((s) => page.indexOf(s));
+  assert.ok(order.every((i, n) => i !== -1 && (n === 0 || i > order[n - 1])), "Copy query, Print summary, Hold, Approve");
+  assert.match(page, /"Tax invoice"/);
+  for (const t of ['"Invoice date"', '"Due date"', '"Bill to"', '"Subtotal"', '"GST 15%"', '"Total due"']) assert.ok(page.includes(t), t);
 });
 
-test("ledger animation: plays when a bill opens, not on edits, and never for reduced motion", () => {
-  assert.match(page, /if \(paintedId !== b\.id\) \{ paintedId = b\.id; writeIn\(\); \}/);
-  assert.match(page, /function writeIn\(\) \{[^]*?prefers-reduced-motion: reduce\)"\)\.matches\) return;/);
-  assert.match(page, /style\.setProperty\("--w"/);
-  assert.match(page, /at\(tr\.querySelector\("\.ring"\), p\.cells\[3\]\);/, "the cell ring flashes with its amount, not all at once");
-  assert.match(css, /\.paper\.is-writing \.w \{ animation: write-in var\(--write\) var\(--ease-ledger\) var\(--w, 0ms\) both; \}/);
-  assert.match(css, /\.paper\.is-writing \.mk \{ animation: mark-in var\(--mark\) var\(--ease-ledger\) var\(--w, 0ms\) both; \}/);
-  const reduced = css.match(/@media \(prefers-reduced-motion: reduce\)\s*\{([\s\S]*?)\n\}/)[1];
-  assert.match(reduced, /\.paper\.is-writing \.w, \.paper\.is-writing \.mk[^{]*\{ animation: none; \}/);
-  assert.ok(!/\bstyle\.(cssText|setAttribute)|setAttribute\("style"/.test(page), "style attributes are blocked by the security policy");
+test("about: the plain intro and How it checks sit below the tool", () => {
+  const about = html.slice(html.indexOf('<section class="about"'), html.indexOf("</main>"));
+  assert.ok(html.indexOf('<section class="about"') > html.indexOf('id="open-bill"'));
+  assert.match(about, /<h2 id="about-h">About this demo<\/h2>/);
+  assert.match(about, /Matching supplier invoices to purchase orders was part of my job as a Purchaser at Häfele\./);
+  assert.match(about, /<h2 id="how">How it checks<\/h2>/);
+  assert.match(about, /<table class="how-table">/);
+  assert.match(about, /What it does not do/);
+  const said = about.match(/(\d+) automated tests cover the rules, the extra features and every sample bill/);
+  assert.ok(said, "the test count line");
+  // The number on the page is the real count of the rule and feature tests. It is counted by running
+  // them, once; the inner run skips this step so it does not start another run.
+  if (process.env.INVOICE_TEST_COUNT_RUN) return;
+  const { spawnSync } = require("child_process");
+  const env = { ...process.env, INVOICE_TEST_COUNT_RUN: "1" };
+  delete env.NODE_TEST_CONTEXT; // a fresh run of its own, not part of this one
+  const run = spawnSync(process.execPath, ["--test", "--test-reporter=tap", "tests/matcher.test.js", "tests/features.test.js"], { cwd: ROOT, encoding: "utf8", env });
+  const counted = +((run.stdout.match(/^# tests (\d+)$/m) || [])[1]);
+  assert.ok(counted > 0, "the tests could be counted");
+  assert.equal(+said[1], counted, `the page says ${said[1]} tests; there are ${counted}`);
 });
 
 // ---------- 7. Support link ----------
