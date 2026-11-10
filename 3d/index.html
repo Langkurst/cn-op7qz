@@ -3,67 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Invoice matching demo | Christopher Nottle</title>
-  <meta name="description" content="Drag a supplier invoice onto its purchase order and it is checked line by line, with the same rules as the invoice checker. Made-up suppliers and prices.">
+  <title>Invoice matching demo moved | Christopher Nottle</title>
   <meta name="robots" content="noindex, nofollow">
-  <meta name="color-scheme" content="light dark">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Invoice matching demo | Christopher Nottle">
-  <meta property="og:image" content="https://langkurst.github.io/cn-op7qz/assets/img/og-portfolio.png">
-  <link rel="icon" href="../assets/img/favicon.png" type="image/png">
-  <link rel="preload" href="../assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../assets/fonts/ibm-plex-sans-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../assets/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css">
+  <meta http-equiv="refresh" content="0; url=../index.html#invoice">
 </head>
 <body>
-  <a class="skip" href="#main">Skip to the main content</a>
-
-  <header class="site-head">
-    <div class="wrap">
-      <a class="site-name" href="../index.html">Christopher Nottle</a>
-      <nav class="site-nav" aria-label="Site">
-        <ul>
-          <li><a href="../index.html">Portfolio</a></li>
-          <li><a href="../invoice-checker.html">Invoice checker</a></li>
-          <li><a href="../index.html#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main" class="wrap">
-    <h1>Invoice matching demo</h1>
-    <p class="intro">Drag the invoice onto its purchase order, or press Check. Each line is checked with the same rules as the <a href="../invoice-checker.html">invoice checker</a>. The suppliers and prices are made up.</p>
-
-    <ul class="bills" data-bills aria-label="Sample bills"><li><button type="button" class="bill" data-bill="0" aria-pressed="false"><code>INV-20418</code><span>Example Fittings Ltd</span></button></li><li><button type="button" class="bill" data-bill="1" aria-pressed="true"><code>SHI-7731</code><span>Sample Hardware Imports Ltd</span></button></li><li><button type="button" class="bill" data-bill="2" aria-pressed="false"><code>INV-20466</code><span>Example Fittings Ltd</span></button></li><li><button type="button" class="bill" data-bill="3" aria-pressed="false"><code>SHI-7802</code><span>Sample Hardware Imports Ltd</span></button></li></ul>
-
-    <div class="desk" data-desk>
-      <section class="doc po" data-po aria-labelledby="po-h"><div class="doc-head"><h2 id="po-h">Purchase order <code>4500012904</code></h2><p>Sample Hardware Imports Ltd</p></div><table><caption class="visually-hidden">Lines on purchase order 4500012904</caption><thead><tr><th scope="col">Item</th><th scope="col" class="num">Qty</th><th scope="col" class="num">Unit price</th></tr></thead><tbody><tr><th scope="row"><code>RUN-500</code><span>Drawer runner, 500 mm, pair</span></th><td class="num">80</td><td class="num">$15.60</td></tr><tr><th scope="row"><code>LED-2M</code><span>LED strip, 2 m, warm white</span></th><td class="num">50</td><td class="num">$18.50</td></tr><tr><th scope="row"><code>SCR-430</code><span>Screws, 4 x 30 mm, box of 500</span></th><td class="num">24</td><td class="num">$11.90</td></tr><tr><th scope="row"><code>LEG-100</code><span>Adjustable cabinet leg, 100 mm</span></th><td class="num">400</td><td class="num">$1.35</td></tr></tbody></table></section>
-      <div class="tray">
-        <section class="doc inv" data-inv aria-labelledby="inv-h"><div class="doc-head"><h2 id="inv-h">Tax invoice <code>SHI-7731</code></h2><p>Sample Hardware Imports Ltd<br>GST number <code>136-900-420</code><br>5 November 2026, for order <code>4500012904</code></p></div><table><caption class="visually-hidden">Lines on invoice SHI-7731</caption><thead><tr><th scope="col">Item</th><th scope="col" class="num">Qty</th><th scope="col" class="num">Unit price</th><th scope="col" class="num">Amount</th><th scope="col"><span class="visually-hidden">Result</span></th></tr></thead><tbody><tr data-code="RUN-500" data-i="0"><th scope="row"><code>RUN-500</code><span>Drawer runner, 500 mm, pair</span></th><td class="num">80</td><td class="num">$16.10</td><td class="num">$1,288.00</td><td class="mark"></td></tr><tr data-code="LED-2M" data-i="1"><th scope="row"><code>LED-2M</code><span>LED strip, 2 m, warm white</span></th><td class="num">60</td><td class="num">$18.50</td><td class="num">$1,110.00</td><td class="mark"></td></tr><tr data-code="SCR-430" data-i="2"><th scope="row"><code>SCR-430</code><span>Screws, 4 x 30 mm, box of 500</span></th><td class="num">24</td><td class="num">$11.90</td><td class="num">$285.60</td><td class="mark"></td></tr><tr data-code="LEG-100" data-i="3"><th scope="row"><code>LEG-100</code><span>Adjustable cabinet leg, 100 mm</span></th><td class="num">300</td><td class="num">$1.35</td><td class="num">$405.00</td><td class="mark"></td></tr></tbody><tfoot><tr><th scope="row" colspan="3">Subtotal</th><td class="num">$3,088.60</td><td></td></tr><tr><th scope="row" colspan="3">GST</th><td class="num">$463.29</td><td></td></tr><tr class="grand"><th scope="row" colspan="3">Total</th><td class="num">$3,551.89</td><td></td></tr></tfoot></table></section>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button type="button" class="btn btn-primary" data-check>Check</button>
-      <button type="button" class="btn" data-reset hidden>Put it back</button>
-    </div>
-
-    <section class="result" data-result aria-live="polite" aria-label="Result of the check" hidden></section>
-
-    <noscript><p class="intro">This demo needs JavaScript. The <a href="../invoice-checker.html">invoice checker</a> shows the same check without dragging.</p></noscript>
-  </main>
-
-  <footer class="site-foot">
-    <div class="wrap">
-      <span>Christopher Nottle, Auckland. Updated November 2026.</span>
-      <a href="../index.html">Back to the portfolio</a>
-    </div>
-  </footer>
-
-  <script src="../assets/js/matcher.js"></script>
-  <script src="../assets/js/samples.js"></script>
-  <script src="demo.js"></script>
+  <h1>The invoice matching demo has moved</h1>
+  <p>It's on the <a href="../index.html#invoice">home page</a> now.</p>
 </body>
 </html>

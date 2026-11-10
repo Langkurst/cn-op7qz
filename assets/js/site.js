@@ -135,35 +135,3 @@
     });
   }
 })();
-
-/*
-  The invoice check in the first screen. It shows the finished check from the start.
-  "Run the check again" replays it line by line, the way the checker works through a bill.
-  Nothing moves unless someone presses the button, and nothing moves at all with reduced motion.
-*/
-(function () {
-  "use strict";
-  var fig = document.querySelector("[data-match]");
-  var run = document.querySelector("[data-match-run]");
-  if (!fig || !run) return;
-  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var timers = [];
-  run.addEventListener("click", function () {
-    timers.forEach(clearTimeout);
-    timers = [];
-    if (reduce) return;                        // the finished check is already on screen
-    var rows = [].slice.call(fig.querySelectorAll("tbody tr"));
-    var foot = fig.querySelector("tfoot");
-    rows.forEach(function (tr) { tr.classList.remove("is-done"); });
-    if (foot) foot.classList.remove("is-done");
-    fig.classList.add("is-running");
-    var at = 150;
-    rows.forEach(function (tr) {
-      if (!tr.classList.contains("reason")) at += 320;  // a reason lands with its line
-      var when = at;
-      timers.push(setTimeout(function () { tr.classList.add("is-done"); }, when));
-    });
-    timers.push(setTimeout(function () { if (foot) foot.classList.add("is-done"); }, at + 320));
-    timers.push(setTimeout(function () { fig.classList.remove("is-running"); }, at + 700));
-  });
-})();

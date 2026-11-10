@@ -1,5 +1,5 @@
 /*
-  Invoice matching demo. A purchase order on the left, its invoice in the in-tray on the right.
+  The invoice check on the home page. A purchase order on the left, its invoice in the in-tray on the right.
   Drag the invoice onto the order (or press Check) and it is checked line by line with the same rules
   and wording as the invoice checker (assets/js/matcher.js), on the same made-up samples (assets/js/samples.js).
   Nothing moves until the visitor drags or presses a button. With reduced motion nothing moves at all.
@@ -30,7 +30,7 @@
       return "<tr><th scope=\"row\"><code>" + esc(l.code) + "</code><span>" + esc(l.description) + "</span></th>" +
         "<td class=\"num\">" + esc(M.formatQuantity(l.qty)) + "</td><td class=\"num\">" + esc(M.formatMoney(l.unitCents)) + "</td></tr>";
     }).join("");
-    return "<div class=\"doc-head\"><h2 id=\"po-h\">Purchase order <code>" + esc(order.number) + "</code></h2>" +
+    return "<div class=\"doc-head\"><h4 id=\"po-h\">Purchase order <code>" + esc(order.number) + "</code></h4>" +
       "<p>" + esc(order.supplier) + "</p></div>" +
       "<table><caption class=\"visually-hidden\">Lines on purchase order " + esc(order.number) + "</caption>" +
       "<thead><tr><th scope=\"col\">Item</th><th scope=\"col\" class=\"num\">Qty</th><th scope=\"col\" class=\"num\">Unit price</th></tr></thead>" +
@@ -42,7 +42,7 @@
         "<td class=\"num\">" + esc(M.formatQuantity(l.qty)) + "</td><td class=\"num\">" + esc(M.formatMoney(l.unitCents)) + "</td>" +
         "<td class=\"num\">" + esc(M.formatMoney(M.lineTotalCents(l))) + "</td><td class=\"mark\"></td></tr>";
     }).join("");
-    return "<div class=\"doc-head\"><h2 id=\"inv-h\">Tax invoice <code>" + esc(inv.number) + "</code></h2>" +
+    return "<div class=\"doc-head\"><h4 id=\"inv-h\">Tax invoice <code>" + esc(inv.number) + "</code></h4>" +
       "<p>" + esc(inv.supplier) + "<br>GST number <code>" + esc(inv.gstNumber) + "</code><br>" + esc(inv.issued) + ", for order <code>" + esc(inv.orderNumber) + "</code></p></div>" +
       "<table><caption class=\"visually-hidden\">Lines on invoice " + esc(inv.number) + "</caption>" +
       "<thead><tr><th scope=\"col\">Item</th><th scope=\"col\" class=\"num\">Qty</th><th scope=\"col\" class=\"num\">Unit price</th><th scope=\"col\" class=\"num\">Amount</th><th scope=\"col\"><span class=\"visually-hidden\">Result</span></th></tr></thead>" +
@@ -127,7 +127,7 @@
         var findings = r.findings.map(function (f) {
           return "<li class=\"is-" + esc(f.severity) + "\"><strong>" + esc(f.title) + "</strong><span>" + esc(f.detail) + "</span></li>";
         }).join("");
-        resultEl.innerHTML = "<h2 id=\"result-h\">" + esc(lines[0]) + "</h2>" + (lines[1] ? "<p class=\"raise\">" + esc(lines[1]) + "</p>" : "") +
+        resultEl.innerHTML = "<h4 id=\"result-h\">" + esc(lines[0]) + "</h4>" + (lines[1] ? "<p class=\"raise\">" + esc(lines[1]) + "</p>" : "") +
           (findings ? "<ul class=\"findings\">" + findings + "</ul>" : "");
         resultEl.hidden = false;
       }, at + (reduce ? 0 : 150)));

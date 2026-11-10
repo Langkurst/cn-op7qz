@@ -54,7 +54,7 @@ test("motion: reduced motion switches the animation off, and focus is visible", 
   assert.ok(reduced, "no reduced-motion block");
   assert.match(reduced[1], /animation:\s*none/);
   assert.match(css, /:focus-visible\s*\{[^}]*outline:\s*3px solid/);
-  assert.equal((css.match(/@keyframes/g) || []).length, 1, "one piece of motion only");
+  assert.ok((css.match(/@keyframes/g) || []).length <= 1, "one piece of motion at most (the AI-tell test below also bans any animation that runs without a user action)");
 });
 
 // ---------- the pages ----------
@@ -173,7 +173,7 @@ test("at most one image per page skips lazy loading, and it is marked high prior
 
 // ---------- AI-look tells (PERSONAL STUFF\Portfolio\AI-TELLS.md, November 2026) ----------
 // Each of these is on the published lists of signs that a page was made by AI. Any hit fails.
-const TELL_PAGES = [["index.html", "assets/css/site.css"], ["3d/index.html", "3d/style.css"]];
+const TELL_PAGES = [["index.html", "assets/css/site.css"]];
 function tellsIn(html, sheet) {
   const found = [];
   const visible = html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ");
@@ -211,25 +211,25 @@ for (const [page, sheetFile] of TELL_PAGES) {
 }
 module.exports = { tellsIn };
 
-// ---------- the invoice matching demo (3d/index.html) ----------
-test("demo page: uses the invoice checker's own rules and samples, works from a button, and has no WebGL", () => {
-  const html = read("3d/index.html");
-  assert.match(html, /<script src="\.\.\/assets\/js\/matcher\.js"><\/script>/);
-  assert.match(html, /<script src="\.\.\/assets\/js\/samples\.js"><\/script>/);
-  assert.match(html, /<script src="demo\.js"><\/script>/);
+// ---------- the invoice check on the home page (it replaced the 3D page) ----------
+test("invoice check: uses the invoice checker's own rules and samples, works from a button, and the old address forwards to it", () => {
+  const html = read("index.html");
+  assert.match(html, /<script src="assets\/js\/matcher\.js"><\/script>/);
+  assert.match(html, /<script src="assets\/js\/samples\.js"><\/script>/);
+  assert.match(html, /<script src="assets\/js\/match\.js"><\/script>/);
   assert.match(html, /<button type="button" class="btn btn-primary" data-check>Check<\/button>/, "a keyboard and screen-reader way to run the check");
   assert.match(html, /aria-live="polite"/, "the result is announced");
   assert.ok(!/<canvas/.test(html) && !fs.existsSync(path.join(ROOT, "3d/vendor/three.module.min.js")), "no WebGL scene");
-  assert.match(html, /href="\.\.\/index\.html"/, "links back to the portfolio");
+  assert.match(read("3d/index.html"), /http-equiv="refresh" content="0; url=\.\.\/index\.html#invoice"/, "old demo address forwards");
   const { spawnSync } = require("child_process");
-  const r = spawnSync(process.execPath, ["--check", path.join(ROOT, "3d/demo.js")], { encoding: "utf8" });
+  const r = spawnSync(process.execPath, ["--check", path.join(ROOT, "assets/js/match.js")], { encoding: "utf8" });
   assert.equal(r.status, 0, r.stderr);
 });
 
-test("demo page: what it says after a check matches the real result for every sample bill", () => {
+test("invoice check: what it says after a check matches the real result for every sample bill", () => {
   const M = require(path.join(ROOT, "assets/js/matcher.js"));
   const S = require(path.join(ROOT, "assets/js/samples.js"));
-  const { verdictText } = require(path.join(ROOT, "3d/demo.js"));
+  const { verdictText } = require(path.join(ROOT, "assets/js/match.js"));
   for (const s of S) {
     const r = M.check(s.order, s.invoice);
     const lines = verdictText(r, M.formatMoney);
@@ -240,14 +240,14 @@ test("demo page: what it says after a check matches the real result for every sa
   }
   const shi = S.find((s) => s.invoice.number === "SHI-7731");
   assert.deepEqual(verdictText(M.check(shi.order, shi.invoice), M.formatMoney),
-    ["2 things to check before paying.", "$225.00 to raise with the supplier, before GST."], "the bill in the portfolio's first screen");
+    ["2 things to check before paying.", "$225.00 to raise with the supplier, before GST."], "the bill shown first");
 });
 
-test("demo page: the first bill is built into the page, exactly as the script draws it, so nothing jumps on load", () => {
+test("invoice check: the first bill is built into the page, exactly as the script draws it, so nothing jumps on load", () => {
   const M = require(path.join(ROOT, "assets/js/matcher.js"));
   const S = require(path.join(ROOT, "assets/js/samples.js"));
-  const D = require(path.join(ROOT, "3d/demo.js"));
-  const html = read("3d/index.html");
+  const D = require(path.join(ROOT, "assets/js/match.js"));
+  const html = read("index.html");
   assert.ok(html.includes(D.orderHTML(S[D.FIRST].order, M)), "purchase order differs from the script's");
   assert.ok(html.includes(D.invoiceHTML(S[D.FIRST].invoice, M)), "invoice differs from the script's");
   assert.ok(html.includes(D.billsHTML(S, D.FIRST)), "bill list differs from the script's");
