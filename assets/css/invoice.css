@@ -165,3 +165,110 @@
   .cmp td.n:not(.cmp-diff) { white-space: normal; }
   .checks li { grid-template-columns: auto 6rem minmax(0, 1fr); }
 }
+
+/* Added features */
+.print-only { display: none; }
+
+/* Second tolerance, and the bar fitting more controls */
+.bar-end { flex-wrap: wrap; justify-content: flex-end; }
+.tol input[id="tolerance-cents"] { width: 2.75rem; }
+
+/* Check a GST number */
+.gst-box { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); padding: var(--s2) var(--s4); border-bottom: 1px solid var(--line); font-size: var(--t-sm); }
+.gst-box label { color: var(--muted); font-weight: 500; }
+.gst-box input { width: 11.5rem; height: 2rem; padding: 0 var(--s2); border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); font: 500 var(--t-sm)/1 var(--mono); }
+.gst-box input::placeholder { color: var(--faint); }
+#gst-result { flex: 1 1 16rem; color: var(--muted); }
+#gst-result[data-state="valid"] { color: var(--ok); }
+#gst-result[data-state="invalid"] { color: var(--warn); }
+
+/* Sheets: the New check form and the shortcut list */
+dialog.sheet { margin: auto; width: min(46rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: var(--s5); border: 1px solid var(--line-strong); border-radius: var(--r-lg); background: var(--surface); color: var(--text); box-shadow: var(--shadow); overflow: auto; }
+dialog.sheet-sm { width: min(24rem, calc(100vw - 2rem)); }
+dialog.sheet::backdrop { background: rgb(20 20 19 / .5); }
+dialog.sheet[open] { animation: sheet-in var(--sheet) var(--ease-out); }
+dialog.sheet[open]::backdrop { animation: fade-in var(--sheet) var(--ease-out); }
+@keyframes sheet-in {
+  from { opacity: 0; transform: scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.sheet-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+.sheet-head h2 { font: 600 var(--t-xl)/1.2 var(--sans); letter-spacing: -.02em; }
+.sheet-note { margin-top: var(--s3); color: var(--muted); font-size: var(--t-sm); line-height: 1.5; }
+.sheet-actions { display: flex; justify-content: flex-end; gap: var(--s2); margin-top: var(--s4); }
+.entry-error { min-height: 1.25rem; margin-top: var(--s3); color: var(--warn); font-size: var(--t-sm); white-space: pre-line; }
+
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s3) var(--s4); margin-top: var(--s4); }
+.field { display: grid; gap: var(--s1); align-content: start; }
+.field.wide { grid-column: 1 / -1; }
+.field > span, .eg-head span { font: 500 .6875rem/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.field input, .eg-row input { width: 100%; min-width: 0; height: 2.25rem; padding: 0 var(--s2); border: 1px solid var(--line-strong); border-radius: var(--r-sm); background: var(--surface); font: 400 var(--t-base)/1 var(--sans); }
+
+.eg-head, .eg-row { display: grid; grid-template-columns: minmax(0, 1fr) repeat(4, 6.25rem) 2.25rem; gap: var(--s2); align-items: center; }
+.eg-head { margin-top: var(--s3); padding-bottom: var(--s1); }
+#entry-rows { display: grid; gap: var(--s2); margin-bottom: var(--s2); }
+.eg-cell { display: block; min-width: 0; }
+.eg-cell > span { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.eg-cell.num input { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Supplier query and print */
+.helpers { display: grid; grid-template-columns: 1fr; gap: var(--s2); margin-top: var(--s5); }
+.helpers .btn { height: 2.25rem; }
+.btn .copy-label { display: inline-flex; align-items: center; gap: var(--s2); }
+.btn.is-copied .copy-label { animation: fade-in var(--sheet) var(--ease-out); }
+.helpers + .decide { margin-top: var(--s3); padding-top: var(--s3); }
+
+/* Keyboard list */
+.keys { display: grid; gap: var(--s2); margin-top: var(--s4); }
+.keys div { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding-bottom: var(--s2); border-bottom: 1px solid var(--line); }
+.keys dt { display: flex; gap: var(--s1); }
+.keys dd { color: var(--muted); font-size: var(--t-sm); }
+kbd { min-width: 1.5rem; padding: .25rem .4rem; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 5px; background: var(--surface-2); font: 500 var(--t-xs)/1 var(--mono); text-align: center; }
+
+/* Support link */
+.foot .support { flex-basis: 100%; }
+
+@media (max-width: 40rem) {
+  dialog.sheet { padding: var(--s4); }
+  .fields { grid-template-columns: minmax(0, 1fr); }
+  .eg-head { display: none; }
+  .eg-row { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: var(--s3); border: 1px solid var(--line); border-radius: var(--r); position: relative; }
+  .eg-row .eg-item { grid-column: 1 / -1; padding-right: 2.75rem; }
+  .eg-row .eg-del { position: absolute; top: var(--s2); right: var(--s2); }
+  .eg-cell > span { position: static !important; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; display: block; margin-bottom: var(--s1); font: 500 .6875rem/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+  .gst-box input { width: 100%; }
+  .bar-end { justify-content: flex-start; margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.sheet[open], dialog.sheet[open]::backdrop, .btn.is-copied .copy-label { animation: none; }
+}
+
+@media print {
+  :root, :root[data-theme="dark"] {
+    --bg: #fff; --surface: #fff; --surface-2: #fff; --line: #cfcdc5; --line-strong: #8a8880;
+    --text: #141413; --muted: #3f3e3a; --faint: #55534d; --shadow: none; --paper-shadow: none;
+    --warn: #8a4b00; --warn-bg: #fff; --warn-line: #8a4b00; --info: #234da8; --info-bg: #fff; --info-line: #234da8; --ok: #1f6b3a; --ok-bg: #fff; --ok-line: #1f6b3a;
+  }
+  body { background: #fff; color: #141413; font-size: 11pt; }
+  .skip, .top, .hero, .inbox, .app-bar, .gst-box, .app-foot, .decide, .decide-note, .helpers, .section, .foot, dialog, noscript { display: none !important; }
+  main::before { display: none; }
+  .print-only { display: block; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 1px solid #141413; }
+  .print-only h2 { font: 600 16pt/1.2 var(--sans); }
+  .print-only p { color: #3f3e3a; font-size: 10pt; }
+  .frame { max-width: none; padding-inline: 0; }
+  .window { border: 0; box-shadow: none; overflow: visible; }
+  .inv-body { display: block; min-height: 0; }
+  .desk { padding: 0; background: none; }
+  .paper { max-width: none; padding: 0; border: 0; box-shadow: none; }
+  .paper::before, .paper::after { display: none; }
+  .cell { border: 0; background: none; padding: 0; margin: 0; appearance: none; }
+  .review { padding: 1rem 0 0; border: 0; break-before: auto; }
+  .verdict, .issues li, .cmp tr, .checks li { break-inside: avoid; }
+  a { text-decoration: none; }
+}

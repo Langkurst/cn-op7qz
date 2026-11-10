@@ -13,6 +13,7 @@
   --s1: .25rem; --s2: .5rem; --s3: .75rem; --s4: 1rem; --s5: 1.5rem; --s6: 2rem; --s7: 3rem; --s8: 4rem; --s9: 6rem;
   --r-sm: 6px; --r: 10px; --r-lg: 14px; --r-pill: 999px;
   --ease: cubic-bezier(.4, 0, .2, 1); --fast: .12s; --dur: .18s;
+  --ease-out: cubic-bezier(.22, 1, .36, 1); --sheet: .15s;
   --frame: 82rem; --gutter: 1.5rem;
 
   --bg: #f7f7f4; --surface: #ffffff; --surface-2: #f1f1ed; --line: #e4e3dd; --line-strong: #cfcdc5;
