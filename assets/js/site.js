@@ -78,10 +78,10 @@
       poster: "assets/img/swimsorted-site.jpg",
       width: 1200,
       height: 720,
-      label: "Recording of the How a visit works demo on swimsorted.co.nz, with sample data, at normal speed. " +
+      label: "Recording of the How a visit works demo on swimsorted.co.nz, with sample data, played a little slower than normal. " +
         "A phone goes through a visit: the Pools list, entering the water test readings, the doses to add, " +
         "saving the visit and the report the pool owner gets, then the office view. The list of five steps " +
-        "beside it marks each step as it plays. It runs for 29 seconds and then repeats."
+        "beside it marks each step as it plays. It runs for 35 seconds and then repeats."
     },
     keaclip: {
       file: "assets/media/keaclip-screens",

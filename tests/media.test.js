@@ -21,7 +21,13 @@ const js = read("assets/js/site.js");
 // without loss. The lossy SwimSorted WebP that looked smeared was 9 KB.
 const MIN_WEBP = 20 * 1024;
 const MIN_JPG = 30 * 1024;
-const MAX_CLIP = 3 * 1024 * 1024;
+// Clips load only when their button is pressed. The SwimSorted clip is 144 frames a second (every
+// frame a new picture), so it may be larger than the KeaClip screens.
+const MAX_CLIP = { swimsorted: 10 * 1024 * 1024, keaclip: 3 * 1024 * 1024 };
+// The SwimSorted clip, remade 11 November 2026: one whole tour cycle (29.2 s of the live page) played
+// 1.2 times slower, drawn frame by frame at 144 frames a second, so it moves smoothly on fast screens.
+const SWIM_FPS = 144;
+const SWIM_SECONDS = [34.5, 35.6];
 
 // ---------- reading the files themselves ----------
 // WebP: "VP8L" is the lossless format, "VP8 " the lossy one. Returns { lossless, width, height }.
@@ -82,6 +88,14 @@ function mp4Info(buf) {
   const scale = version ? box.readUInt32BE(mvhd + 28) : box.readUInt32BE(mvhd + 20);
   const length = version ? Number(box.readBigUInt64BE(mvhd + 32)) : box.readUInt32BE(mvhd + 24);
   const tkhd = box.indexOf("tkhd") - 4, tkhdSize = box.readUInt32BE(tkhd);
+  // Frame timing of the (only) video track: the track's time scale, and the frame durations in "stts"
+  // as (count, duration) pairs. A clip with a steady frame rate has a single duration.
+  const mdhd = box.indexOf("mdhd") - 4;
+  const trackScale = box[mdhd + 8] ? box.readUInt32BE(mdhd + 28) : box.readUInt32BE(mdhd + 20);
+  const stts = box.indexOf("stts") - 4;
+  const durations = [];
+  for (let i = 0, n = box.readUInt32BE(stts + 12); i < n; i++) durations.push([box.readUInt32BE(stts + 16 + i * 8), box.readUInt32BE(stts + 20 + i * 8)]);
+  const frames = durations.reduce((s, [count]) => s + count, 0);
   return {
     h264: box.includes("avc1"),
     fastStart: moov.at < mdat.at,
@@ -89,7 +103,18 @@ function mp4Info(buf) {
     width: box.readUInt32BE(tkhd + tkhdSize - 8) / 65536,
     height: box.readUInt32BE(tkhd + tkhdSize - 4) / 65536,
     seconds: length / scale,
+    frames,
+    steadyFps: new Set(durations.map(([, d]) => d)).size === 1 ? trackScale / durations[0][1] : null,
   };
+}
+// WebM: the frame duration the file declares for its video track (DefaultDuration, in nanoseconds).
+function webmFps(buf) {
+  const at = buf.indexOf(Buffer.from([0x23, 0xe3, 0x83]));
+  if (at < 0) return null;
+  const len = buf[at + 3] & 0x7f; // a one-byte size, as ffmpeg writes it
+  let ns = 0;
+  for (let i = 0; i < len; i++) ns = ns * 256 + buf[at + 4 + i];
+  return 1e9 / ns;
 }
 
 // ---------- the stills ----------
@@ -150,11 +175,11 @@ test("clips: SwimSorted and KeaClip each have a clip, a poster and a description
 });
 
 for (const [name, clip] of Object.entries(CLIPS)) {
-  test(`clips: ${name} is H.264 and VP9 under 3 MB, starts while it downloads, has no sound, and has the shape of its still`, () => {
+  test(`clips: ${name} is H.264 and VP9 under ${MAX_CLIP[name] / 1024 / 1024} MB, starts while it downloads, has no sound, and has the shape of its still`, () => {
     for (const ext of ["mp4", "webm"]) {
       const f = `${clip.file}.${ext}`;
       assert.ok(fs.existsSync(path.join(ROOT, f)), `${f} is missing`);
-      assert.ok(bytes(f).length < MAX_CLIP, `${f} is ${bytes(f).length} bytes`);
+      assert.ok(bytes(f).length < MAX_CLIP[name], `${f} is ${bytes(f).length} bytes`);
     }
     const m = mp4Info(bytes(`${clip.file}.mp4`));
     assert.ok(m && m.h264, "the MP4 is not H.264");
@@ -171,6 +196,34 @@ for (const [name, clip] of Object.entries(CLIPS)) {
     assert.ok(Math.abs(poster.width / poster.height - clip.width / clip.height) < 0.005, `${clip.poster} is not the shape of the clip`);
   });
 }
+
+test("clips: the SwimSorted clip runs at a steady 144 frames a second for about 35 seconds, in both files", () => {
+  const file = CLIPS.swimsorted.file;
+  const m = mp4Info(bytes(`${file}.mp4`));
+  assert.equal(m.steadyFps, SWIM_FPS, `the MP4 is ${m.steadyFps === null ? "not at a steady rate" : m.steadyFps + " frames a second"}`);
+  assert.ok(m.seconds >= SWIM_SECONDS[0] && m.seconds <= SWIM_SECONDS[1], `the MP4 is ${m.seconds} s long, not about 35 s`);
+  assert.ok(Math.abs(m.frames - m.seconds * SWIM_FPS) < 1, `the MP4 has ${m.frames} frames for ${m.seconds} s`);
+  const webm = webmFps(bytes(`${file}.webm`));
+  assert.ok(webm && Math.abs(webm - SWIM_FPS) < 0.01, `the WebM is ${webm} frames a second`);
+});
+
+test("clips: the frame-rate checks themselves tell 144 from 30 frames a second", () => {
+  // Smallest boxes that carry the timing: an mvhd (length), a tkhd (picture size), an mdhd (time scale)
+  // and an stts (frame durations), inside a moov before an empty mdat.
+  const box = (kind, body) => { const h = Buffer.alloc(8); h.writeUInt32BE(8 + body.length, 0); h.write(kind, 4, "ascii"); return Buffer.concat([h, body]); };
+  const clip = (fps, frames) => {
+    const scale = fps * 128;
+    const mvhd = Buffer.alloc(100); mvhd.writeUInt32BE(1000, 12); mvhd.writeUInt32BE(Math.round((frames / fps) * 1000), 16);
+    const tkhd = Buffer.alloc(84); tkhd.writeUInt32BE(1800 * 65536, 76); tkhd.writeUInt32BE(1080 * 65536, 80);
+    const mdhd = Buffer.alloc(24); mdhd.writeUInt32BE(scale, 12); mdhd.writeUInt32BE(frames * 128, 16);
+    const stts = Buffer.alloc(16); stts.writeUInt32BE(1, 4); stts.writeUInt32BE(frames, 8); stts.writeUInt32BE(128, 12);
+    return Buffer.concat([box("moov", Buffer.concat([box("mvhd", mvhd), box("tkhd", tkhd), box("mdhd", mdhd), box("stts", stts), Buffer.from("avc1")])), box("mdat", Buffer.alloc(0))]);
+  };
+  assert.equal(mp4Info(clip(144, 5048)).steadyFps, 144);
+  assert.equal(mp4Info(clip(30, 1315)).steadyFps, 30, "the old 30 frames a second clip must be caught");
+  assert.equal(webmFps(Buffer.from([0x23, 0xe3, 0x83, 0x83, 0x69, 0xf6, 0xbc])).toFixed(2), "144.00");
+  assert.equal(webmFps(Buffer.from([0x23, 0xe3, 0x83, 0x84, 0x01, 0xfc, 0xa0, 0x55])).toFixed(2), "30.00");
+});
 
 // ---------- what must stay on the page ----------
 const article = (id) => (html.match(new RegExp(`<article class="project" id="${id}"[\\s\\S]*?</article>`)) || [""])[0];
