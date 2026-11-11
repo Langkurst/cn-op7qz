@@ -122,6 +122,7 @@ a:hover { text-decoration-color: currentColor; }
 .shot .frame iframe { width: 100%; height: min(70vh, 34rem); border: 0; background: #fff; }
 .shot .frame video { width: 100%; }
 .shot-actions { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin-top: .75rem; }
+.shot-portrait { max-width: 20rem; }   /* a phone-shaped app window, shown at about phone width */
 .brief { margin: 1.25rem 0 0; padding: .25rem 0 .25rem 1.25rem; border-left: 1px solid var(--line-strong); color: var(--muted); }
 .brief p { margin: 0 0 .5rem; }
 
