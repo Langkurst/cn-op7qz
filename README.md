@@ -15,6 +15,6 @@ By Christopher Nottle.
 node --test
 ```
 
-This runs the checks: the invoice checker's rules, colour contrast in both themes, image sizes and descriptions, links, the security policy on both tool pages, and a list of things the site must never claim.
+This runs the checks: the invoice checker's rules, colour contrast in both themes, image sizes and descriptions, that every screenshot is stored without loss, that no clip plays until its button is pressed, links, the security policy on both tool pages, and a list of things the site must never claim.
 
 No cookies and no tracking. The pages are set to `noindex`.

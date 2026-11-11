@@ -1,6 +1,7 @@
 /*
   Small behaviours shared by both pages: the light and dark switch, the Copy email button,
-  the SwimSorted recording, and the live SwimSorted view (only on the one address it is allowed on).
+  the SwimSorted recording and the KeaClip screens (each plays only when its button is pressed),
+  and the live SwimSorted view (only on the one address it is allowed on).
   No cookies, no tracking, no outside requests.
 */
 (function () {
@@ -69,24 +70,43 @@
     });
   });
 
-  // ----- SwimSorted: play the recording in place of the still
-  var shot = document.querySelector("[data-swimsorted]");
-  if (!shot) return;
-  var frame = shot.querySelector(".frame");
-  var playButton = shot.querySelector("[data-play]");
-
-  function showVideo() {
+  // ----- Clips: the SwimSorted recording and the KeaClip screens. Each one replaces its still only
+  // when its button is pressed; nothing plays on load. Once started it repeats, with its controls showing.
+  var CLIPS = {
+    swimsorted: {
+      file: "assets/media/swimsorted-site",
+      poster: "assets/img/swimsorted-site.jpg",
+      width: 1200,
+      height: 720,
+      label: "Recording of the How a visit works demo on swimsorted.co.nz, with sample data, at normal speed. " +
+        "A phone goes through a visit: the Pools list, entering the water test readings, the doses to add, " +
+        "saving the visit and the report the pool owner gets, then the office view. The list of five steps " +
+        "beside it marks each step as it plays. It runs for 29 seconds and then repeats."
+    },
+    keaclip: {
+      file: "assets/media/keaclip-screens",
+      poster: "assets/img/keaclip-download.jpg",
+      width: 1180,
+      height: 780,
+      label: "Four screenshots from KeaClip version 0.4.0, each shown for about 4 seconds with a short fade " +
+        "between them, then repeated. They are still screens from the app, not a recording: Download in the " +
+        "light theme, Queue in the dark theme, Editor in the dark theme and Library in the light theme."
+    }
+  };
+  function playClip(figure, clip) {
+    var frame = figure.querySelector(".frame");
     var video = document.createElement("video");
     video.controls = true;
     video.muted = true;
+    video.loop = true;
     video.playsInline = true;
-    video.width = 1280;
-    video.height = 800;
-    video.poster = "assets/img/swimsorted-site.jpg";
-    video.setAttribute("aria-label", "Recording of the SwimSorted website being scrolled, sample data only");
-    [["assets/media/swimsorted-site.webm", "video/webm"], ["assets/media/swimsorted-site.mp4", "video/mp4"]].forEach(function (s) {
+    video.width = clip.width;
+    video.height = clip.height;
+    video.poster = clip.poster;
+    video.setAttribute("aria-label", clip.label);
+    [["webm", "video/webm"], ["mp4", "video/mp4"]].forEach(function (s) {
       var source = document.createElement("source");
-      source.src = s[0];
+      source.src = clip.file + "." + s[0];
       source.type = s[1];
       video.appendChild(source);
     });
@@ -96,9 +116,21 @@
     if (started && started.catch) started.catch(function () { /* the controls are there to press */ });
     video.focus();
   }
-  if (playButton) playButton.addEventListener("click", function () { showVideo(); playButton.hidden = true; });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-clip]"), function (figure) {
+    var clip = CLIPS[figure.getAttribute("data-clip")];
+    var button = figure.querySelector("[data-play]");
+    if (!clip || !button) return;
+    button.addEventListener("click", function () {
+      playClip(figure, clip);
+      button.hidden = true;
+    });
+  });
 
   // ----- SwimSorted: live view. Allowed only when this page is served from the address below.
+  var shot = document.querySelector("[data-swimsorted]");
+  if (!shot) return;
+  var frame = shot.querySelector(".frame");
+  var playButton = shot.querySelector("[data-play]");
   var LIVE_ORIGIN = "https://langkurst.github.io";
   var LIVE_PAGES = [["Welcome", "welcome"], ["Features", "features"], ["Pricing", "pricing"], ["About", "about"], ["Story", "story"]];
   var liveButton = shot.querySelector("[data-live]");
