@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; form-action 'none'; base-uri 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; worker-src 'self'; frame-src 'none'; object-src 'none'; form-action 'none'; base-uri 'none'">
   <title>Invoice checker | Christopher Nottle</title>
   <meta name="description" content="A bill review demo with made-up data: each supplier invoice is matched to its purchase order line by line, and checked against Inland Revenue's tax invoice rules.">
   <meta property="og:type" content="website">
@@ -47,6 +47,23 @@
         <h2 id="bills-h">Bills to pay</h2>
         <p id="inbox-summary"></p>
       </div>
+
+      <section class="panel desk" id="desk" aria-labelledby="desk-h">
+        <div class="panel-head">
+          <h2 id="desk-h">Check your own documents</h2>
+          <span>Read on this device. Nothing is sent or saved.</span>
+        </div>
+        <div class="desk-drop" id="desk-drop">
+          <p class="desk-hint" id="desk-hint">Drop a purchase order and its invoice here, then drag one onto the other. Or drop them both at once. PDF, photo or CSV, in any layout.</p>
+          <ul class="desk-cards" id="desk-cards" aria-label="Documents on the desk"></ul>
+          <div class="desk-tools">
+            <label class="btn" for="desk-file"><svg class="i"><use href="assets/img/icons.svg#plus"/></svg><span>Add files</span></label>
+            <input type="file" id="desk-file" class="visually-hidden" multiple accept=".pdf,.png,.jpg,.jpeg,.webp,.gif,.bmp,.csv,.tsv,.txt,application/pdf,image/*,text/csv,text/plain">
+            <span class="desk-help">Without a mouse: select one document, then the one to check it against.</span>
+          </div>
+        </div>
+        <p class="visually-hidden" id="desk-live" role="status"></p>
+      </section>
 
       <div class="panel bills">
         <div class="toolbar">
@@ -179,7 +196,7 @@
           <h3>What it does not do</h3>
           <ul class="plain-list">
             <li>It does not check the goods receipt, so it is a two-way match, not a three-way match.</li>
-            <li>It does not read PDF invoices. The numbers are typed in.</li>
+            <li>It reads PDFs, photos and CSV files on this device, with written rules rather than AI. A photo is read with Tesseract, which can misread a figure, so check anything that looks wrong: every number on the invoice can be changed.</li>
             <li>Money is held in whole cents, so the sums are exact. 72 automated tests cover the rules, the extra features and every sample bill.</li>
           </ul>
         </div>
@@ -200,5 +217,9 @@
   <script src="assets/js/samples.js"></script>
   <script src="assets/js/entry.js"></script>
   <script src="assets/js/invoice-page.js"></script>
+  <script src="assets/js/reader.js"></script>
+  <script src="assets/js/pair.js"></script>
+  <script src="assets/js/files.js"></script>
+  <script src="assets/js/desk.js"></script>
 </body>
 </html>

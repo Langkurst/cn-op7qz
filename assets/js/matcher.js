@@ -122,7 +122,7 @@
   }
 
   // 123450 -> "$1,234.50". -500 -> "-$5.00".
-  function formatMoney(cents) {
+  function baseFormatMoney(cents) {
     if (!Number.isFinite(cents)) return "not a number";
     var negative = cents < 0;
     var whole = Math.abs(Math.round(cents));
@@ -130,6 +130,8 @@
     var rest = String(whole % 100).padStart(2, "0");
     return (negative ? "-$" : "$") + dollars + "." + rest;
   }
+
+  var formatMoney = baseFormatMoney;
 
   function formatQuantity(qty) {
     if (!Number.isFinite(qty)) return "not a number";
@@ -149,8 +151,9 @@
     return tidy(a) === tidy(b);
   }
 
+  // A discount line (read from a document) carries a negative price; every other line is zero or more.
   function validLine(line) {
-    return Number.isFinite(line.qty) && line.qty >= 0 && Number.isFinite(line.unitCents) && line.unitCents >= 0;
+    return Number.isFinite(line.qty) && line.qty >= 0 && Number.isFinite(line.unitCents) && (line.unitCents >= 0 || line.discount === true);
   }
 
   // Group lines by item code, keeping the order they first appear in.
@@ -188,6 +191,12 @@
       ? options.priceTolerancePercent : 0;
     var toleranceCents = options && Number.isFinite(options.priceToleranceCents) && options.priceToleranceCents > 0
       ? options.priceToleranceCents : 0;
+    // Another country's bill (from a read document): its own tax rate and name, its own currency.
+    // A New Zealand bill leaves these out and is checked exactly as before.
+    var taxPct = options && Number.isFinite(options.taxPercent) ? options.taxPercent : GST_PERCENT;
+    var taxName = (options && options.taxName) || "GST";
+    var nzRules = !(options && options.nzRules === false);
+    var formatMoney = (options && options.formatMoney) || baseFormatMoney;
     var findings = [];
     var lineStatus = {}; // item code -> "check" | "note" | "ok"
 
@@ -253,6 +262,11 @@
       if (!ordLines) {
         if (unreadable[k]) return; // already reported as unreadable on the order
         var extraCents = invLines.reduce(function (t, line) { return t + lineTotalCents(line); }, 0);
+        if (extraCents < 0 && invLines.every(function (line) { return line.discount === true; })) {
+          add("extra-line", "note", code, "A discount not on the order",
+            name + " takes " + formatMoney(-extraCents) + " off the bill. It isn't on the order, so check it's the discount you agreed.", 0);
+          return;
+        }
         add("extra-line", "check", code, code + " was not on the order",
           name + " is on the invoice for " + formatMoney(extraCents) + " but is not on the order. Someone needs to approve it, or ask the supplier for a credit.",
           extraCents, { item: code, expected: "not on the order", invoiced: formatQuantity(sumQty(invLines)) + " at " + formatMoney(invLines[0].unitCents) });
@@ -316,11 +330,11 @@
     // 5. Totals. Each rule compares neighbouring figures, so one mistake raises one flag.
     var linesCents = invoiceLines.reduce(function (t, line) { return t + lineTotalCents(line); }, 0);
     var subtotal = invoice.subtotalCents, gst = invoice.gstCents, total = invoice.totalCents;
-    var expectedGst = Number.isFinite(subtotal) ? Math.round(subtotal * GST_PERCENT / 100) : NaN;
+    var expectedGst = Number.isFinite(subtotal) ? Math.round(subtotal * taxPct / 100) : NaN;
 
     if (!Number.isFinite(subtotal) || !Number.isFinite(gst) || !Number.isFinite(total)) {
       add("invalid-number", "check", null, "A total on the invoice cannot be read",
-        "The subtotal, GST or total on the invoice is not a plain amount, so the totals were not checked.");
+        "The subtotal, " + taxName + " or total on the invoice is not a plain amount, so the totals were not checked.");
     } else {
       // If a line could not be read, the lines cannot be added up, so the subtotal is left alone.
       if (invoiceLines.length === invoice.lines.length && subtotal !== linesCents) {
@@ -330,24 +344,24 @@
           { item: "Subtotal", expected: formatMoney(linesCents) + " (the lines added up)", invoiced: formatMoney(subtotal) });
       }
       if (Math.abs(gst - expectedGst) > GST_ROUNDING_CENTS) {
-        add("gst", "check", null, gst === 0 ? "No GST is charged" : "The GST amount is not 15% of the subtotal",
+        add("gst", "check", null, gst === 0 ? "No " + taxName + " is charged" : "The " + taxName + " amount is not " + taxPct + "% of the subtotal",
           gst === 0
-            ? "The invoice shows no GST. GST at 15% of the " + formatMoney(subtotal) + " subtotal would be " + formatMoney(expectedGst) + ". Confirm whether this supplier charges GST."
-            : "GST at 15% of the " + formatMoney(subtotal) + " subtotal is " + formatMoney(expectedGst) + ". The invoice shows " + formatMoney(gst) +
+            ? "The invoice shows no " + taxName + ". " + taxName + " at " + taxPct + "% of the " + formatMoney(subtotal) + " subtotal would be " + formatMoney(expectedGst) + ". Confirm whether this supplier charges " + taxName + "."
+            : taxName + " at " + taxPct + "% of the " + formatMoney(subtotal) + " subtotal is " + formatMoney(expectedGst) + ". The invoice shows " + formatMoney(gst) +
               ", a difference of " + formatMoney(Math.abs(gst - expectedGst)) + ".",
-          gst - expectedGst, { item: "GST", expected: formatMoney(expectedGst) + " (15% of the subtotal)", invoiced: formatMoney(gst) });
+          gst - expectedGst, { item: taxName, expected: formatMoney(expectedGst) + " (" + taxPct + "% of the subtotal)", invoiced: formatMoney(gst) });
       }
       if (total !== subtotal + gst) {
         add("total", "check", null, "The total does not add up",
-          "The subtotal plus GST is " + formatMoney(subtotal + gst) + ". The invoice total is " + formatMoney(total) +
+          "The subtotal plus " + taxName + " is " + formatMoney(subtotal + gst) + ". The invoice total is " + formatMoney(total) +
           ", a difference of " + formatMoney(Math.abs(total - subtotal - gst)) + ".", total - subtotal - gst,
-          { item: "Total", expected: formatMoney(subtotal + gst) + " (subtotal plus GST)", invoiced: formatMoney(total) });
+          { item: "Total", expected: formatMoney(subtotal + gst) + " (subtotal plus " + taxName + ")", invoiced: formatMoney(total) });
       }
     }
 
     // 6. Tax invoice details (Inland Revenue's taxable supply information). Checked when the invoice
     //    record carries these fields. Without them the GST on the invoice cannot be claimed back.
-    if ("gstNumber" in invoice && Number.isFinite(total)) {
+    if (nzRules && "gstNumber" in invoice && Number.isFinite(total)) {
       var gstNo = String(invoice.gstNumber || "").trim();
       if (total > TSI_GST_NUMBER_OVER_CENTS && !gstNo) {
         add("tax-gst-number", "check", null, "No GST number on the invoice",

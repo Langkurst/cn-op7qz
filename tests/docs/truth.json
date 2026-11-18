@@ -1,0 +1,3546 @@
+{
+  "about": "Made-up purchasing documents for measuring a document reader. Every company, person, address, tax number and price is invented. Money is a decimal string with a dot. taxId is the tax number of the party that issued the document (the buyer on a purchase order), as printed. unit is the unit price. On multi-page documents the variants are one PNG and one photo per page, in page order.",
+  "seed": 20261118,
+  "docs": [
+    {
+      "file": "out/po-01.pdf",
+      "variants": [
+        "out/po-01.png",
+        "out/po-01-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L8",
+      "kind": "order",
+      "title": "Purchase Order",
+      "language": "en",
+      "number": "4500012904",
+      "orderNumber": "4500012904",
+      "supplier": "Sample Hardware Imports Ltd",
+      "buyer": "Example Kitchens Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "43-722-964"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-10-27",
+      "lines": [
+        {
+          "code": "RUN-500",
+          "description": "Drawer runner, 500 mm, soft close, pair",
+          "qty": 80,
+          "unit": "15.60",
+          "amount": "1248.00"
+        },
+        {
+          "code": "HNG-110",
+          "description": "Concealed hinge 110°, clip-on, with mounting plate",
+          "qty": 400,
+          "unit": "3.65",
+          "amount": "1460.00"
+        },
+        {
+          "code": "HND-160",
+          "description": "Bar handle 160 mm centres, brushed nickel",
+          "qty": 240,
+          "unit": "5.90",
+          "amount": "1416.00"
+        },
+        {
+          "code": "LEG-150",
+          "description": "Adjustable cabinet leg 150 mm, with plinth clip",
+          "qty": 320,
+          "unit": "1.45",
+          "amount": "464.00"
+        },
+        {
+          "code": "BIN-60",
+          "description": "Pull-out waste bin, twin 30 litre, for 600 mm base cabinet, grey",
+          "qty": 12,
+          "unit": "138.50",
+          "amount": "1662.00"
+        },
+        {
+          "code": "LED-2K",
+          "description": "Under-cabinet LED strip kit 2 m, warm white, with driver and door sensor switch",
+          "qty": 20,
+          "unit": "89.90",
+          "amount": "1798.00"
+        }
+      ],
+      "subtotal": "8048.00",
+      "tax": "1207.20",
+      "total": "9255.20",
+      "tracking": [],
+      "notes": "Layout L8 (ERP printout): item numbers 00010, 00020... are not quantities, quantities have 3 decimals, and each line has a delivery-date sub-row. The SAP vendor number 100873 and purchasing group are not document numbers."
+    },
+    {
+      "file": "out/conf-01.pdf",
+      "variants": [
+        "out/conf-01.png",
+        "out/conf-01-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L2",
+      "kind": "confirmation",
+      "title": "Sales Order Acknowledgement",
+      "language": "en",
+      "number": "SO-88412",
+      "orderNumber": "4500012904",
+      "supplier": "Sample Hardware Imports Ltd",
+      "buyer": "Example Kitchens Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "111-947-708"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-10-28",
+      "lines": [
+        {
+          "code": "RUN-500",
+          "description": "Drawer runner, 500 mm, soft close, pair",
+          "qty": 80,
+          "unit": "15.60",
+          "amount": "1248.00"
+        },
+        {
+          "code": "HNG-110",
+          "description": "Concealed hinge 110°, clip-on, with mounting plate",
+          "qty": 400,
+          "unit": "3.65",
+          "amount": "1460.00"
+        },
+        {
+          "code": "HND-160",
+          "description": "Bar handle 160 mm centres, brushed nickel",
+          "qty": 240,
+          "unit": "5.90",
+          "amount": "1416.00"
+        },
+        {
+          "code": "LEG-150",
+          "description": "Adjustable cabinet leg 150 mm, with plinth clip",
+          "qty": 320,
+          "unit": "1.45",
+          "amount": "464.00"
+        },
+        {
+          "code": "BIN-60",
+          "description": "Pull-out waste bin, twin 30 litre, for 600 mm base cabinet, grey",
+          "qty": 12,
+          "unit": "138.50",
+          "amount": "1662.00"
+        },
+        {
+          "code": "LED-2K",
+          "description": "Under-cabinet LED strip kit 2 m, warm white, with driver and door sensor switch",
+          "qty": 20,
+          "unit": "89.90",
+          "amount": "1798.00"
+        }
+      ],
+      "subtotal": "8048.00",
+      "tax": "1207.20",
+      "total": "9255.20",
+      "tracking": [],
+      "notes": "Layout L2: description first, then code, and price before quantity; header block on the right. Titled \"Sales Order Acknowledgement\"."
+    },
+    {
+      "file": "out/inv-01.pdf",
+      "variants": [
+        "out/inv-01.png",
+        "out/inv-01-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L1",
+      "kind": "invoice",
+      "title": "Tax Invoice",
+      "language": "en",
+      "number": "INV-20931",
+      "orderNumber": "4500012904",
+      "supplier": "Sample Hardware Imports Ltd",
+      "buyer": "Example Kitchens Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "111-947-708"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-11-05",
+      "lines": [
+        {
+          "code": "RUN-500",
+          "description": "Drawer runner, 500 mm, soft close, pair",
+          "qty": 80,
+          "unit": "16.10",
+          "amount": "1288.00"
+        },
+        {
+          "code": "HNG-110",
+          "description": "Concealed hinge 110°, clip-on, with mounting plate",
+          "qty": 400,
+          "unit": "3.65",
+          "amount": "1460.00"
+        },
+        {
+          "code": "HND-160",
+          "description": "Bar handle 160 mm centres, brushed nickel",
+          "qty": 240,
+          "unit": "5.90",
+          "amount": "1416.00"
+        },
+        {
+          "code": "LEG-150",
+          "description": "Adjustable cabinet leg 150 mm, with plinth clip",
+          "qty": 320,
+          "unit": "1.45",
+          "amount": "464.00"
+        },
+        {
+          "code": "BIN-60",
+          "description": "Pull-out waste bin, twin 30 litre, for 600 mm base cabinet, grey",
+          "qty": 12,
+          "unit": "138.50",
+          "amount": "1662.00"
+        },
+        {
+          "code": "LED-2K",
+          "description": "Under-cabinet LED strip kit 2 m, warm white, with driver and door sensor switch",
+          "qty": 20,
+          "unit": "89.90",
+          "amount": "1798.00"
+        }
+      ],
+      "subtotal": "8088.00",
+      "tax": "1213.20",
+      "total": "9301.20",
+      "tracking": [
+        "1ZYRKHG60392574700",
+        "LZ158768409NZ"
+      ],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left. Sales order SO-88412 is also printed; the order number is the PO 4500012904. Courier tracking numbers (UPS, NZ Post) are noise, not lines."
+    },
+    {
+      "file": "out/po-02.pdf",
+      "variants": [
+        "out/po-02.png",
+        "out/po-02-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L4",
+      "kind": "order",
+      "title": "Purchase Order",
+      "language": "en",
+      "number": "PO-7731",
+      "orderNumber": "PO-7731",
+      "supplier": "Sample Fasteners NZ Ltd",
+      "buyer": "Example Joinery Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "100-433-389"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-10-12",
+      "lines": [
+        {
+          "code": "SCR-850Z",
+          "description": "Chipboard screw 8g x 50 mm, zinc plated, box of 500",
+          "qty": 10,
+          "unit": "24.80",
+          "amount": "248.00"
+        },
+        {
+          "code": "SCR-1465G",
+          "description": "Batten screw 14g x 65 mm, hot-dip galvanised, box of 100",
+          "qty": 20,
+          "unit": "31.50",
+          "amount": "630.00"
+        },
+        {
+          "code": "ANC-M1080",
+          "description": "Masonry anchor M10 x 80 mm, box of 50",
+          "qty": 6,
+          "unit": "58.00",
+          "amount": "348.00"
+        },
+        {
+          "code": "NAI-9031",
+          "description": "Framing nail 90 x 3.15 mm, bright, collated, 2,000 per carton",
+          "qty": 8,
+          "unit": "96.40",
+          "amount": "771.20"
+        },
+        {
+          "code": "BOL-M12100",
+          "description": "Hex bolt M12 x 100 mm with nut and washer, hot-dip galvanised",
+          "qty": 100,
+          "unit": "2.85",
+          "amount": "285.00"
+        },
+        {
+          "code": "WSH-M12",
+          "description": "Flat washer M12, galvanised, bag of 100",
+          "qty": 4,
+          "unit": "14.20",
+          "amount": "56.80"
+        },
+        {
+          "code": "GLU-PU750",
+          "description": "Polyurethane construction adhesive 750 ml sausage, box of 12",
+          "qty": 3,
+          "unit": "118.80",
+          "amount": "356.40"
+        }
+      ],
+      "subtotal": "2695.40",
+      "tax": "404.31",
+      "total": "3099.71",
+      "tracking": [],
+      "notes": "Layout L4: no amount column, so line amounts are not printed (truth amount = qty x unit). Descriptions contain sizes and pack counts (8g x 50 mm, box of 500, 2,000 per carton) that are not quantities."
+    },
+    {
+      "file": "out/inv-02.pdf",
+      "variants": [
+        "out/inv-02.png",
+        "out/inv-02-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L7",
+      "kind": "invoice",
+      "title": "TAX INVOICE",
+      "language": "en",
+      "number": "100482",
+      "orderNumber": "PO-7731",
+      "supplier": "Sample Fasteners NZ Ltd",
+      "buyer": "Example Joinery Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "56-256-083"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-10-21",
+      "lines": [
+        {
+          "code": "SCR-850Z",
+          "description": "Chipboard screw 8g x 50 mm, zinc plated, box of 500",
+          "qty": 10,
+          "unit": "24.80",
+          "amount": "248.00"
+        },
+        {
+          "code": "SCR-1465G",
+          "description": "Batten screw 14g x 65 mm, hot-dip galvanised, box of 100",
+          "qty": 20,
+          "unit": "31.50",
+          "amount": "630.00"
+        },
+        {
+          "code": "ANC-M1080",
+          "description": "Masonry anchor M10 x 80 mm, box of 50",
+          "qty": 6,
+          "unit": "58.00",
+          "amount": "348.00"
+        },
+        {
+          "code": "NAI-9031",
+          "description": "Framing nail 90 x 3.15 mm, bright, collated, 2,000 per carton",
+          "qty": 8,
+          "unit": "96.40",
+          "amount": "771.20"
+        },
+        {
+          "code": "BOL-M12100",
+          "description": "Hex bolt M12 x 100 mm with nut and washer, hot-dip galvanised",
+          "qty": 120,
+          "unit": "2.85",
+          "amount": "342.00"
+        },
+        {
+          "code": "WSH-M12",
+          "description": "Flat washer M12, galvanised, bag of 100",
+          "qty": 4,
+          "unit": "14.20",
+          "amount": "56.80"
+        },
+        {
+          "code": "GLU-PU750",
+          "description": "Polyurethane construction adhesive 750 ml sausage, box of 12",
+          "qty": 3,
+          "unit": "118.80",
+          "amount": "356.40"
+        }
+      ],
+      "subtotal": "2752.40",
+      "tax": "412.86",
+      "total": "3165.26",
+      "tracking": [
+        "CP182193387NZ"
+      ],
+      "notes": "Layout L7: no code column; the code is printed under each description. The invoice number 100482 is a plain number. Courier tracking numbers (NZ Post) are noise, not lines."
+    },
+    {
+      "file": "out/po-03.pdf",
+      "variants": [
+        "out/po-03-p1.png",
+        "out/po-03-p1-photo.jpg",
+        "out/po-03-p2.png",
+        "out/po-03-p2-photo.jpg"
+      ],
+      "pages": 2,
+      "layout": "L1",
+      "kind": "order",
+      "title": "Purchase Order",
+      "language": "en",
+      "number": "FO-2026-0317",
+      "orderNumber": "FO-2026-0317",
+      "supplier": "Sample Building Supplies Ltd",
+      "buyer": "Example Fit-Out Group Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "88-050-487"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-09-21",
+      "lines": [
+        {
+          "code": "PB10-2412",
+          "description": "Plasterboard standard 10 mm, 2400 x 1200",
+          "qty": 12,
+          "unit": "24.50",
+          "amount": "294.00"
+        },
+        {
+          "code": "PB13-2412",
+          "description": "Plasterboard standard 13 mm, 2400 x 1200",
+          "qty": 12,
+          "unit": "29.80",
+          "amount": "357.60"
+        },
+        {
+          "code": "PB13-2712",
+          "description": "Plasterboard standard 13 mm, 2700 x 1200",
+          "qty": 48,
+          "unit": "33.40",
+          "amount": "1603.20"
+        },
+        {
+          "code": "PBA10-2412",
+          "description": "Wet area plasterboard 10 mm, 2400 x 1200",
+          "qty": 100,
+          "unit": "36.90",
+          "amount": "3690.00"
+        },
+        {
+          "code": "PBF13-2412",
+          "description": "Fire-rated plasterboard 13 mm, 2400 x 1200",
+          "qty": 15,
+          "unit": "41.20",
+          "amount": "618.00"
+        },
+        {
+          "code": "ST64-30",
+          "description": "Steel stud 64 mm, 0.55 BMT, 3.0 m",
+          "qty": 20,
+          "unit": "8.95",
+          "amount": "179.00"
+        },
+        {
+          "code": "ST92-30",
+          "description": "Steel stud 92 mm, 0.55 BMT, 3.0 m",
+          "qty": 120,
+          "unit": "11.40",
+          "amount": "1368.00"
+        },
+        {
+          "code": "TR64-30",
+          "description": "Steel track 64 mm, 3.0 m",
+          "qty": 48,
+          "unit": "7.10",
+          "amount": "340.80"
+        },
+        {
+          "code": "TR92-30",
+          "description": "Steel track 92 mm, 3.0 m",
+          "qty": 50,
+          "unit": "9.30",
+          "amount": "465.00"
+        },
+        {
+          "code": "PF9045-48",
+          "description": "Pine framing 90 x 45 MSG8 H1.2, 4.8 m",
+          "qty": 40,
+          "unit": "21.60",
+          "amount": "864.00"
+        },
+        {
+          "code": "PF7045-48",
+          "description": "Pine framing 70 x 45 MSG8 H1.2, 4.8 m",
+          "qty": 16,
+          "unit": "16.90",
+          "amount": "270.40"
+        },
+        {
+          "code": "SCR-PB25",
+          "description": "Plasterboard screw 6g x 25 mm, box of 1000",
+          "qty": 60,
+          "unit": "27.50",
+          "amount": "1650.00"
+        },
+        {
+          "code": "SCR-PB41",
+          "description": "Plasterboard screw 6g x 41 mm, box of 1000",
+          "qty": 15,
+          "unit": "34.20",
+          "amount": "513.00"
+        },
+        {
+          "code": "JC-BASE20",
+          "description": "Joint compound base coat, 20 kg bag",
+          "qty": 4,
+          "unit": "38.00",
+          "amount": "152.00"
+        },
+        {
+          "code": "JC-FIN15",
+          "description": "Finishing compound, 15 L pail",
+          "qty": 4,
+          "unit": "44.50",
+          "amount": "178.00"
+        },
+        {
+          "code": "TAPE-5075",
+          "description": "Paper joint tape 50 mm x 75 m",
+          "qty": 40,
+          "unit": "6.80",
+          "amount": "272.00"
+        },
+        {
+          "code": "CB-3000",
+          "description": "External corner bead 3.0 m, galvanised",
+          "qty": 4,
+          "unit": "5.40",
+          "amount": "21.60"
+        },
+        {
+          "code": "INS-R26-90",
+          "description": "Wall insulation batt R2.6, 90 mm, pack",
+          "qty": 12,
+          "unit": "64.00",
+          "amount": "768.00"
+        },
+        {
+          "code": "INS-R32-140",
+          "description": "Ceiling insulation batt R3.2, 140 mm, pack",
+          "qty": 6,
+          "unit": "71.50",
+          "amount": "429.00"
+        },
+        {
+          "code": "DR-HC760",
+          "description": "Hollow core door 1980 x 760 x 35 mm, primed",
+          "qty": 120,
+          "unit": "118.00",
+          "amount": "14160.00"
+        },
+        {
+          "code": "DR-HC810",
+          "description": "Hollow core door 1980 x 810 x 35 mm, primed",
+          "qty": 6,
+          "unit": "124.00",
+          "amount": "744.00"
+        },
+        {
+          "code": "JB-PINE",
+          "description": "Door jamb set, finger-jointed pine, 1980 mm",
+          "qty": 4,
+          "unit": "62.00",
+          "amount": "248.00"
+        },
+        {
+          "code": "HW-LEV-SC",
+          "description": "Passage lever set, satin chrome",
+          "qty": 2,
+          "unit": "39.90",
+          "amount": "79.80"
+        },
+        {
+          "code": "HW-PRIV-SC",
+          "description": "Privacy lever set, satin chrome",
+          "qty": 40,
+          "unit": "46.90",
+          "amount": "1876.00"
+        },
+        {
+          "code": "HW-STOP-SC",
+          "description": "Door stop, skirting mount, satin chrome",
+          "qty": 24,
+          "unit": "6.20",
+          "amount": "148.80"
+        },
+        {
+          "code": "HW-HNG100",
+          "description": "Butt hinge 100 mm, satin chrome, pair",
+          "qty": 6,
+          "unit": "9.80",
+          "amount": "58.80"
+        },
+        {
+          "code": "PT-SEAL10",
+          "description": "Sealer undercoat, 10 L",
+          "qty": 50,
+          "unit": "129.00",
+          "amount": "6450.00"
+        },
+        {
+          "code": "PT-LS-W10",
+          "description": "Interior low sheen acrylic, white, 10 L",
+          "qty": 50,
+          "unit": "189.00",
+          "amount": "9450.00"
+        },
+        {
+          "code": "PT-CEIL10",
+          "description": "Ceiling flat acrylic, white, 10 L",
+          "qty": 8,
+          "unit": "149.00",
+          "amount": "1192.00"
+        },
+        {
+          "code": "PT-ROLL230",
+          "description": "Paint roller 230 mm, medium nap",
+          "qty": 20,
+          "unit": "11.50",
+          "amount": "230.00"
+        },
+        {
+          "code": "CT-1206",
+          "description": "Ceiling tile 1200 x 600 mm, square edge, box of 8",
+          "qty": 120,
+          "unit": "96.00",
+          "amount": "11520.00"
+        },
+        {
+          "code": "CG-MAIN36",
+          "description": "Ceiling grid main tee 3600 mm",
+          "qty": 2,
+          "unit": "12.40",
+          "amount": "24.80"
+        },
+        {
+          "code": "CG-CROSS12",
+          "description": "Ceiling grid cross tee 1200 mm",
+          "qty": 12,
+          "unit": "4.10",
+          "amount": "49.20"
+        },
+        {
+          "code": "CG-WALL30",
+          "description": "Ceiling wall angle 3000 mm",
+          "qty": 24,
+          "unit": "5.30",
+          "amount": "127.20"
+        },
+        {
+          "code": "SK-MDF60",
+          "description": "MDF skirting 60 x 12 mm, primed, 5.4 m",
+          "qty": 6,
+          "unit": "18.70",
+          "amount": "112.20"
+        },
+        {
+          "code": "AR-MDF42",
+          "description": "MDF architrave 42 x 12 mm, primed, 5.4 m",
+          "qty": 2,
+          "unit": "14.90",
+          "amount": "29.80"
+        },
+        {
+          "code": "GF-450W",
+          "description": "Acrylic gap filler 450 g, white",
+          "qty": 15,
+          "unit": "7.40",
+          "amount": "111.00"
+        },
+        {
+          "code": "SIL-300C",
+          "description": "Silicone sealant 300 g, clear",
+          "qty": 80,
+          "unit": "12.60",
+          "amount": "1008.00"
+        },
+        {
+          "code": "ADH-STUD",
+          "description": "Stud adhesive, 380 ml cartridge",
+          "qty": 80,
+          "unit": "9.90",
+          "amount": "792.00"
+        },
+        {
+          "code": "ANC-FR6",
+          "description": "Frame anchor 6 x 60 mm, box of 100",
+          "qty": 60,
+          "unit": "32.00",
+          "amount": "1920.00"
+        },
+        {
+          "code": "NOG-9045",
+          "description": "Nogging 90 x 45, 2.4 m",
+          "qty": 2,
+          "unit": "9.60",
+          "amount": "19.20"
+        },
+        {
+          "code": "BR-STEEL",
+          "description": "Steel bracing strap 30 x 0.8 mm, 30 m roll",
+          "qty": 2,
+          "unit": "48.00",
+          "amount": "96.00"
+        },
+        {
+          "code": "GL-SAFE",
+          "description": "Safety glasses, clear",
+          "qty": 12,
+          "unit": "4.50",
+          "amount": "54.00"
+        },
+        {
+          "code": "DUST-P2",
+          "description": "Disposable P2 dust mask, box of 20",
+          "qty": 120,
+          "unit": "36.00",
+          "amount": "4320.00"
+        },
+        {
+          "code": "TARP-46",
+          "description": "Drop sheet 4 x 6 m, canvas",
+          "qty": 8,
+          "unit": "58.00",
+          "amount": "464.00"
+        },
+        {
+          "code": "BIN-240",
+          "description": "Site waste bin hire, 240 L, per week",
+          "qty": 40,
+          "unit": "22.00",
+          "amount": "880.00"
+        }
+      ],
+      "subtotal": "70198.40",
+      "tax": "10529.76",
+      "total": "80728.16",
+      "tracking": [],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left. Two pages, 46 lines; the table header repeats on page 2."
+    },
+    {
+      "file": "out/inv-03.pdf",
+      "variants": [
+        "out/inv-03-p1.png",
+        "out/inv-03-p1-photo.jpg",
+        "out/inv-03-p2.png",
+        "out/inv-03-p2-photo.jpg"
+      ],
+      "pages": 2,
+      "layout": "L2",
+      "kind": "invoice",
+      "title": "Tax Invoice",
+      "language": "en",
+      "number": "INV-0041872",
+      "orderNumber": "FO-2026-0317",
+      "supplier": "Sample Building Supplies Ltd",
+      "buyer": "Example Fit-Out Group Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "48-908-667"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-10-08",
+      "lines": [
+        {
+          "code": "PB10-2412",
+          "description": "Plasterboard standard 10 mm, 2400 x 1200",
+          "qty": 12,
+          "unit": "24.50",
+          "amount": "294.00"
+        },
+        {
+          "code": "PB13-2412",
+          "description": "Plasterboard standard 13 mm, 2400 x 1200",
+          "qty": 12,
+          "unit": "29.80",
+          "amount": "357.60"
+        },
+        {
+          "code": "PB13-2712",
+          "description": "Plasterboard standard 13 mm, 2700 x 1200",
+          "qty": 48,
+          "unit": "33.40",
+          "amount": "1603.20"
+        },
+        {
+          "code": "PBA10-2412",
+          "description": "Wet area plasterboard 10 mm, 2400 x 1200",
+          "qty": 100,
+          "unit": "36.90",
+          "amount": "3690.00"
+        },
+        {
+          "code": "PBF13-2412",
+          "description": "Fire-rated plasterboard 13 mm, 2400 x 1200",
+          "qty": 15,
+          "unit": "41.20",
+          "amount": "618.00"
+        },
+        {
+          "code": "ST64-30",
+          "description": "Steel stud 64 mm, 0.55 BMT, 3.0 m",
+          "qty": 20,
+          "unit": "8.95",
+          "amount": "179.00"
+        },
+        {
+          "code": "ST92-30",
+          "description": "Steel stud 92 mm, 0.55 BMT, 3.0 m",
+          "qty": 120,
+          "unit": "11.40",
+          "amount": "1368.00"
+        },
+        {
+          "code": "TR64-30",
+          "description": "Steel track 64 mm, 3.0 m",
+          "qty": 48,
+          "unit": "7.10",
+          "amount": "340.80"
+        },
+        {
+          "code": "TR92-30",
+          "description": "Steel track 92 mm, 3.0 m",
+          "qty": 50,
+          "unit": "9.30",
+          "amount": "465.00"
+        },
+        {
+          "code": "PF9045-48",
+          "description": "Pine framing 90 x 45 MSG8 H1.2, 4.8 m",
+          "qty": 40,
+          "unit": "21.60",
+          "amount": "864.00"
+        },
+        {
+          "code": "PF7045-48",
+          "description": "Pine framing 70 x 45 MSG8 H1.2, 4.8 m",
+          "qty": 16,
+          "unit": "16.90",
+          "amount": "270.40"
+        },
+        {
+          "code": "SCR-PB25",
+          "description": "Plasterboard screw 6g x 25 mm, box of 1000",
+          "qty": 60,
+          "unit": "27.50",
+          "amount": "1650.00"
+        },
+        {
+          "code": "SCR-PB41",
+          "description": "Plasterboard screw 6g x 41 mm, box of 1000",
+          "qty": 15,
+          "unit": "34.20",
+          "amount": "513.00"
+        },
+        {
+          "code": "JC-BASE20",
+          "description": "Joint compound base coat, 20 kg bag",
+          "qty": 4,
+          "unit": "38.00",
+          "amount": "152.00"
+        },
+        {
+          "code": "JC-FIN15",
+          "description": "Finishing compound, 15 L pail",
+          "qty": 4,
+          "unit": "44.50",
+          "amount": "178.00"
+        },
+        {
+          "code": "TAPE-5075",
+          "description": "Paper joint tape 50 mm x 75 m",
+          "qty": 40,
+          "unit": "6.80",
+          "amount": "272.00"
+        },
+        {
+          "code": "CB-3000",
+          "description": "External corner bead 3.0 m, galvanised",
+          "qty": 4,
+          "unit": "5.40",
+          "amount": "21.60"
+        },
+        {
+          "code": "INS-R26-90",
+          "description": "Wall insulation batt R2.6, 90 mm, pack",
+          "qty": 12,
+          "unit": "64.00",
+          "amount": "768.00"
+        },
+        {
+          "code": "INS-R32-140",
+          "description": "Ceiling insulation batt R3.2, 140 mm, pack",
+          "qty": 6,
+          "unit": "71.50",
+          "amount": "429.00"
+        },
+        {
+          "code": "DR-HC760",
+          "description": "Hollow core door 1980 x 760 x 35 mm, primed",
+          "qty": 120,
+          "unit": "118.00",
+          "amount": "14160.00"
+        },
+        {
+          "code": "DR-HC810",
+          "description": "Hollow core door 1980 x 810 x 35 mm, primed",
+          "qty": 6,
+          "unit": "124.00",
+          "amount": "744.00"
+        },
+        {
+          "code": "JB-PINE",
+          "description": "Door jamb set, finger-jointed pine, 1980 mm",
+          "qty": 4,
+          "unit": "62.00",
+          "amount": "248.00"
+        },
+        {
+          "code": "HW-LEV-SC",
+          "description": "Passage lever set, satin chrome",
+          "qty": 2,
+          "unit": "39.90",
+          "amount": "79.80"
+        },
+        {
+          "code": "HW-PRIV-SC",
+          "description": "Privacy lever set, satin chrome",
+          "qty": 40,
+          "unit": "46.90",
+          "amount": "1876.00"
+        },
+        {
+          "code": "HW-STOP-SC",
+          "description": "Door stop, skirting mount, satin chrome",
+          "qty": 24,
+          "unit": "6.20",
+          "amount": "148.80"
+        },
+        {
+          "code": "HW-HNG100",
+          "description": "Butt hinge 100 mm, satin chrome, pair",
+          "qty": 6,
+          "unit": "9.80",
+          "amount": "58.80"
+        },
+        {
+          "code": "PT-SEAL10",
+          "description": "Sealer undercoat, 10 L",
+          "qty": 50,
+          "unit": "129.00",
+          "amount": "6450.00"
+        },
+        {
+          "code": "PT-LS-W10",
+          "description": "Interior low sheen acrylic, white, 10 L",
+          "qty": 50,
+          "unit": "189.00",
+          "amount": "9450.00"
+        },
+        {
+          "code": "PT-CEIL10",
+          "description": "Ceiling flat acrylic, white, 10 L",
+          "qty": 8,
+          "unit": "149.00",
+          "amount": "1192.00"
+        },
+        {
+          "code": "PT-ROLL230",
+          "description": "Paint roller 230 mm, medium nap",
+          "qty": 20,
+          "unit": "11.50",
+          "amount": "230.00"
+        },
+        {
+          "code": "CT-1206",
+          "description": "Ceiling tile 1200 x 600 mm, square edge, box of 8",
+          "qty": 120,
+          "unit": "96.00",
+          "amount": "11520.00"
+        },
+        {
+          "code": "CG-MAIN36",
+          "description": "Ceiling grid main tee 3600 mm",
+          "qty": 2,
+          "unit": "12.40",
+          "amount": "24.80"
+        },
+        {
+          "code": "CG-CROSS12",
+          "description": "Ceiling grid cross tee 1200 mm",
+          "qty": 12,
+          "unit": "4.10",
+          "amount": "49.20"
+        },
+        {
+          "code": "CG-WALL30",
+          "description": "Ceiling wall angle 3000 mm",
+          "qty": 24,
+          "unit": "5.30",
+          "amount": "127.20"
+        },
+        {
+          "code": "SK-MDF60",
+          "description": "MDF skirting 60 x 12 mm, primed, 5.4 m",
+          "qty": 6,
+          "unit": "18.70",
+          "amount": "112.20"
+        },
+        {
+          "code": "AR-MDF42",
+          "description": "MDF architrave 42 x 12 mm, primed, 5.4 m",
+          "qty": 2,
+          "unit": "14.90",
+          "amount": "29.80"
+        },
+        {
+          "code": "GF-450W",
+          "description": "Acrylic gap filler 450 g, white",
+          "qty": 15,
+          "unit": "7.40",
+          "amount": "111.00"
+        },
+        {
+          "code": "ADH-STUD",
+          "description": "Stud adhesive, 380 ml cartridge",
+          "qty": 80,
+          "unit": "9.90",
+          "amount": "792.00"
+        },
+        {
+          "code": "ANC-FR6",
+          "description": "Frame anchor 6 x 60 mm, box of 100",
+          "qty": 60,
+          "unit": "32.00",
+          "amount": "1920.00"
+        },
+        {
+          "code": "NOG-9045",
+          "description": "Nogging 90 x 45, 2.4 m",
+          "qty": 2,
+          "unit": "9.60",
+          "amount": "19.20"
+        },
+        {
+          "code": "BR-STEEL",
+          "description": "Steel bracing strap 30 x 0.8 mm, 30 m roll",
+          "qty": 2,
+          "unit": "48.00",
+          "amount": "96.00"
+        },
+        {
+          "code": "GL-SAFE",
+          "description": "Safety glasses, clear",
+          "qty": 12,
+          "unit": "4.50",
+          "amount": "54.00"
+        },
+        {
+          "code": "DUST-P2",
+          "description": "Disposable P2 dust mask, box of 20",
+          "qty": 120,
+          "unit": "36.00",
+          "amount": "4320.00"
+        },
+        {
+          "code": "TARP-46",
+          "description": "Drop sheet 4 x 6 m, canvas",
+          "qty": 8,
+          "unit": "58.00",
+          "amount": "464.00"
+        },
+        {
+          "code": "BIN-240",
+          "description": "Site waste bin hire, 240 L, per week",
+          "qty": 40,
+          "unit": "22.00",
+          "amount": "880.00"
+        }
+      ],
+      "subtotal": "69190.40",
+      "tax": "10378.56",
+      "total": "79568.96",
+      "tracking": [
+        "1Z63G7D60334761182"
+      ],
+      "notes": "Layout L2: description first, then code, and price before quantity; header block on the right. Two pages, 45 lines; \"Silicone sealant 300 g, clear\" from the PO is not invoiced. \"Carried forward\" and \"Brought forward\" rows are page subtotals, not lines. Courier tracking numbers (UPS) are noise, not lines."
+    },
+    {
+      "file": "out/po-04.pdf",
+      "variants": [
+        "out/po-04.png",
+        "out/po-04-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L3",
+      "kind": "order",
+      "title": "Purchase Order",
+      "language": "en",
+      "number": "EPS-PO-1188",
+      "orderNumber": "EPS-PO-1188",
+      "supplier": "Sample Electrical Wholesale Ltd",
+      "buyer": "Example Property Services Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "148-634-068"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-10-02",
+      "lines": [
+        {
+          "code": null,
+          "description": "Double power point, horizontal, white",
+          "qty": 24,
+          "unit": "9.80",
+          "amount": "235.20"
+        },
+        {
+          "code": null,
+          "description": "LED downlight 10 W, 90 mm cut-out, tri-colour, IC-F rated",
+          "qty": 60,
+          "unit": "18.40",
+          "amount": "1104.00"
+        },
+        {
+          "code": null,
+          "description": "TPS cable 2.5 mm² twin and earth, 100 m roll",
+          "qty": 4,
+          "unit": "189.00",
+          "amount": "756.00"
+        },
+        {
+          "code": null,
+          "description": "RCD 40 A Type A, 30 mA, 2 pole",
+          "qty": 6,
+          "unit": "64.50",
+          "amount": "387.00"
+        },
+        {
+          "code": null,
+          "description": "Weatherproof outdoor socket, single, IP56, grey",
+          "qty": 8,
+          "unit": "27.90",
+          "amount": "223.20"
+        },
+        {
+          "code": null,
+          "description": "Smoke alarm, photoelectric, 10-year lithium battery, hush button",
+          "qty": 12,
+          "unit": "39.95",
+          "amount": "479.40"
+        }
+      ],
+      "subtotal": "3184.80",
+      "tax": "477.72",
+      "total": "3662.52",
+      "tracking": [],
+      "notes": "Layout L3: no code column. Work order number WO 66120 is not the PO number."
+    },
+    {
+      "file": "out/inv-04.pdf",
+      "variants": [
+        "out/inv-04.png",
+        "out/inv-04-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L6",
+      "kind": "invoice",
+      "title": "Tax Invoice",
+      "language": "en",
+      "number": "TI-55120",
+      "orderNumber": "EPS-PO-1188",
+      "supplier": "Sample Electrical Wholesale Ltd",
+      "buyer": "Example Property Services Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "123-430-425"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-10-14",
+      "lines": [
+        {
+          "code": null,
+          "description": "Double power point, horizontal, white",
+          "qty": 24,
+          "unit": "9.80",
+          "amount": "235.20"
+        },
+        {
+          "code": null,
+          "description": "LED downlight 10 W, 90 mm cut-out, tri-colour, IC-F rated",
+          "qty": 60,
+          "unit": "18.40",
+          "amount": "1104.00"
+        },
+        {
+          "code": null,
+          "description": "TPS cable 2.5 mm² twin and earth, 100 m roll",
+          "qty": 4,
+          "unit": "189.00",
+          "amount": "756.00"
+        },
+        {
+          "code": null,
+          "description": "RCD 40 A Type A, 30 mA, 2 pole",
+          "qty": 6,
+          "unit": "64.50",
+          "amount": "387.00"
+        },
+        {
+          "code": null,
+          "description": "Weatherproof outdoor socket, single, IP56, grey",
+          "qty": 8,
+          "unit": "27.90",
+          "amount": "223.20"
+        },
+        {
+          "code": null,
+          "description": "Smoke alarm, photoelectric, 10-year lithium battery, hush button",
+          "qty": 12,
+          "unit": "39.95",
+          "amount": "479.40"
+        }
+      ],
+      "subtotal": "3184.80",
+      "tax": "398.10",
+      "total": "3582.90",
+      "tracking": [],
+      "notes": "Layout L6: quantity is the first column; boxed grid. GST printed is 12.5% of the subtotal (should be 15%); the total adds up with the wrong GST."
+    },
+    {
+      "file": "out/po-05.pdf",
+      "variants": [
+        "out/po-05.png",
+        "out/po-05-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L1",
+      "kind": "order",
+      "title": "Purchase Order",
+      "language": "en",
+      "number": "EM-2026-044",
+      "orderNumber": "EM-2026-044",
+      "supplier": "Sample Marine Supply Inc.",
+      "buyer": "Example Marine Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "84-113-646"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-09-29",
+      "lines": [
+        {
+          "code": "SMS-SH08",
+          "description": "Stainless bow shackle 8 mm, 316 grade",
+          "qty": 50,
+          "unit": "6.40",
+          "amount": "320.00"
+        },
+        {
+          "code": "SMS-BP1100",
+          "description": "Bilge pump 1100 GPH, 12 V, automatic float switch",
+          "qty": 6,
+          "unit": "142.00",
+          "amount": "852.00"
+        },
+        {
+          "code": "SMS-NL2",
+          "description": "LED navigation light pair, port and starboard, 2 nm",
+          "qty": 4,
+          "unit": "96.50",
+          "amount": "386.00"
+        },
+        {
+          "code": "SMS-CL10",
+          "description": "Mooring line 10 mm double braid, 15 m, navy",
+          "qty": 10,
+          "unit": "58.75",
+          "amount": "587.50"
+        },
+        {
+          "code": "SMS-FD4",
+          "description": "Fender 4.5 x 16 in, white, with line",
+          "qty": 12,
+          "unit": "21.90",
+          "amount": "262.80"
+        }
+      ],
+      "subtotal": "2408.30",
+      "tax": "0.00",
+      "total": "2408.30",
+      "tracking": [],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left. Overseas supplier, so no GST; all amounts are NZD."
+    },
+    {
+      "file": "out/inv-05.pdf",
+      "variants": [
+        "out/inv-05.png",
+        "out/inv-05-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L6",
+      "kind": "invoice",
+      "title": "COMMERCIAL INVOICE",
+      "language": "en",
+      "number": "SMS-INV-30871",
+      "orderNumber": "EM-2026-044",
+      "supplier": "Sample Marine Supply Inc.",
+      "buyer": "Example Marine Ltd",
+      "taxId": null,
+      "country": "US",
+      "currency": "USD",
+      "issued": "2026-10-09",
+      "lines": [
+        {
+          "code": "SMS-SH08",
+          "description": "Stainless bow shackle 8 mm, 316 grade",
+          "qty": 50,
+          "unit": "6.40",
+          "amount": "320.00"
+        },
+        {
+          "code": "SMS-BP1100",
+          "description": "Bilge pump 1100 GPH, 12 V, automatic float switch",
+          "qty": 6,
+          "unit": "142.00",
+          "amount": "852.00"
+        },
+        {
+          "code": "SMS-NL2",
+          "description": "LED navigation light pair, port and starboard, 2 nm",
+          "qty": 4,
+          "unit": "96.50",
+          "amount": "386.00"
+        },
+        {
+          "code": "SMS-CL10",
+          "description": "Mooring line 10 mm double braid, 15 m, navy",
+          "qty": 10,
+          "unit": "58.75",
+          "amount": "587.50"
+        },
+        {
+          "code": "SMS-FD4",
+          "description": "Fender 4.5 x 16 in, white, with line",
+          "qty": 12,
+          "unit": "21.90",
+          "amount": "262.80"
+        }
+      ],
+      "subtotal": "2408.30",
+      "tax": "0.00",
+      "total": "2408.30",
+      "tracking": [
+        "780910947895"
+      ],
+      "notes": "Layout L6: quantity is the first column; boxed grid. US date format mm/dd/yyyy (10/09/2026 is 9 October). Same figures as the NZD order but in USD. Courier tracking numbers (FedEx) are noise, not lines."
+    },
+    {
+      "file": "out/conf-06.pdf",
+      "variants": [
+        "out/conf-06.png",
+        "out/conf-06-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L2",
+      "kind": "confirmation",
+      "title": "Order Confirmation",
+      "language": "en",
+      "number": "OC-24019",
+      "orderNumber": "ELS-PO-0912",
+      "supplier": "Sample Office Furniture Ltd",
+      "buyer": "Example Legal Services Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "62-108-384"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-10-15",
+      "lines": [
+        {
+          "code": "CHR-MESH-BK",
+          "description": "Task chair, mesh back, adjustable arms, black",
+          "qty": 8,
+          "unit": "389.00",
+          "amount": "3112.00"
+        },
+        {
+          "code": "DSK-1680-W",
+          "description": "Desk 1600 x 800 mm, white top, silver frame",
+          "qty": 8,
+          "unit": "465.00",
+          "amount": "3720.00"
+        },
+        {
+          "code": "PED-3D-L",
+          "description": "Mobile pedestal, 3 drawer, lockable, white",
+          "qty": 8,
+          "unit": "239.00",
+          "amount": "1912.00"
+        },
+        {
+          "code": "MON-ARM-2",
+          "description": "Dual monitor arm, desk clamp, gas spring",
+          "qty": 8,
+          "unit": "149.00",
+          "amount": "1192.00"
+        },
+        {
+          "code": null,
+          "description": "Contract discount 10% (agreement EL-2026-07)",
+          "qty": null,
+          "unit": null,
+          "amount": "-993.60"
+        }
+      ],
+      "subtotal": "8942.40",
+      "tax": "1341.36",
+      "total": "10283.76",
+      "tracking": [],
+      "notes": "Layout L2: description first, then code, and price before quantity; header block on the right. The discount is a table line with no quantity or unit price; it is part of the subtotal."
+    },
+    {
+      "file": "out/inv-06.pdf",
+      "variants": [
+        "out/inv-06.png",
+        "out/inv-06-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L1",
+      "kind": "invoice",
+      "title": "Tax Invoice",
+      "language": "en",
+      "number": "SOF-61377",
+      "orderNumber": "ELS-PO-0912",
+      "supplier": "Sample Office Furniture Ltd",
+      "buyer": "Example Legal Services Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "62-108-384"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-10-30",
+      "lines": [
+        {
+          "code": "CHR-MESH-BK",
+          "description": "Task chair, mesh back, adjustable arms, black",
+          "qty": 8,
+          "unit": "389.00",
+          "amount": "3112.00"
+        },
+        {
+          "code": "DSK-1680-W",
+          "description": "Desk 1600 x 800 mm, white top, silver frame",
+          "qty": 8,
+          "unit": "465.00",
+          "amount": "3720.00"
+        },
+        {
+          "code": "PED-3D-L",
+          "description": "Mobile pedestal, 3 drawer, lockable, white",
+          "qty": 8,
+          "unit": "239.00",
+          "amount": "1912.00"
+        },
+        {
+          "code": "MON-ARM-2",
+          "description": "Dual monitor arm, desk clamp, gas spring",
+          "qty": 8,
+          "unit": "149.00",
+          "amount": "1192.00"
+        },
+        {
+          "code": null,
+          "description": "Contract discount 10% (agreement EL-2026-07)",
+          "qty": null,
+          "unit": null,
+          "amount": "-993.60"
+        }
+      ],
+      "subtotal": "8942.40",
+      "tax": "1341.36",
+      "total": "10283.76",
+      "tracking": [],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left. The discount is a table line with no quantity or unit price; it is part of the subtotal."
+    },
+    {
+      "file": "out/po-07.pdf",
+      "variants": [
+        "out/po-07.png",
+        "out/po-07-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L4",
+      "kind": "order",
+      "title": "Purchase Order",
+      "language": "en",
+      "number": "PO26-0458",
+      "orderNumber": "PO26-0458",
+      "supplier": "Sample Timber Products Pty Ltd",
+      "buyer": "Example Cabinetry Pty Ltd",
+      "taxId": {
+        "type": "abn",
+        "value": "86 784 337 991"
+      },
+      "country": "AU",
+      "currency": "AUD",
+      "issued": "2026-10-06",
+      "lines": [
+        {
+          "code": "MDF16-2412",
+          "description": "Moisture resistant MDF 16 mm, 2400 x 1200",
+          "qty": 60,
+          "unit": "48.90",
+          "amount": "2934.00"
+        },
+        {
+          "code": "HPP12-2412",
+          "description": "Hoop pine plywood 12 mm, 2400 x 1200, BB grade",
+          "qty": 30,
+          "unit": "72.40",
+          "amount": "2172.00"
+        },
+        {
+          "code": "MEL16-WH",
+          "description": "Melamine board 16 mm white, 3600 x 1800, two sides",
+          "qty": 40,
+          "unit": "96.80",
+          "amount": "3872.00"
+        },
+        {
+          "code": "EDG22-WH",
+          "description": "ABS edge tape 22 x 1 mm white, 100 m roll",
+          "qty": 10,
+          "unit": "38.50",
+          "amount": "385.00"
+        },
+        {
+          "code": "EDG29-OAK",
+          "description": "ABS edge tape 29 x 1 mm natural oak, 50 m roll",
+          "qty": 6,
+          "unit": "44.20",
+          "amount": "265.20"
+        }
+      ],
+      "subtotal": "9628.20",
+      "tax": "962.82",
+      "total": "10591.02",
+      "tracking": [],
+      "notes": "Layout L4: no amount column, so line amounts are not printed (truth amount = qty x unit)."
+    },
+    {
+      "file": "out/inv-07.pdf",
+      "variants": [
+        "out/inv-07.png",
+        "out/inv-07-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L2",
+      "kind": "invoice",
+      "title": "Tax Invoice",
+      "language": "en",
+      "number": "INV-118204",
+      "orderNumber": "PO26-0458",
+      "supplier": "Sample Timber Products Pty Ltd",
+      "buyer": "Example Cabinetry Pty Ltd",
+      "taxId": {
+        "type": "abn",
+        "value": "52 549 839 609"
+      },
+      "country": "AU",
+      "currency": "AUD",
+      "issued": "2026-10-14",
+      "lines": [
+        {
+          "code": "MDF16-2412",
+          "description": "Moisture resistant MDF 16 mm, 2400 x 1200",
+          "qty": 60,
+          "unit": "48.90",
+          "amount": "2934.00"
+        },
+        {
+          "code": "HPP12-2412",
+          "description": "Hoop pine plywood 12 mm, 2400 x 1200, BB grade",
+          "qty": 30,
+          "unit": "72.40",
+          "amount": "2172.00"
+        },
+        {
+          "code": "MEL16-WH",
+          "description": "Melamine board 16 mm white, 3600 x 1800, two sides",
+          "qty": 34,
+          "unit": "96.80",
+          "amount": "3291.20"
+        },
+        {
+          "code": "EDG22-WH",
+          "description": "ABS edge tape 22 x 1 mm white, 100 m roll",
+          "qty": 10,
+          "unit": "38.50",
+          "amount": "385.00"
+        },
+        {
+          "code": "EDG29-OAK",
+          "description": "ABS edge tape 29 x 1 mm natural oak, 50 m roll",
+          "qty": 6,
+          "unit": "44.20",
+          "amount": "265.20"
+        }
+      ],
+      "subtotal": "9047.40",
+      "tax": "904.74",
+      "total": "9952.14",
+      "tracking": [
+        "1021000481"
+      ],
+      "notes": "Layout L2: description first, then code, and price before quantity; header block on the right. Total line reads \"Total inc. GST\". Courier tracking numbers (DHL Express) are noise, not lines."
+    },
+    {
+      "file": "out/po-08.pdf",
+      "variants": [
+        "out/po-08.png",
+        "out/po-08-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L1",
+      "kind": "order",
+      "title": "Purchase Order",
+      "language": "en",
+      "number": "EF-PO-55210",
+      "orderNumber": "EF-PO-55210",
+      "supplier": "Sample Packaging Australia Pty Ltd",
+      "buyer": "Example Foods Pty Ltd",
+      "taxId": {
+        "type": "abn",
+        "value": "18 958 251 690"
+      },
+      "country": "AU",
+      "currency": "AUD",
+      "issued": "2026-10-19",
+      "lines": [
+        {
+          "code": "CTN-433",
+          "description": "Shipping carton 400 x 300 x 300 mm, single wall, bundle of 25",
+          "qty": 40,
+          "unit": "31.25",
+          "amount": "1250.00"
+        },
+        {
+          "code": "TPE-4875",
+          "description": "Packing tape 48 mm x 75 m, clear, acrylic",
+          "qty": 72,
+          "unit": "2.95",
+          "amount": "212.40"
+        },
+        {
+          "code": "TRY-KM",
+          "description": "Kraft food tray, medium, carton of 300",
+          "qty": 15,
+          "unit": "64.80",
+          "amount": "972.00"
+        },
+        {
+          "code": "LID-KM",
+          "description": "Clear lid for kraft food tray, medium, carton of 300",
+          "qty": 15,
+          "unit": "52.30",
+          "amount": "784.50"
+        },
+        {
+          "code": "LBL-100",
+          "description": "Thermal labels 100 x 150 mm, 500 per roll",
+          "qty": 24,
+          "unit": "18.60",
+          "amount": "446.40"
+        }
+      ],
+      "subtotal": "3665.30",
+      "tax": "366.53",
+      "total": "4031.83",
+      "tracking": [],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left."
+    },
+    {
+      "file": "out/inv-08.pdf",
+      "variants": [
+        "out/inv-08.png",
+        "out/inv-08-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L7",
+      "kind": "invoice",
+      "title": "Tax Invoice",
+      "language": "en",
+      "number": "SPA-0098811",
+      "orderNumber": "EF-PO-55210",
+      "supplier": "Sample Packaging Australia Pty Ltd",
+      "buyer": "Example Foods Pty Ltd",
+      "taxId": {
+        "type": "abn",
+        "value": "62 126 543 142"
+      },
+      "country": "AU",
+      "currency": "AUD",
+      "issued": "2026-10-27",
+      "lines": [
+        {
+          "code": "CTN-433",
+          "description": "Shipping carton 400 x 300 x 300 mm, single wall, bundle of 25",
+          "qty": 40,
+          "unit": "31.25",
+          "amount": "1250.00"
+        },
+        {
+          "code": "TPE-4875",
+          "description": "Packing tape 48 mm x 75 m, clear, acrylic",
+          "qty": 72,
+          "unit": "2.95",
+          "amount": "212.40"
+        },
+        {
+          "code": "TRY-KM",
+          "description": "Kraft food tray, medium, carton of 300",
+          "qty": 15,
+          "unit": "64.80",
+          "amount": "972.00"
+        },
+        {
+          "code": "LID-KM",
+          "description": "Clear lid for kraft food tray, medium, carton of 300",
+          "qty": 15,
+          "unit": "52.30",
+          "amount": "784.50"
+        },
+        {
+          "code": "LBL-100",
+          "description": "Thermal labels 100 x 150 mm, 500 per roll",
+          "qty": 24,
+          "unit": "18.60",
+          "amount": "446.40"
+        }
+      ],
+      "subtotal": "3665.30",
+      "tax": "366.53",
+      "total": "4013.83",
+      "tracking": [
+        "1ZFP97EE0397948077"
+      ],
+      "notes": "Layout L7: no code column; the code is printed under each description. The printed total has two digits swapped, so it is not subtotal + GST. Courier tracking numbers (UPS) are noise, not lines."
+    },
+    {
+      "file": "out/po-09.pdf",
+      "variants": [
+        "out/po-09.png",
+        "out/po-09-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L3",
+      "kind": "order",
+      "title": "Purchase Order",
+      "language": "en",
+      "number": "EHG-PO-3307",
+      "orderNumber": "EHG-PO-3307",
+      "supplier": "Sample Lighting Co Pty Ltd",
+      "buyer": "Example Hospitality Group Pty Ltd",
+      "taxId": {
+        "type": "abn",
+        "value": "92 482 591 224"
+      },
+      "country": "AU",
+      "currency": "AUD",
+      "issued": "2026-09-15",
+      "lines": [
+        {
+          "code": null,
+          "description": "Pendant light, spun aluminium, 350 mm, matt black",
+          "qty": 24,
+          "unit": "129.00",
+          "amount": "3096.00"
+        },
+        {
+          "code": null,
+          "description": "Track spotlight 15 W, 3000 K, white",
+          "qty": 40,
+          "unit": "54.50",
+          "amount": "2180.00"
+        },
+        {
+          "code": null,
+          "description": "Single-circuit track rail 2 m, white, with end caps",
+          "qty": 12,
+          "unit": "46.00",
+          "amount": "552.00"
+        },
+        {
+          "code": null,
+          "description": "LED driver 24 V, 60 W, constant voltage, IP67",
+          "qty": 10,
+          "unit": "38.90",
+          "amount": "389.00"
+        },
+        {
+          "code": null,
+          "description": "LED strip 24 V, 14.4 W/m, 2700 K, 5 m reel",
+          "qty": 10,
+          "unit": "62.00",
+          "amount": "620.00"
+        }
+      ],
+      "subtotal": "6837.00",
+      "tax": "683.70",
+      "total": "7520.70",
+      "tracking": [],
+      "notes": "Layout L3: no code column."
+    },
+    {
+      "file": "out/inv-09.pdf",
+      "variants": [
+        "out/inv-09.png",
+        "out/inv-09-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L1",
+      "kind": "invoice",
+      "title": "Tax Invoice",
+      "language": "en",
+      "number": "SL-2026-1204",
+      "orderNumber": "EHG-PO-3307",
+      "supplier": "Sample Lighting Co Pty Ltd",
+      "buyer": "Example Hospitality Group Pty Ltd",
+      "taxId": {
+        "type": "abn",
+        "value": "47 593 511 952"
+      },
+      "country": "AU",
+      "currency": "AUD",
+      "issued": "2026-09-24",
+      "lines": [
+        {
+          "code": "PND-350-BK",
+          "description": "Pendant light, spun aluminium, 350 mm, matt black",
+          "qty": 24,
+          "unit": "129.00",
+          "amount": "3096.00"
+        },
+        {
+          "code": "TRK-15-30",
+          "description": "Track spotlight 15 W, 3000 K, white",
+          "qty": 40,
+          "unit": "54.50",
+          "amount": "2180.00"
+        },
+        {
+          "code": "TRK-RAIL-2",
+          "description": "Single-circuit track rail 2 m, white, with end caps",
+          "qty": 12,
+          "unit": "46.00",
+          "amount": "552.00"
+        },
+        {
+          "code": "DRV-24-60",
+          "description": "LED driver 24 V, 60 W, constant voltage, IP67",
+          "qty": 10,
+          "unit": "38.90",
+          "amount": "389.00"
+        },
+        {
+          "code": "STR-24-5",
+          "description": "LED strip 24 V, 14.4 W/m, 2700 K, 5 m reel",
+          "qty": 10,
+          "unit": "62.00",
+          "amount": "620.00"
+        },
+        {
+          "code": null,
+          "description": "Freight: Sydney to Newcastle, 3 cartons",
+          "qty": 1,
+          "unit": "85.00",
+          "amount": "85.00"
+        }
+      ],
+      "subtotal": "6922.00",
+      "tax": "692.20",
+      "total": "7614.20",
+      "tracking": [
+        "7621887991"
+      ],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left. Freight is a real table line (no code) and is not on the PO. Courier tracking numbers (DHL Express) are noise, not lines."
+    },
+    {
+      "file": "out/po-10.pdf",
+      "variants": [
+        "out/po-10.png",
+        "out/po-10-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L2",
+      "kind": "order",
+      "title": "Purchase Order",
+      "language": "en",
+      "number": "EB/PO/0219",
+      "orderNumber": "EB/PO/0219",
+      "supplier": "Sample Catering Equipment Ltd",
+      "buyer": "Example Bistro Ltd",
+      "taxId": null,
+      "country": "GB",
+      "currency": "GBP",
+      "issued": "2026-10-20",
+      "lines": [
+        {
+          "code": "GN11-65",
+          "description": "Gastronorm pan 1/1, 65 mm deep, stainless steel",
+          "qty": 12,
+          "unit": "18.40",
+          "amount": "220.80"
+        },
+        {
+          "code": "BLD-2L",
+          "description": "Commercial blender 2 litre, 1500 W",
+          "qty": 2,
+          "unit": "289.00",
+          "amount": "578.00"
+        },
+        {
+          "code": "CBS-6",
+          "description": "Chopping board set, colour coded, 6 boards with rack",
+          "qty": 3,
+          "unit": "64.95",
+          "amount": "194.85"
+        },
+        {
+          "code": "THM-PRB",
+          "description": "Digital probe thermometer, -50 to 300 °C",
+          "qty": 6,
+          "unit": "19.50",
+          "amount": "117.00"
+        },
+        {
+          "code": "HLP-2",
+          "description": "Heat lamp, twin bulb, 500 W",
+          "qty": 1,
+          "unit": "145.00",
+          "amount": "145.00"
+        }
+      ],
+      "subtotal": "1255.65",
+      "tax": "251.13",
+      "total": "1506.78",
+      "tracking": [],
+      "notes": "Layout L2: description first, then code, and price before quantity; header block on the right."
+    },
+    {
+      "file": "out/inv-10.pdf",
+      "variants": [
+        "out/inv-10.png",
+        "out/inv-10-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L1",
+      "kind": "invoice",
+      "title": "Invoice",
+      "language": "en",
+      "number": "SCE-77612",
+      "orderNumber": "EB/PO/0219",
+      "supplier": "Sample Catering Equipment Ltd",
+      "buyer": "Example Bistro Ltd",
+      "taxId": {
+        "type": "gb-vat",
+        "value": "GB 928 0143 38"
+      },
+      "country": "GB",
+      "currency": "GBP",
+      "issued": "2026-10-28",
+      "lines": [
+        {
+          "code": "GN11-65",
+          "description": "Gastronorm pan 1/1, 65 mm deep, stainless steel",
+          "qty": 12,
+          "unit": "18.40",
+          "amount": "220.80"
+        },
+        {
+          "code": "GN12-65",
+          "description": "Gastronorm pan 1/2, 65 mm deep, stainless steel",
+          "qty": 12,
+          "unit": "11.20",
+          "amount": "134.40"
+        },
+        {
+          "code": "BLD-2L",
+          "description": "Commercial blender 2 litre, 1500 W",
+          "qty": 2,
+          "unit": "289.00",
+          "amount": "578.00"
+        },
+        {
+          "code": "CBS-6",
+          "description": "Chopping board set, colour coded, 6 boards with rack",
+          "qty": 3,
+          "unit": "64.95",
+          "amount": "194.85"
+        },
+        {
+          "code": "THM-PRB",
+          "description": "Digital probe thermometer, -50 to 300 °C",
+          "qty": 6,
+          "unit": "19.50",
+          "amount": "117.00"
+        },
+        {
+          "code": "HLP-2",
+          "description": "Heat lamp, twin bulb, 500 W",
+          "qty": 1,
+          "unit": "145.00",
+          "amount": "145.00"
+        }
+      ],
+      "subtotal": "1390.05",
+      "tax": "278.01",
+      "total": "1668.06",
+      "tracking": [
+        "3817288812"
+      ],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left. Titled just \"Invoice\"; VAT 20%. Courier tracking numbers (DHL Express) are noise, not lines."
+    },
+    {
+      "file": "out/po-11.pdf",
+      "variants": [
+        "out/po-11.png",
+        "out/po-11-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L1",
+      "kind": "order",
+      "title": "Purchase Order",
+      "language": "en",
+      "number": "PO-004417",
+      "orderNumber": "PO-004417",
+      "supplier": "Sample Print Supplies Ltd",
+      "buyer": "Example Design Studio Ltd",
+      "taxId": {
+        "type": "gb-vat",
+        "value": "GB 590 0930 46"
+      },
+      "country": "GB",
+      "currency": "GBP",
+      "issued": "2026-10-05",
+      "lines": [
+        {
+          "code": "TNR-K-HY",
+          "description": "Toner cartridge, black, high yield, 12,000 pages",
+          "qty": 6,
+          "unit": "148.00",
+          "amount": "888.00"
+        },
+        {
+          "code": "PPR-A4-80",
+          "description": "A4 copier paper 80 gsm, box of 5 reams",
+          "qty": 20,
+          "unit": "21.50",
+          "amount": "430.00"
+        },
+        {
+          "code": "PPR-A3-100",
+          "description": "A3 bright white paper 100 gsm, ream of 500",
+          "qty": 10,
+          "unit": "14.80",
+          "amount": "148.00"
+        },
+        {
+          "code": "LAM-A4-150",
+          "description": "Laminating pouch A4, 150 micron, pack of 100",
+          "qty": 4,
+          "unit": "23.90",
+          "amount": "95.60"
+        },
+        {
+          "code": "INK-C-XL",
+          "description": "Ink cartridge, cyan, XL",
+          "qty": 8,
+          "unit": "32.40",
+          "amount": "259.20"
+        },
+        {
+          "code": "BND-21",
+          "description": "Plastic binding comb 21 mm, black, box of 50",
+          "qty": 2,
+          "unit": "17.60",
+          "amount": "35.20"
+        }
+      ],
+      "subtotal": "1856.00",
+      "tax": "371.20",
+      "total": "2227.20",
+      "tracking": [],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left."
+    },
+    {
+      "file": "out/conf-11.pdf",
+      "variants": [
+        "out/conf-11.png",
+        "out/conf-11-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L4",
+      "kind": "confirmation",
+      "title": "Order Acknowledgement",
+      "language": "en",
+      "number": "SOA-260934",
+      "orderNumber": "PO-004417",
+      "supplier": "Sample Print Supplies Ltd",
+      "buyer": "Example Design Studio Ltd",
+      "taxId": {
+        "type": "gb-vat",
+        "value": "GB 108 8955 37"
+      },
+      "country": "GB",
+      "currency": "GBP",
+      "issued": "2026-10-06",
+      "lines": [
+        {
+          "code": "TNR-K-HY2",
+          "description": "Toner cartridge, black, high yield, 12,000 pages",
+          "qty": 6,
+          "unit": "148.00",
+          "amount": "888.00"
+        },
+        {
+          "code": "PPR-A4-80",
+          "description": "A4 copier paper 80 gsm, box of 5 reams",
+          "qty": 20,
+          "unit": "21.50",
+          "amount": "430.00"
+        },
+        {
+          "code": "PPR-A3-100",
+          "description": "A3 bright white paper 100 gsm, ream of 500",
+          "qty": 10,
+          "unit": "14.80",
+          "amount": "148.00"
+        },
+        {
+          "code": "LAM-A4-150",
+          "description": "Laminating pouch A4, 150 micron, pack of 100",
+          "qty": 4,
+          "unit": "23.90",
+          "amount": "95.60"
+        },
+        {
+          "code": "INK-C-XL",
+          "description": "Ink cartridge, cyan, XL",
+          "qty": 8,
+          "unit": "32.40",
+          "amount": "259.20"
+        },
+        {
+          "code": "BND-21",
+          "description": "Plastic binding comb 21 mm, black, box of 50",
+          "qty": 2,
+          "unit": "17.60",
+          "amount": "35.20"
+        }
+      ],
+      "subtotal": "1856.00",
+      "tax": "371.20",
+      "total": "2227.20",
+      "tracking": [],
+      "notes": "Layout L4: no amount column, so line amounts are not printed (truth amount = qty x unit). The toner has a new supplier code (TNR-K-HY2) with the same description."
+    },
+    {
+      "file": "out/inv-11.pdf",
+      "variants": [
+        "out/inv-11.png",
+        "out/inv-11-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L2",
+      "kind": "invoice",
+      "title": "VAT Invoice",
+      "language": "en",
+      "number": "SPS-INV-090221",
+      "orderNumber": "PO-004417",
+      "supplier": "Sample Print Supplies Ltd",
+      "buyer": "Example Design Studio Ltd",
+      "taxId": {
+        "type": "gb-vat",
+        "value": "GB 108 8955 37"
+      },
+      "country": "GB",
+      "currency": "GBP",
+      "issued": "2026-10-09",
+      "lines": [
+        {
+          "code": "TNR-K-HY2",
+          "description": "Toner cartridge, black, high yield, 12,000 pages",
+          "qty": 6,
+          "unit": "148.00",
+          "amount": "888.00"
+        },
+        {
+          "code": "PPR-A4-80",
+          "description": "A4 copier paper 80 gsm, box of 5 reams",
+          "qty": 20,
+          "unit": "21.50",
+          "amount": "430.00"
+        },
+        {
+          "code": "PPR-A3-100",
+          "description": "A3 bright white paper 100 gsm, ream of 500",
+          "qty": 6,
+          "unit": "14.80",
+          "amount": "88.80"
+        },
+        {
+          "code": "LAM-A4-150",
+          "description": "Laminating pouch A4, 150 micron, pack of 100",
+          "qty": 4,
+          "unit": "23.90",
+          "amount": "95.60"
+        },
+        {
+          "code": "INK-C-XL",
+          "description": "Ink cartridge, cyan, XL",
+          "qty": 8,
+          "unit": "32.40",
+          "amount": "259.20"
+        },
+        {
+          "code": "BND-21",
+          "description": "Plastic binding comb 21 mm, black, box of 50",
+          "qty": 2,
+          "unit": "17.60",
+          "amount": "35.20"
+        }
+      ],
+      "subtotal": "1796.80",
+      "tax": "359.36",
+      "total": "2156.16",
+      "tracking": [
+        "1ZLRA2D70184920487"
+      ],
+      "notes": "Layout L2: description first, then code, and price before quantity; header block on the right. Part shipment: 6 of 10 reams of A3 paper. Courier tracking numbers (UPS) are noise, not lines."
+    },
+    {
+      "file": "out/po-12.pdf",
+      "variants": [
+        "out/po-12.png",
+        "out/po-12-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L2",
+      "kind": "order",
+      "title": "Bestellung",
+      "language": "de",
+      "number": "B-2026-0412",
+      "orderNumber": "B-2026-0412",
+      "supplier": "Sample Beschläge GmbH",
+      "buyer": "Example Möbelwerkstatt GmbH",
+      "taxId": {
+        "type": "eu-vat",
+        "value": "DE771655203"
+      },
+      "country": "DE",
+      "currency": "EUR",
+      "issued": "2026-10-07",
+      "lines": [
+        {
+          "code": "SCH-110-CL",
+          "description": "Möbelscharnier 110°, Clip-Montage, mit Dämpfung",
+          "qty": 500,
+          "unit": "2.95",
+          "amount": "1475.00"
+        },
+        {
+          "code": "VA-500-SE",
+          "description": "Vollauszug 500 mm, Softeinzug, Tragkraft 40 kg (Paar)",
+          "qty": 60,
+          "unit": "18.40",
+          "amount": "1104.00"
+        },
+        {
+          "code": "GRF-128-ES",
+          "description": "Griff Edelstahl, Lochabstand 128 mm",
+          "qty": 300,
+          "unit": "3.80",
+          "amount": "1140.00"
+        },
+        {
+          "code": "SCHR-4-30",
+          "description": "Spanplattenschraube 4 x 30 mm, verzinkt",
+          "qty": 2000,
+          "unit": "0.04",
+          "amount": "80.00"
+        },
+        {
+          "code": "BEL-LED-12",
+          "description": "LED-Unterbauleuchte 12 V, 600 mm, warmweiß, mit Anschlusskabel 2 m",
+          "qty": 25,
+          "unit": "34.90",
+          "amount": "872.50"
+        },
+        {
+          "code": "KU-BU-22",
+          "description": "Kantenumleimer Buche, 22 mm, Rolle 50 m",
+          "qty": 12,
+          "unit": "9.85",
+          "amount": "118.20"
+        }
+      ],
+      "subtotal": "4789.70",
+      "tax": "910.04",
+      "total": "5699.74",
+      "tracking": [],
+      "notes": "Layout L2: description first, then code, and price before quantity; header block on the right. German number format: Menge 2.000 is two thousand; 1.234,56 money."
+    },
+    {
+      "file": "out/conf-12.pdf",
+      "variants": [
+        "out/conf-12.png",
+        "out/conf-12-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L5",
+      "kind": "confirmation",
+      "title": "Auftragsbestätigung",
+      "language": "de",
+      "number": "AB-26-0931",
+      "orderNumber": "B-2026-0412",
+      "supplier": "Sample Beschläge GmbH",
+      "buyer": "Example Möbelwerkstatt GmbH",
+      "taxId": {
+        "type": "eu-vat",
+        "value": "DE533889077"
+      },
+      "country": "DE",
+      "currency": "EUR",
+      "issued": "2026-10-08",
+      "lines": [
+        {
+          "code": "SCH-110-CL",
+          "description": "Möbelscharnier 110°, Clip-Montage, mit Dämpfung",
+          "qty": 500,
+          "unit": "2.95",
+          "amount": "1475.00"
+        },
+        {
+          "code": "VA-500-SE",
+          "description": "Vollauszug 500 mm, Softeinzug, Tragkraft 40 kg (Paar)",
+          "qty": 60,
+          "unit": "19.15",
+          "amount": "1149.00"
+        },
+        {
+          "code": "GRF-128-ES",
+          "description": "Griff Edelstahl, Lochabstand 128 mm",
+          "qty": 300,
+          "unit": "3.80",
+          "amount": "1140.00"
+        },
+        {
+          "code": "SCHR-4-30",
+          "description": "Spanplattenschraube 4 x 30 mm, verzinkt",
+          "qty": 2000,
+          "unit": "0.04",
+          "amount": "80.00"
+        },
+        {
+          "code": "BEL-LED-12",
+          "description": "LED-Unterbauleuchte 12 V, 600 mm, warmweiß, mit Anschlusskabel 2 m",
+          "qty": 25,
+          "unit": "36.30",
+          "amount": "907.50"
+        },
+        {
+          "code": "KU-BU-22",
+          "description": "Kantenumleimer Buche, 22 mm, Rolle 50 m",
+          "qty": 12,
+          "unit": "9.85",
+          "amount": "118.20"
+        }
+      ],
+      "subtotal": "4869.70",
+      "tax": "925.24",
+      "total": "5794.94",
+      "tracking": [],
+      "notes": "Layout L5 (DIN style): the Pos. column (1, 2, 3...) and the unit-of-measure column are not quantities. Two prices are higher than on the Bestellung (Preisanpassung)."
+    },
+    {
+      "file": "out/inv-12.pdf",
+      "variants": [
+        "out/inv-12.png",
+        "out/inv-12-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L5",
+      "kind": "invoice",
+      "title": "Rechnung",
+      "language": "de",
+      "number": "RE-2026-10457",
+      "orderNumber": "B-2026-0412",
+      "supplier": "Sample Beschläge GmbH",
+      "buyer": "Example Möbelwerkstatt GmbH",
+      "taxId": {
+        "type": "eu-vat",
+        "value": "DE533889077"
+      },
+      "country": "DE",
+      "currency": "EUR",
+      "issued": "2026-10-19",
+      "lines": [
+        {
+          "code": "SCH-110-CL",
+          "description": "Möbelscharnier 110°, Clip-Montage, mit Dämpfung",
+          "qty": 500,
+          "unit": "2.95",
+          "amount": "1475.00"
+        },
+        {
+          "code": "VA-500-SE",
+          "description": "Vollauszug 500 mm, Softeinzug, Tragkraft 40 kg (Paar)",
+          "qty": 60,
+          "unit": "19.15",
+          "amount": "1149.00"
+        },
+        {
+          "code": "GRF-128-ES",
+          "description": "Griff Edelstahl, Lochabstand 128 mm",
+          "qty": 300,
+          "unit": "3.80",
+          "amount": "1140.00"
+        },
+        {
+          "code": "SCHR-4-30",
+          "description": "Spanplattenschraube 4 x 30 mm, verzinkt",
+          "qty": 2000,
+          "unit": "0.04",
+          "amount": "80.00"
+        },
+        {
+          "code": "BEL-LED-12",
+          "description": "LED-Unterbauleuchte 12 V, 600 mm, warmweiß, mit Anschlusskabel 2 m",
+          "qty": 25,
+          "unit": "36.30",
+          "amount": "907.50"
+        },
+        {
+          "code": "KU-BU-22",
+          "description": "Kantenumleimer Buche, 22 mm, Rolle 50 m",
+          "qty": 12,
+          "unit": "9.85",
+          "amount": "118.20"
+        }
+      ],
+      "subtotal": "4869.70",
+      "tax": "925.24",
+      "total": "5794.94",
+      "tracking": [
+        "2429124946"
+      ],
+      "notes": "Layout L5 (DIN style): the Pos. column (1, 2, 3...) and the unit-of-measure column are not quantities. The 2 % Skonto amount under the totals is not the tax or the total. Courier tracking numbers (DHL Express) are noise, not lines."
+    },
+    {
+      "file": "out/po-13.pdf",
+      "variants": [
+        "out/po-13.png",
+        "out/po-13-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L5",
+      "kind": "order",
+      "title": "Bestellung",
+      "language": "de",
+      "number": "EA-B-26-0213",
+      "orderNumber": "EA-B-26-0213",
+      "supplier": "Sample Elektrotechnik GmbH",
+      "buyer": "Example Anlagenbau GmbH",
+      "taxId": {
+        "type": "eu-vat",
+        "value": "DE814852548"
+      },
+      "country": "DE",
+      "currency": "EUR",
+      "issued": "2026-10-13",
+      "lines": [
+        {
+          "code": "NYM-3X15",
+          "description": "Mantelleitung NYM-J 3 x 1,5 mm²",
+          "qty": 112.5,
+          "unit": "0.88",
+          "amount": "99.00"
+        },
+        {
+          "code": "LS-B16",
+          "description": "Leitungsschutzschalter B16, 1-polig, 6 kA",
+          "qty": 24,
+          "unit": "4.95",
+          "amount": "118.80"
+        },
+        {
+          "code": "FI-40-30",
+          "description": "FI-Schutzschalter 40 A, 30 mA, 4-polig, Typ A",
+          "qty": 4,
+          "unit": "38.60",
+          "amount": "154.40"
+        },
+        {
+          "code": "ABZ-IP54",
+          "description": "Abzweigdose Aufputz IP54, 100 x 100 mm, grau",
+          "qty": 40,
+          "unit": "2.35",
+          "amount": "94.00"
+        },
+        {
+          "code": "KK-2020",
+          "description": "Kabelkanal 20 x 20 mm, weiß, Länge 2 m",
+          "qty": 30,
+          "unit": "3.10",
+          "amount": "93.00"
+        },
+        {
+          "code": "VK-3P",
+          "description": "Verbindungsklemme 3-polig, 0,2 bis 4 mm², Packung 50",
+          "qty": 6,
+          "unit": "11.90",
+          "amount": "71.40"
+        }
+      ],
+      "subtotal": "630.60",
+      "tax": "119.81",
+      "total": "750.41",
+      "tracking": [],
+      "notes": "Layout L5 (DIN style): the Pos. column (1, 2, 3...) and the unit-of-measure column are not quantities. Menge 112,5 m is a decimal quantity."
+    },
+    {
+      "file": "out/inv-13.pdf",
+      "variants": [
+        "out/inv-13.png",
+        "out/inv-13-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L2",
+      "kind": "invoice",
+      "title": "Rechnung",
+      "language": "de",
+      "number": "2026-30118",
+      "orderNumber": "EA-B-26-0213",
+      "supplier": "Sample Elektrotechnik GmbH",
+      "buyer": "Example Anlagenbau GmbH",
+      "taxId": {
+        "type": "eu-vat",
+        "value": "DE934588866"
+      },
+      "country": "DE",
+      "currency": "EUR",
+      "issued": "2026-10-22",
+      "lines": [
+        {
+          "code": "NYM-3X15",
+          "description": "Mantelleitung NYM-J 3 x 1,5 mm²",
+          "qty": 112.5,
+          "unit": "0.88",
+          "amount": "99.00"
+        },
+        {
+          "code": "LS-B16",
+          "description": "Leitungsschutzschalter B16, 1-polig, 6 kA",
+          "qty": 24,
+          "unit": "4.95",
+          "amount": "118.80"
+        },
+        {
+          "code": "FI-4P-40-30",
+          "description": "FI-Schutzschalter 40 A, 30 mA, 4-polig, Typ A",
+          "qty": 4,
+          "unit": "38.60",
+          "amount": "154.40"
+        },
+        {
+          "code": "ABZ-IP54",
+          "description": "Abzweigdose Aufputz IP54, 100 x 100 mm, grau",
+          "qty": 40,
+          "unit": "2.35",
+          "amount": "94.00"
+        },
+        {
+          "code": "KK-2020",
+          "description": "Kabelkanal 20 x 20 mm, weiß, Länge 2 m",
+          "qty": 30,
+          "unit": "3.10",
+          "amount": "93.00"
+        },
+        {
+          "code": "VK-3P",
+          "description": "Verbindungsklemme 3-polig, 0,2 bis 4 mm², Packung 50",
+          "qty": 6,
+          "unit": "11.90",
+          "amount": "71.40"
+        }
+      ],
+      "subtotal": "630.60",
+      "tax": "119.81",
+      "total": "750.41",
+      "tracking": [],
+      "notes": "Layout L2: description first, then code, and price before quantity; header block on the right. Invoice number 2026-30118 looks like a date range; the FI switch has a different Art.-Nr. with the same description."
+    },
+    {
+      "file": "out/po-14.pdf",
+      "variants": [
+        "out/po-14.png",
+        "out/po-14-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L5",
+      "kind": "order",
+      "title": "Bon de commande",
+      "language": "fr",
+      "number": "BC-2026-118",
+      "orderNumber": "BC-2026-118",
+      "supplier": "Sample Fournitures SARL",
+      "buyer": "Example Boulangerie SAS",
+      "taxId": {
+        "type": "eu-vat",
+        "value": "FR 84 627 998 297"
+      },
+      "country": "FR",
+      "currency": "EUR",
+      "issued": "2026-10-01",
+      "lines": [
+        {
+          "code": "FAR-T65-25",
+          "description": "Farine de blé T65, sac de 25 kg",
+          "qty": 40,
+          "unit": "21.60",
+          "amount": "864.00"
+        },
+        {
+          "code": "SAC-KR-1000",
+          "description": "Sachets kraft pour baguette, lot de 1000",
+          "qty": 6,
+          "unit": "38.90",
+          "amount": "233.40"
+        },
+        {
+          "code": "GNT-NIT-M",
+          "description": "Gants nitrile taille M, boîte de 100",
+          "qty": 10,
+          "unit": "7.45",
+          "amount": "74.50"
+        },
+        {
+          "code": "PAP-CUI-500",
+          "description": "Papier cuisson 40 x 60 cm, paquet de 500 feuilles",
+          "qty": 4,
+          "unit": "26.80",
+          "amount": "107.20"
+        },
+        {
+          "code": "LEV-500",
+          "description": "Levure sèche boulangère, 500 g",
+          "qty": 24,
+          "unit": "4.15",
+          "amount": "99.60"
+        },
+        {
+          "code": "BAN-PL-60",
+          "description": "Bannetons plastique 60 x 40 cm, lot de 10",
+          "qty": 2,
+          "unit": "112.00",
+          "amount": "224.00"
+        }
+      ],
+      "subtotal": "1602.70",
+      "tax": "320.54",
+      "total": "1923.24",
+      "tracking": [],
+      "notes": "Layout L5 (DIN style): the Pos. column (1, 2, 3...) and the unit-of-measure column are not quantities. French number format with a space as the thousands separator (1 234,56)."
+    },
+    {
+      "file": "out/inv-14.pdf",
+      "variants": [
+        "out/inv-14.png",
+        "out/inv-14-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L1",
+      "kind": "invoice",
+      "title": "Facture",
+      "language": "fr",
+      "number": "F2026-0318",
+      "orderNumber": "BC-2026-118",
+      "supplier": "Sample Fournitures SARL",
+      "buyer": "Example Boulangerie SAS",
+      "taxId": {
+        "type": "eu-vat",
+        "value": "FR 83 743 119 869"
+      },
+      "country": "FR",
+      "currency": "EUR",
+      "issued": "2026-10-07",
+      "lines": [
+        {
+          "code": "FAR-T65-25",
+          "description": "Farine de blé T65, sac de 25 kg",
+          "qty": 40,
+          "unit": "21.60",
+          "amount": "864.00"
+        },
+        {
+          "code": "SAC-KR-1000",
+          "description": "Sachets kraft pour baguette, lot de 1000",
+          "qty": 6,
+          "unit": "38.90",
+          "amount": "233.40"
+        },
+        {
+          "code": "GNT-NIT-M",
+          "description": "Gants nitrile taille M, boîte de 100",
+          "qty": 10,
+          "unit": "7.45",
+          "amount": "74.50"
+        },
+        {
+          "code": "PAP-CUI-500",
+          "description": "Papier cuisson 40 x 60 cm, paquet de 500 feuilles",
+          "qty": 4,
+          "unit": "26.80",
+          "amount": "107.20"
+        },
+        {
+          "code": "LEV-500",
+          "description": "Levure sèche boulangère, 500 g",
+          "qty": 24,
+          "unit": "4.15",
+          "amount": "99.60"
+        },
+        {
+          "code": "BAN-PL-60",
+          "description": "Bannetons plastique 60 x 40 cm, lot de 10",
+          "qty": 2,
+          "unit": "112.00",
+          "amount": "224.00"
+        }
+      ],
+      "subtotal": "1602.70",
+      "tax": "320.54",
+      "total": "1923.24",
+      "tracking": [],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left. French legal footer text contains 40 € and other numbers that are not totals."
+    },
+    {
+      "file": "out/po-15.pdf",
+      "variants": [
+        "out/po-15.png",
+        "out/po-15-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L1",
+      "kind": "order",
+      "title": "Pedido",
+      "language": "es",
+      "number": "PED-26-0577",
+      "orderNumber": "PED-26-0577",
+      "supplier": "Sample Suministros Hosteleros S.L.",
+      "buyer": "Example Restauración S.L.",
+      "taxId": {
+        "type": "eu-vat",
+        "value": "ESB57153108"
+      },
+      "country": "ES",
+      "currency": "EUR",
+      "issued": "2026-10-09",
+      "lines": [
+        {
+          "code": "VAS-SID-6",
+          "description": "Vaso de sidra 50 cl, caja de 6",
+          "qty": 20,
+          "unit": "9.60",
+          "amount": "192.00"
+        },
+        {
+          "code": "SRV-2C-40",
+          "description": "Servilletas 2 capas 40 x 40 cm, paquete de 50",
+          "qty": 60,
+          "unit": "2.15",
+          "amount": "129.00"
+        },
+        {
+          "code": "GN11-INOX",
+          "description": "Bandeja GN 1/1 acero inoxidable, 65 mm",
+          "qty": 10,
+          "unit": "16.90",
+          "amount": "169.00"
+        },
+        {
+          "code": "CUB-24",
+          "description": "Cubiertos de mesa, juego de 24 piezas, acero 18/10",
+          "qty": 8,
+          "unit": "34.50",
+          "amount": "276.00"
+        },
+        {
+          "code": "MANT-PAP",
+          "description": "Mantel de papel 100 x 100 cm, blanco, caja de 400",
+          "qty": 5,
+          "unit": "41.80",
+          "amount": "209.00"
+        },
+        {
+          "code": "JAR-1L",
+          "description": "Jarra de vidrio 1 litro con tapa",
+          "qty": 12,
+          "unit": "5.75",
+          "amount": "69.00"
+        }
+      ],
+      "subtotal": "1044.00",
+      "tax": "219.24",
+      "total": "1263.24",
+      "tracking": [],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left."
+    },
+    {
+      "file": "out/conf-15.pdf",
+      "variants": [
+        "out/conf-15.png",
+        "out/conf-15-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L3",
+      "kind": "confirmation",
+      "title": "Confirmación de pedido",
+      "language": "es",
+      "number": "CP-26-1290",
+      "orderNumber": "PED-26-0577",
+      "supplier": "Sample Suministros Hosteleros S.L.",
+      "buyer": "Example Restauración S.L.",
+      "taxId": {
+        "type": "eu-vat",
+        "value": "ESB92647114"
+      },
+      "country": "ES",
+      "currency": "EUR",
+      "issued": "2026-10-10",
+      "lines": [
+        {
+          "code": null,
+          "description": "Vaso de sidra 50 cl, caja de 6",
+          "qty": 20,
+          "unit": "9.60",
+          "amount": "192.00"
+        },
+        {
+          "code": null,
+          "description": "Servilletas 2 capas 40 x 40 cm, paquete de 50",
+          "qty": 40,
+          "unit": "2.15",
+          "amount": "86.00"
+        },
+        {
+          "code": null,
+          "description": "Bandeja GN 1/1 acero inoxidable, 65 mm",
+          "qty": 10,
+          "unit": "16.90",
+          "amount": "169.00"
+        },
+        {
+          "code": null,
+          "description": "Mantel de papel 100 x 100 cm, blanco, caja de 400",
+          "qty": 5,
+          "unit": "41.80",
+          "amount": "209.00"
+        },
+        {
+          "code": null,
+          "description": "Jarra de vidrio 1 litro con tapa",
+          "qty": 12,
+          "unit": "5.75",
+          "amount": "69.00"
+        }
+      ],
+      "subtotal": "725.00",
+      "tax": "152.25",
+      "total": "877.25",
+      "tracking": [],
+      "notes": "Layout L3: no code column. Servilletas confirmed 40 of 60; cubiertos (CUB-24) dropped as discontinued. No code column."
+    },
+    {
+      "file": "out/inv-15.pdf",
+      "variants": [
+        "out/inv-15.png",
+        "out/inv-15-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L5",
+      "kind": "invoice",
+      "title": "Factura",
+      "language": "es",
+      "number": "A-2026/0941",
+      "orderNumber": "PED-26-0577",
+      "supplier": "Sample Suministros Hosteleros S.L.",
+      "buyer": "Example Restauración S.L.",
+      "taxId": {
+        "type": "eu-vat",
+        "value": "ESB92647114"
+      },
+      "country": "ES",
+      "currency": "EUR",
+      "issued": "2026-10-16",
+      "lines": [
+        {
+          "code": "VAS-SID-6",
+          "description": "Vaso de sidra 50 cl, caja de 6",
+          "qty": 20,
+          "unit": "9.60",
+          "amount": "192.00"
+        },
+        {
+          "code": "SRV-2C-40",
+          "description": "Servilletas 2 capas 40 x 40 cm, paquete de 50",
+          "qty": 40,
+          "unit": "2.15",
+          "amount": "86.00"
+        },
+        {
+          "code": "GN11-INOX",
+          "description": "Bandeja GN 1/1 acero inoxidable, 65 mm",
+          "qty": 10,
+          "unit": "16.90",
+          "amount": "169.00"
+        },
+        {
+          "code": "MANT-PAP",
+          "description": "Mantel de papel 100 x 100 cm, blanco, caja de 400",
+          "qty": 5,
+          "unit": "41.80",
+          "amount": "209.00"
+        },
+        {
+          "code": "JAR-1L",
+          "description": "Jarra de vidrio 1 litro con tapa",
+          "qty": 12,
+          "unit": "5.75",
+          "amount": "69.00"
+        }
+      ],
+      "subtotal": "725.00",
+      "tax": "152.25",
+      "total": "877.25",
+      "tracking": [],
+      "notes": "Layout L5 (DIN style): the Pos. column (1, 2, 3...) and the unit-of-measure column are not quantities. Invoice number contains a slash (A-2026/0941). Albarán ALB-26-3310 is a delivery note number."
+    },
+    {
+      "file": "out/po-16.pdf",
+      "variants": [
+        "out/po-16.png",
+        "out/po-16-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L6",
+      "kind": "order",
+      "title": "PURCHASE ORDER",
+      "language": "en",
+      "number": "EMW-10442",
+      "orderNumber": "EMW-10442",
+      "supplier": "Sample Industrial Supply LLC",
+      "buyer": "Example Machine Works Inc.",
+      "taxId": null,
+      "country": "US",
+      "currency": "USD",
+      "issued": "2026-10-05",
+      "lines": [
+        {
+          "code": "HCS-12-13-2",
+          "description": "Hex cap screw 1/2-13 x 2 in, grade 8, yellow zinc (box of 50)",
+          "qty": 10,
+          "unit": "18.75",
+          "amount": "187.50"
+        },
+        {
+          "code": "SG-CLR-AF",
+          "description": "Safety glasses, clear lens, anti-fog",
+          "qty": 48,
+          "unit": "3.40",
+          "amount": "163.20"
+        },
+        {
+          "code": "NG-L-1000",
+          "description": "Nitrile gloves, size L, 5 mil, case of 1000",
+          "qty": 6,
+          "unit": "74.00",
+          "amount": "444.00"
+        },
+        {
+          "code": "CUT-OIL-1G",
+          "description": "Cutting oil, sulfurized, 1 gallon",
+          "qty": 4,
+          "unit": "26.90",
+          "amount": "107.60"
+        },
+        {
+          "code": "FD-45-60",
+          "description": "Flap disc 4-1/2 in, 60 grit, zirconia (pack of 10)",
+          "qty": 12,
+          "unit": "21.50",
+          "amount": "258.00"
+        }
+      ],
+      "subtotal": "1160.30",
+      "tax": "0.00",
+      "total": "1160.30",
+      "tracking": [],
+      "notes": "Layout L6: quantity is the first column; boxed grid. Dates are mm/dd/yyyy. Resale certificate number RC-48213 is noise."
+    },
+    {
+      "file": "out/inv-16.pdf",
+      "variants": [
+        "out/inv-16.png",
+        "out/inv-16-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L7",
+      "kind": "invoice",
+      "title": "Invoice",
+      "language": "en",
+      "number": "418805",
+      "orderNumber": "EMW-10442",
+      "supplier": "Sample Industrial Supply LLC",
+      "buyer": "Example Machine Works Inc.",
+      "taxId": null,
+      "country": "US",
+      "currency": "USD",
+      "issued": "2026-10-13",
+      "lines": [
+        {
+          "code": "HCS-12-13-2",
+          "description": "Hex cap screw 1/2-13 x 2 in, grade 8, yellow zinc (box of 50)",
+          "qty": 10,
+          "unit": "18.75",
+          "amount": "187.50"
+        },
+        {
+          "code": "SG-CLR-AF",
+          "description": "Safety glasses, clear lens, anti-fog",
+          "qty": 48,
+          "unit": "4.10",
+          "amount": "196.80"
+        },
+        {
+          "code": "NG-L-1000",
+          "description": "Nitrile gloves, size L, 5 mil, case of 1000",
+          "qty": 8,
+          "unit": "74.00",
+          "amount": "592.00"
+        },
+        {
+          "code": "CUT-OIL-1G",
+          "description": "Cutting oil, sulfurized, 1 gallon",
+          "qty": 4,
+          "unit": "26.90",
+          "amount": "107.60"
+        },
+        {
+          "code": "FD-45-60",
+          "description": "Flap disc 4-1/2 in, 60 grit, zirconia (pack of 10)",
+          "qty": 12,
+          "unit": "21.50",
+          "amount": "258.00"
+        }
+      ],
+      "subtotal": "1341.90",
+      "tax": "0.00",
+      "total": "1341.90",
+      "tracking": [
+        "1ZP5JC191294319705"
+      ],
+      "notes": "Layout L7: no code column; the code is printed under each description. Only a $ sign; the currency is USD from the US addresses. Courier tracking numbers (UPS) are noise, not lines."
+    },
+    {
+      "file": "out/inv-17.pdf",
+      "variants": [
+        "out/inv-17.png",
+        "out/inv-17-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L3",
+      "kind": "invoice",
+      "title": "Invoice",
+      "language": "en",
+      "number": "2026-1149",
+      "orderNumber": null,
+      "supplier": "Sample Cleaning Supplies Ltd",
+      "buyer": "Example Kitchens Ltd",
+      "taxId": {
+        "type": "nz-gst",
+        "value": "61-071-172"
+      },
+      "country": "NZ",
+      "currency": "NZD",
+      "issued": "2026-11-02",
+      "lines": [
+        {
+          "code": null,
+          "description": "Kitchen degreaser concentrate 5 L",
+          "qty": 4,
+          "unit": "32.50",
+          "amount": "130.00"
+        },
+        {
+          "code": null,
+          "description": "Microfibre cloths, colour coded, pack of 40",
+          "qty": 3,
+          "unit": "27.00",
+          "amount": "81.00"
+        },
+        {
+          "code": null,
+          "description": "Hand towel roll 200 m, carton of 6",
+          "qty": 5,
+          "unit": "44.90",
+          "amount": "224.50"
+        },
+        {
+          "code": null,
+          "description": "Foaming hand soap refill 1 L",
+          "qty": 6,
+          "unit": "11.20",
+          "amount": "67.20"
+        }
+      ],
+      "subtotal": "502.70",
+      "tax": "75.41",
+      "total": "578.11",
+      "tracking": [
+        "LZ565798659NZ"
+      ],
+      "notes": "Layout L3: no code column. No order number on the document (orderNumber null). Titled just \"Invoice\". Courier tracking numbers (NZ Post) are noise, not lines."
+    },
+    {
+      "file": "out/inv-18.pdf",
+      "variants": [
+        "out/inv-18.png",
+        "out/inv-18-photo.jpg"
+      ],
+      "pages": 1,
+      "layout": "L6",
+      "kind": "invoice",
+      "title": "TAX INVOICE",
+      "language": "en",
+      "number": "TI-660192",
+      "orderNumber": "ECP-7720",
+      "supplier": "Sample Plumbing Supplies Pty Ltd",
+      "buyer": "Example Cabinetry Pty Ltd",
+      "taxId": {
+        "type": "abn",
+        "value": "32 653 268 781"
+      },
+      "country": "AU",
+      "currency": "AUD",
+      "issued": "2026-10-30",
+      "lines": [
+        {
+          "code": "MXR-SNK-CH",
+          "description": "Sink mixer, gooseneck, pull-out spray, chrome finish, 5 star water rating, with braided hoses and mounting kit",
+          "qty": 6,
+          "unit": "189.00",
+          "amount": "1134.00"
+        },
+        {
+          "code": "SNK-DB-860",
+          "description": "Double bowl sink 860 x 480 mm, 1.0 mm stainless steel, with overflow, basket wastes and template",
+          "qty": 3,
+          "unit": "279.00",
+          "amount": "837.00"
+        },
+        {
+          "code": "TRP-40-PP",
+          "description": "Bottle trap 40 mm, polypropylene, adjustable height 50 to 80 mm",
+          "qty": 6,
+          "unit": "14.60",
+          "amount": "87.60"
+        },
+        {
+          "code": "HOS-450",
+          "description": "Braided flexible hose 450 mm, 1/2 in F x 1/2 in F, pair",
+          "qty": 12,
+          "unit": "8.95",
+          "amount": "107.40"
+        }
+      ],
+      "subtotal": "2166.00",
+      "tax": "216.60",
+      "total": "2382.60",
+      "tracking": [
+        "3200170385"
+      ],
+      "notes": "Layout L6: quantity is the first column; boxed grid. Long descriptions wrap over two lines. Courier tracking numbers (DHL Express) are noise, not lines."
+    },
+    {
+      "file": "out/inv-19-zh.pdf",
+      "variants": [],
+      "pages": 1,
+      "layout": "L1",
+      "kind": "invoice",
+      "title": "商业发票",
+      "language": "zh",
+      "number": "CI-NB-26118",
+      "orderNumber": "4500012977",
+      "supplier": "示例五金（宁波）有限公司",
+      "buyer": "Example Kitchens Ltd",
+      "taxId": null,
+      "country": "CN",
+      "currency": "USD",
+      "issued": "2026-10-08",
+      "lines": [
+        {
+          "code": "HNG-110",
+          "description": "110° 隐藏式铰链，快装底座",
+          "qty": 2000,
+          "unit": "0.42",
+          "amount": "840.00"
+        },
+        {
+          "code": "RUN-450",
+          "description": "三节阻尼滑轨 450 毫米（对）",
+          "qty": 500,
+          "unit": "3.85",
+          "amount": "1925.00"
+        },
+        {
+          "code": "HND-128",
+          "description": "不锈钢拉手，孔距 128 毫米",
+          "qty": 1000,
+          "unit": "0.96",
+          "amount": "960.00"
+        }
+      ],
+      "subtotal": "3725.00",
+      "tax": "0.00",
+      "total": "3725.00",
+      "tracking": [],
+      "notes": "Layout L1: code, description, qty, unit price, amount; header block on the left. Chinese text (WenQuanYi Zen Hei font); PDF only. Export invoice, no tax."
+    }
+  ],
+  "pairs": [
+    {
+      "a": "out/po-01.pdf",
+      "b": "out/conf-01.pdf",
+      "differences": []
+    },
+    {
+      "a": "out/conf-01.pdf",
+      "b": "out/inv-01.pdf",
+      "differences": [
+        {
+          "type": "price-higher",
+          "item": "RUN-500",
+          "expected": "15.60",
+          "actual": "16.10"
+        }
+      ]
+    },
+    {
+      "a": "out/po-01.pdf",
+      "b": "out/inv-01.pdf",
+      "differences": [
+        {
+          "type": "price-higher",
+          "item": "RUN-500",
+          "expected": "15.60",
+          "actual": "16.10"
+        }
+      ]
+    },
+    {
+      "a": "out/po-02.pdf",
+      "b": "out/inv-02.pdf",
+      "differences": [
+        {
+          "type": "qty-over",
+          "item": "BOL-M12100",
+          "expected": "100",
+          "actual": "120"
+        }
+      ]
+    },
+    {
+      "a": "out/po-03.pdf",
+      "b": "out/inv-03.pdf",
+      "differences": [
+        {
+          "type": "missing-line",
+          "item": "SIL-300C",
+          "description": "Silicone sealant 300 g, clear",
+          "expected": "1008.00",
+          "actual": null
+        }
+      ]
+    },
+    {
+      "a": "out/po-04.pdf",
+      "b": "out/inv-04.pdf",
+      "differences": [
+        {
+          "type": "gst-wrong",
+          "item": "tax",
+          "expected": "477.72",
+          "actual": "398.10"
+        }
+      ]
+    },
+    {
+      "a": "out/po-05.pdf",
+      "b": "out/inv-05.pdf",
+      "differences": [
+        {
+          "type": "currency-differs",
+          "item": null,
+          "expected": "NZD",
+          "actual": "USD"
+        }
+      ]
+    },
+    {
+      "a": "out/conf-06.pdf",
+      "b": "out/inv-06.pdf",
+      "differences": []
+    },
+    {
+      "a": "out/po-07.pdf",
+      "b": "out/inv-07.pdf",
+      "differences": [
+        {
+          "type": "qty-under",
+          "item": "MEL16-WH",
+          "expected": "40",
+          "actual": "34"
+        }
+      ]
+    },
+    {
+      "a": "out/po-08.pdf",
+      "b": "out/inv-08.pdf",
+      "differences": [
+        {
+          "type": "totals-wrong",
+          "item": "total",
+          "expected": "4031.83",
+          "actual": "4013.83"
+        }
+      ]
+    },
+    {
+      "a": "out/po-09.pdf",
+      "b": "out/inv-09.pdf",
+      "differences": [
+        {
+          "type": "extra-line",
+          "item": "Freight: Sydney to Newcastle, 3 cartons",
+          "description": "Freight: Sydney to Newcastle, 3 cartons",
+          "expected": null,
+          "actual": "85.00"
+        }
+      ]
+    },
+    {
+      "a": "out/po-10.pdf",
+      "b": "out/inv-10.pdf",
+      "differences": [
+        {
+          "type": "extra-line",
+          "item": "GN12-65",
+          "description": "Gastronorm pan 1/2, 65 mm deep, stainless steel",
+          "expected": null,
+          "actual": "134.40"
+        }
+      ]
+    },
+    {
+      "a": "out/po-11.pdf",
+      "b": "out/conf-11.pdf",
+      "differences": [
+        {
+          "type": "code-differs",
+          "item": "TNR-K-HY",
+          "description": "Toner cartridge, black, high yield, 12,000 pages",
+          "expected": "TNR-K-HY",
+          "actual": "TNR-K-HY2"
+        }
+      ]
+    },
+    {
+      "a": "out/conf-11.pdf",
+      "b": "out/inv-11.pdf",
+      "differences": [
+        {
+          "type": "qty-under",
+          "item": "PPR-A3-100",
+          "expected": "10",
+          "actual": "6"
+        }
+      ]
+    },
+    {
+      "a": "out/po-11.pdf",
+      "b": "out/inv-11.pdf",
+      "differences": [
+        {
+          "type": "code-differs",
+          "item": "TNR-K-HY",
+          "description": "Toner cartridge, black, high yield, 12,000 pages",
+          "expected": "TNR-K-HY",
+          "actual": "TNR-K-HY2"
+        },
+        {
+          "type": "qty-under",
+          "item": "PPR-A3-100",
+          "expected": "10",
+          "actual": "6"
+        }
+      ]
+    },
+    {
+      "a": "out/po-12.pdf",
+      "b": "out/conf-12.pdf",
+      "differences": [
+        {
+          "type": "price-higher",
+          "item": "VA-500-SE",
+          "expected": "18.40",
+          "actual": "19.15"
+        },
+        {
+          "type": "price-higher",
+          "item": "BEL-LED-12",
+          "expected": "34.90",
+          "actual": "36.30"
+        }
+      ]
+    },
+    {
+      "a": "out/conf-12.pdf",
+      "b": "out/inv-12.pdf",
+      "differences": []
+    },
+    {
+      "a": "out/po-12.pdf",
+      "b": "out/inv-12.pdf",
+      "differences": [
+        {
+          "type": "price-higher",
+          "item": "VA-500-SE",
+          "expected": "18.40",
+          "actual": "19.15"
+        },
+        {
+          "type": "price-higher",
+          "item": "BEL-LED-12",
+          "expected": "34.90",
+          "actual": "36.30"
+        }
+      ]
+    },
+    {
+      "a": "out/po-13.pdf",
+      "b": "out/inv-13.pdf",
+      "differences": [
+        {
+          "type": "code-differs",
+          "item": "FI-40-30",
+          "description": "FI-Schutzschalter 40 A, 30 mA, 4-polig, Typ A",
+          "expected": "FI-40-30",
+          "actual": "FI-4P-40-30"
+        }
+      ]
+    },
+    {
+      "a": "out/po-14.pdf",
+      "b": "out/inv-14.pdf",
+      "differences": []
+    },
+    {
+      "a": "out/po-15.pdf",
+      "b": "out/conf-15.pdf",
+      "differences": [
+        {
+          "type": "qty-under",
+          "item": "SRV-2C-40",
+          "expected": "60",
+          "actual": "40"
+        },
+        {
+          "type": "missing-line",
+          "item": "CUB-24",
+          "description": "Cubiertos de mesa, juego de 24 piezas, acero 18/10",
+          "expected": "276.00",
+          "actual": null
+        }
+      ]
+    },
+    {
+      "a": "out/conf-15.pdf",
+      "b": "out/inv-15.pdf",
+      "differences": []
+    },
+    {
+      "a": "out/po-15.pdf",
+      "b": "out/inv-15.pdf",
+      "differences": [
+        {
+          "type": "qty-under",
+          "item": "SRV-2C-40",
+          "expected": "60",
+          "actual": "40"
+        },
+        {
+          "type": "missing-line",
+          "item": "CUB-24",
+          "description": "Cubiertos de mesa, juego de 24 piezas, acero 18/10",
+          "expected": "276.00",
+          "actual": null
+        }
+      ]
+    },
+    {
+      "a": "out/po-16.pdf",
+      "b": "out/inv-16.pdf",
+      "differences": [
+        {
+          "type": "price-higher",
+          "item": "SG-CLR-AF",
+          "expected": "3.40",
+          "actual": "4.10"
+        },
+        {
+          "type": "qty-over",
+          "item": "NG-L-1000",
+          "expected": "6",
+          "actual": "8"
+        }
+      ]
+    }
+  ]
+}
