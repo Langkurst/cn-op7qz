@@ -53,8 +53,19 @@
     return s;
   }
 
-  function money(c) { return C.formatMoney(c); }
-  function asText(c) { return Number.isFinite(c) ? C.formatMoney(c) : ""; }
+  // A bill read from another country's documents carries its own money format and tax name.
+  function fmtOf(b) { return (b && b.options && b.options.formatMoney) || C.formatMoney; }
+  function money(c) { return fmtOf(bills[selected])(c); }
+  // In the boxes on the invoice: "$1,234.50", or "1234.50" for another currency so it reads back the same.
+  function asText(c) {
+    if (!Number.isFinite(c)) return "";
+    var b = bills[selected];
+    return b && b.options && b.options.formatMoney ? (c / 100).toFixed(2) : C.formatMoney(c);
+  }
+  function taxLabel(b) {
+    var o = (b && b.options) || {};
+    return (o.taxName || "GST") + " " + (Number.isFinite(o.taxPercent) ? o.taxPercent : C.GST_PERCENT) + "%";
+  }
   function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
   // Bills in this session that look like another bill: same supplier and invoice number, or total and date.
   function duplicateMap() {
@@ -63,10 +74,11 @@
     }));
   }
   function result(b, dupes) {
-    return C.check(b.order, b.invoice, {
-      priceTolerancePercent: tolerance, priceToleranceCents: toleranceCents,
-      duplicates: (dupes || duplicateMap())[b.id] || []
-    });
+    var o = {};
+    if (b.options) Object.keys(b.options).forEach(function (k) { if (b.options[k] !== undefined) o[k] = b.options[k]; });
+    o.priceTolerancePercent = tolerance; o.priceToleranceCents = toleranceCents;
+    o.duplicates = (dupes || duplicateMap())[b.id] || [];
+    return C.check(b.order, b.invoice, o);
   }
 
   function statusOf(b) {
@@ -97,7 +109,7 @@
       tr.appendChild(sup);
       tr.appendChild(el("td", "num", b.invoice.number));
       tr.appendChild(el("td", "bill-date", b.invoice.issued || "No date"));
-      tr.appendChild(el("td", "n", money(b.invoice.totalCents)));
+      tr.appendChild(el("td", "n", fmtOf(b)(b.invoice.totalCents)));
       var stCell = el("td", "st");
       stCell.appendChild(statusEl(st.cls, st.icon, st.text));
       if (st.extra) stCell.appendChild(el("span", "status-extra", st.extra));
@@ -152,7 +164,7 @@
     who.appendChild(el("p", "paper-addr", ADDRESS[inv.supplier] || ""));
     head.appendChild(who);
     var title = el("div", "paper-title");
-    title.appendChild(el("h3", null, "Tax invoice"));
+    title.appendChild(el("h3", null, b.title || "Tax invoice"));
     title.appendChild(el("p", null, "Invoice number " + inv.number));
     head.appendChild(title);
     paperEl.appendChild(head);
@@ -195,7 +207,7 @@
     paperEl.appendChild(table);
 
     var totals = el("dl", "totals");
-    [["Subtotal", "subtotalCents", "subtotal"], ["GST 15%", "gstCents", "gst"], ["Total due", "totalCents", "total"]].forEach(function (t) {
+    [["Subtotal", "subtotalCents", "subtotal"], [taxLabel(b), "gstCents", "gst"], ["Total due", "totalCents", "total"]].forEach(function (t) {
       var d = el("div", t[1] === "totalCents" ? "is-total" : "");
       d.appendChild(el("dt", null, t[0]));
       var dd = el("dd");
@@ -205,7 +217,7 @@
       d.appendChild(dd); totals.appendChild(d);
     });
     paperEl.appendChild(totals);
-    docSourceEl.textContent = b.entered ? "Entered by you" : "Sample data";
+    docSourceEl.textContent = b.source ? "Read from " + b.source : b.entered ? "Entered by you" : "Sample data";
     refreshPaper();
     // A different bill was opened by the user: show the change. Not on load, and not on every edit.
     if (paintedId !== b.id) {
@@ -274,7 +286,46 @@
     summary.appendChild(icon(r.verdict === "check" ? "alert-triangle" : "circle-check"));
     summary.appendChild(el("span", null, headline + (r.verdict === "match" ? "" : ".")));
     body.appendChild(summary);
-    if (r.queryCents > 0) body.appendChild(el("p", "raise", "Raise " + money(r.queryCents) + " with the supplier before GST."));
+    if (r.queryCents > 0) body.appendChild(el("p", "raise", "Raise " + money(r.queryCents) + " with the supplier before " + ((b.options && b.options.taxName) || "GST") + "."));
+
+    // Read from files: what was assumed or couldn't be read, so a person knows what to look at.
+    var told = (b.warnings || []).map(function (w) { return { sev: "check", w: w }; }).concat((b.notes || []).map(function (n) { return { sev: "note", w: n }; }));
+    if (told.length) {
+      body.appendChild(el("h3", null, "How the documents were read"));
+      var rl = el("ul", "issues read-notes");
+      told.forEach(function (t) {
+        var li = el("li", "sev-" + t.sev);
+        var tt = el("p", "issue-title");
+        tt.appendChild(mark(t.sev === "check" ? "check" : "note"));
+        tt.appendChild(el("span", null, t.w.title));
+        li.appendChild(tt);
+        li.appendChild(el("p", "issue-detail", t.w.detail));
+        rl.appendChild(li);
+      });
+      body.appendChild(rl);
+    }
+    // The bill is in another currency than the order: compare prices once a rate is given.
+    if (b.rerun && b.currency && b.currency.order !== b.currency.bill) {
+      var rf = el("form", "rate-form");
+      var rid = "rate-" + b.id;
+      var lab = el("label", null, "1 " + b.currency.order + " = ");
+      lab.htmlFor = rid;
+      var rin = el("input"); rin.id = rid; rin.type = "text"; rin.inputMode = "decimal"; rin.autocomplete = "off";
+      rin.value = b.rate ? String(b.rate) : "";
+      rf.appendChild(lab); rf.appendChild(rin); rf.appendChild(el("span", null, " " + b.currency.bill));
+      var go = el("button", "btn", b.rate ? "Compare again" : "Compare prices"); go.type = "submit";
+      rf.appendChild(go);
+      rf.appendChild(el("p", "rate-help", "Use the rate on the day you ordered or the day you'll pay. Your bank or the Reserve Bank shows it."));
+      rf.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var rate = parseFloat(String(rin.value).replace(",", "."));
+        if (!(rate > 0)) { rin.setAttribute("aria-invalid", "true"); rin.focus(); return; }
+        var again = b.rerun(rate);
+        b.order = again.order; b.invoice = again.invoice; b.options = again.options; b.notes = again.notes; b.warnings = again.warnings; b.currency = again.currency; b.rate = rate;
+        renderAll();
+      });
+      body.appendChild(rf);
+    }
 
     // Line by line
     body.appendChild(el("h3", null, "Lines against the order"));
@@ -304,19 +355,23 @@
     body.appendChild(t);
 
     // Tax invoice and totals
-    body.appendChild(el("h3", null, "Tax invoice and totals"));
+    var nzRules = !(b.options && b.options.nzRules === false);
+    body.appendChild(el("h3", null, nzRules ? "Tax invoice and totals" : "Totals"));
     var buyer = inv.buyer || {};
     var checks = [
       ["Order number", !has("order-number"), "Quotes " + (inv.orderNumber || "nothing")],
       ["Supplier", !has("supplier"), inv.supplier],
       ["Subtotal", !has("subtotal"), "Lines add to " + money(r.linesCents)],
-      ["GST 15%", !has("gst"), "Expected " + money(r.expectedGstCents)],
-      ["Total", !has("total"), Number.isFinite(inv.subtotalCents + inv.gstCents) ? "Should be " + money(inv.subtotalCents + inv.gstCents) : "Cannot add up"],
+      [taxLabel(b), !has("gst"), "Expected " + money(r.expectedGstCents)],
+      ["Total", !has("total"), Number.isFinite(inv.subtotalCents + inv.gstCents) ? "Should be " + money(inv.subtotalCents + inv.gstCents) : "Cannot add up"]
+    ];
+    if (nzRules) checks = checks.concat([
       ["GST number", !has("tax-gst-number"), inv.gstNumber ? (has("tax-gst-number") ? "Fails the check digit" : "Valid check digit") : "Not shown"],
       ["Date", !has("tax-date"), inv.issued || "Not shown"],
       ["Duplicates", !has("duplicate-invoice"), has("duplicate-invoice") ? "Possible duplicate" : "None found"],
       ["Your details", !has("tax-buyer"), buyer.name ? buyer.name : "Not shown"]
-    ];
+    ]);
+    else checks.push(["Duplicates", !has("duplicate-invoice"), has("duplicate-invoice") ? "Possible duplicate" : "None found"]);
     var ct = el("table", "cmp checks"), cth = el("thead"), chr = el("tr");
     ct.appendChild(el("caption", "visually-hidden", "Tax invoice details and totals"));
     ["Check", "On the invoice", "Result"].forEach(function (h) { var c = el("th", null, h); c.scope = "col"; chr.appendChild(c); });
@@ -587,6 +642,21 @@
     paintTheme();
   });
   paintTheme();
+
+  // Bills read from files (assets/js/desk.js) join the list and open.
+  window.InvoicePage = {
+    addBill: function (entry) {
+      enteredCount++;
+      bills.push({ id: "file-" + enteredCount, order: entry.order, invoice: entry.invoice, decision: null, entered: true,
+        options: entry.options, notes: entry.notes, warnings: entry.warnings, source: entry.source, title: entry.title,
+        currency: entry.currency, rerun: entry.rerun });
+      selected = bills.length - 1;
+      renderAll();
+      focusBill(selected);
+      if (openEl.scrollIntoView) openEl.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      return bills[selected].id;
+    }
+  };
 
   renderAll();
 })();

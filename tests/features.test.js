@@ -186,7 +186,7 @@ test("duplicates: a duplicate holds the bill like the other hold reasons", () =>
 
 test("duplicates: the page asks for them and lists the rule", () => {
   assert.match(page, /findDuplicates/);
-  assert.match(page, /duplicates:/);
+  assert.match(page, /o\.duplicates = /);
   assert.match(page, /"duplicate-invoice"/);
   assert.match(html, /A possible duplicate/);
 });
@@ -481,12 +481,15 @@ test("layout: no hero; an app bar names the tool, and the bills table comes firs
 test("check results: a table of lines, the needs-a-person list, the actions, and the amount to raise as a sentence", () => {
   for (const h of ['["Line", ""]', '["Ordered", "n"]', '["Invoiced", "n"]', '["Difference", "n"]', '["Result", ""]']) assert.ok(page.includes(h), h);
   assert.match(page, /"Needs a person"/);
-  assert.match(page, /"Raise " \+ money\(r\.queryCents\) \+ " with the supplier before GST\."/);
+  // "before GST." for a New Zealand bill; another country's bill names its own tax (VAT).
+  assert.match(page, /"Raise " \+ money\(r\.queryCents\) \+ " with the supplier before " \+ \(\(b\.options && b\.options\.taxName\) \|\| "GST"\) \+ "\."/);
   assert.ok(!/v-amount|to raise with the supplier/.test(page + css), "no big amount over a caption");
   const order = ['id = "copy-query"', 'id = "print-summary"', 'id = "hold"', 'id = "approve"'].map((s) => page.indexOf(s));
   assert.ok(order.every((i, n) => i !== -1 && (n === 0 || i > order[n - 1])), "Copy query, Print summary, Hold, Approve");
   assert.match(page, /"Tax invoice"/);
-  for (const t of ['"Invoice date"', '"Due date"', '"Bill to"', '"Subtotal"', '"GST 15%"', '"Total due"']) assert.ok(page.includes(t), t);
+  for (const t of ['"Invoice date"', '"Due date"', '"Bill to"', '"Subtotal"', '"Total due"']) assert.ok(page.includes(t), t);
+  // "GST 15%" for a New Zealand bill: the tax name and rate come from the bill, defaulting to GST at 15%.
+  assert.ok(page.includes('(o.taxName || "GST") + " " + (Number.isFinite(o.taxPercent) ? o.taxPercent : C.GST_PERCENT) + "%"'));
 });
 
 test("about: the plain intro and How it checks sit below the tool", () => {
@@ -525,7 +528,10 @@ test("support link: one plain line in the footer, no widget, no script", () => {
 // ---------- the page as a whole ----------
 test("the security policy is unchanged and nothing is stored", () => {
   const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)[1];
-  assert.equal(csp, "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; form-action 'none'; base-uri 'none'");
+  // Reading your own files (desk.js): the PDF and photo readers run as workers from this site
+  // (worker-src 'self'), and a photo is shown to the reader from memory (img-src blob:). Every
+  // connection is still blocked, so nothing read from a file can leave the page.
+  assert.equal(csp, "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; worker-src 'self'; frame-src 'none'; object-src 'none'; form-action 'none'; base-uri 'none'");
   assert.ok(!/localStorage|sessionStorage|indexedDB|document\.cookie/.test(page.replace(/localStorage\.setItem\("theme"/, "")));
   assert.ok(!/ style="/.test(html));
   assert.ok(!/<script>[^<]/.test(html));

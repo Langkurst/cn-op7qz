@@ -375,9 +375,45 @@ dialog.sheet[open]::backdrop { animation: fade-in var(--sheet) var(--ease); }
   .eg-cell > span { position: static !important; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; display: block; margin-bottom: 4px; color: var(--muted); font-size: 13px; }
 }
 
+/* ---------- the desk: drop documents, drag one onto another ---------- */
+.desk { margin-bottom: 16px; }
+.desk-drop { padding: 16px; border: 1px solid transparent; border-radius: 0 0 var(--radius) var(--radius); transition: background-color var(--quick) var(--ease), border-color var(--quick) var(--ease); }
+.desk-drop.is-over { background: var(--blue-tint); border-color: var(--blue); }
+.desk-hint { margin: 0 0 12px; color: var(--muted); }
+.desk-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.desk-drop.has-docs .desk-cards { margin-bottom: 12px; }
+.desk-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.desk-help { color: var(--muted); font-size: 13px; }
+.doc-card { position: relative; touch-action: none; transition: transform var(--quick) var(--ease), opacity var(--quick) var(--ease); }
+.doc-body { display: grid; grid-template-columns: 20px 1fr; gap: 4px 10px; width: 100%; min-height: 88px; padding: 12px 36px 14px 12px; text-align: left;
+  font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--border-strong); border-radius: var(--radius); cursor: grab;
+  transition: background-color var(--quick) var(--ease), border-color var(--quick) var(--ease); }
+.doc-body:hover { border-color: var(--field); }
+.doc-body .i { margin-top: 2px; color: var(--muted); }
+.doc-text { display: grid; gap: 2px; min-width: 0; }
+.doc-kind { font-weight: 600; }
+.doc-name { color: var(--muted); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.doc-sum { font-size: 13px; }
+.doc-bar { grid-column: 1 / -1; height: 3px; margin-top: 6px; background: var(--grey-tint); border-radius: var(--radius); overflow: hidden; }
+.doc-bar-fill { display: block; height: 100%; background: var(--blue); transform-origin: left; transform: scaleX(0); transition: transform var(--quick) var(--ease); }
+.doc-card.is-ready .doc-bar, .doc-card.is-failed .doc-bar { visibility: hidden; }
+.doc-card.is-failed .doc-body { cursor: default; border-color: var(--amber); }
+.doc-card.is-failed .doc-kind { color: var(--amber); }
+.doc-card.is-picked .doc-body { border-color: var(--blue); background: var(--blue-tint); }
+.doc-card.is-target .doc-body { border-color: var(--blue); background: var(--blue-tint); }
+.doc-card.is-lifted { z-index: 5; transition-duration: 0s; }
+.doc-card.is-lifted .doc-body { cursor: grabbing; border-color: var(--blue); }
+.doc-card.is-settling { z-index: 5; opacity: .2; }
+.doc-x { position: absolute; top: 6px; right: 6px; }
+.desk-drop.is-dragging .doc-card:not(.is-lifted):not(.is-target).is-ready .doc-body { background: var(--sunken); }
+.rate-form { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 12px 0 0; padding: 12px; background: var(--sunken); border: 1px solid var(--border); border-radius: var(--radius); }
+.rate-form input { width: 7em; }
+.rate-help { flex-basis: 100%; margin: 0; color: var(--muted); font-size: 13px; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0s !important; }
   dialog.sheet[open], dialog.sheet[open]::backdrop, .btn.is-copied .copy-label, .open-bill.is-opening > .panel { animation: none; }
+  .doc-card, .doc-card.is-lifted { transform: none !important; }
 }
 
 @media print {
@@ -387,7 +423,7 @@ dialog.sheet[open]::backdrop { animation: fade-in var(--sheet) var(--ease); }
     --green: #17703a; --amber: #8a5600; --amber-tint: #fcfcfd; --grey: #3e454d; --blue-tint: #fcfcfd;
   }
   body { background: #fcfcfd; color: #1c2126; font-size: 10.5pt; }
-  .skip, .topbar, .page-head, .bills, .panel-head, .viewer-note, .actions, .decide-note, .about, .foot, dialog, noscript { display: none !important; }
+  .skip, .topbar, .page-head, .bills, .desk, .rate-form, .panel-head, .viewer-note, .actions, .decide-note, .about, .foot, dialog, noscript { display: none !important; }
   .print-only { display: block; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #1c2126; }
   .print-only h2 { font-size: 16pt; }
   .print-only p { color: #3e454d; }

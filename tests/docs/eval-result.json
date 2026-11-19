@@ -1,0 +1,5044 @@
+{
+ "summary": {
+  "run": "2026-11-18T23:59:22.332Z",
+  "pdf": {
+   "documents": 39,
+   "lineAccuracy": 100,
+   "linesRight": 294,
+   "lines": 294,
+   "extraLines": 0,
+   "fieldAccuracy": 100,
+   "medianMs": 115,
+   "slowestMs": 169
+  },
+  "png": {
+   "documents": 40,
+   "lineAccuracy": 66.8,
+   "linesRight": 255,
+   "lines": 382,
+   "extraLines": 5,
+   "fieldAccuracy": 86.2,
+   "medianMs": 2498,
+   "slowestMs": 7669
+  },
+  "photo": {
+   "documents": 40,
+   "lineAccuracy": 52.1,
+   "linesRight": 199,
+   "lines": 382,
+   "extraLines": 10,
+   "fieldAccuracy": 83.1,
+   "medianMs": 3274,
+   "slowestMs": 9680
+  },
+  "pairsPdf": {
+   "pairs": 24,
+   "differences": 25,
+   "found": 25,
+   "missed": 0,
+   "falseAlarms": 0,
+   "falseAlarmsPer10Docs": 0
+  },
+  "pairsPhoto": {
+   "pairs": 24,
+   "differences": 25,
+   "found": 21,
+   "missed": 4,
+   "falseAlarms": 66,
+   "falseAlarmsPer10Docs": 13.75
+  }
+ },
+ "docs": [
+  {
+   "file": "out/po-01.pdf",
+   "kind": "pdf",
+   "ms": 169,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-01.png",
+   "kind": "png",
+   "ms": 4373,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": false,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 0,
+    "found": 6,
+    "wrong": [
+     {
+      "line": 0,
+      "truth": "RUN-500 80 15.60",
+      "got": " 80 1560"
+     },
+     {
+      "line": 1,
+      "truth": "HNG-110 400 3.65",
+      "got": " 400 365"
+     },
+     {
+      "line": 2,
+      "truth": "HND-160 240 5.90",
+      "got": " 240 590"
+     },
+     {
+      "line": 3,
+      "truth": "LEG-150 320 1.45",
+      "got": " 320 145"
+     },
+     {
+      "line": 4,
+      "truth": "BIN-60 12 138.50",
+      "got": " 12 13850"
+     },
+     {
+      "line": 5,
+      "truth": "LED-2K 20 89.90",
+      "got": " 20 8990"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-01-photo.jpg",
+   "kind": "photo",
+   "ms": 3669,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": false,
+    "tax": false,
+    "total": false
+   },
+   "lines": {
+    "truth": 6,
+    "right": 0,
+    "found": 5,
+    "wrong": [
+     {
+      "line": 0,
+      "truth": "RUN-500 80 15.60",
+      "got": " 80 1560"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "HNG-110"
+     },
+     {
+      "line": 2,
+      "truth": "HND-160 240 5.90",
+      "got": " 240 590"
+     },
+     {
+      "line": 3,
+      "truth": "LEG-150 320 1.45",
+      "got": " 320 145"
+     },
+     {
+      "line": 4,
+      "truth": "BIN-60 12 138.50",
+      "got": " 12 13850"
+     },
+     {
+      "line": 5,
+      "truth": "LED-2K 20 89.90",
+      "got": " 20 8990"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-01.pdf",
+   "kind": "pdf",
+   "ms": 119,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-01.png",
+   "kind": "png",
+   "ms": 2420,
+   "method": "ocr",
+   "fields": {
+    "kind": false,
+    "number": false,
+    "orderNumber": false,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 5,
+    "found": 6,
+    "wrong": [
+     {
+      "line": 4,
+      "truth": "BIN-60 12 138.50",
+      "got": " 12 13850"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-01-photo.jpg",
+   "kind": "photo",
+   "ms": 2874,
+   "method": "ocr",
+   "fields": {
+    "kind": false,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": false,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 5,
+    "found": 6,
+    "wrong": [
+     {
+      "line": 4,
+      "truth": "BIN-60 12 138.50",
+      "got": " 12 13850"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-01.pdf",
+   "kind": "pdf",
+   "ms": 106,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-01.png",
+   "kind": "png",
+   "ms": 2842,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-01-photo.jpg",
+   "kind": "photo",
+   "ms": 3274,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-02.pdf",
+   "kind": "pdf",
+   "ms": 126,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 7,
+    "right": 7,
+    "found": 7,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-02.png",
+   "kind": "png",
+   "ms": 2275,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 7,
+    "right": 7,
+    "found": 7,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-02-photo.jpg",
+   "kind": "photo",
+   "ms": 2464,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 7,
+    "right": 7,
+    "found": 7,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-02.pdf",
+   "kind": "pdf",
+   "ms": 125,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 7,
+    "right": 7,
+    "found": 7,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-02.png",
+   "kind": "png",
+   "ms": 2943,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 7,
+    "right": 7,
+    "found": 7,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-02-photo.jpg",
+   "kind": "photo",
+   "ms": 4145,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": false,
+    "taxId": true,
+    "issued": true,
+    "subtotal": false,
+    "tax": false,
+    "total": false,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 7,
+    "right": 6,
+    "found": 7,
+    "wrong": [
+     {
+      "line": 6,
+      "truth": "GLU-PU750 3 118.80",
+      "got": " 3 11880"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-03.pdf",
+   "kind": "pdf",
+   "ms": 144,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 46,
+    "right": 46,
+    "found": 46,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-03-p1.png",
+   "kind": "png",
+   "ms": 4231,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": false,
+    "tax": false,
+    "total": false
+   },
+   "lines": {
+    "truth": 46,
+    "right": 26,
+    "found": 26,
+    "wrong": [
+     {
+      "line": 26,
+      "why": "not found",
+      "truth": "PT-SEAL10"
+     },
+     {
+      "line": 27,
+      "why": "not found",
+      "truth": "PT-LS-W10"
+     },
+     {
+      "line": 28,
+      "why": "not found",
+      "truth": "PT-CEIL10"
+     },
+     {
+      "line": 29,
+      "why": "not found",
+      "truth": "PT-ROLL230"
+     },
+     {
+      "line": 30,
+      "why": "not found",
+      "truth": "CT-1206"
+     },
+     {
+      "line": 31,
+      "why": "not found",
+      "truth": "CG-MAIN36"
+     },
+     {
+      "line": 32,
+      "why": "not found",
+      "truth": "CG-CROSS12"
+     },
+     {
+      "line": 33,
+      "why": "not found",
+      "truth": "CG-WALL30"
+     },
+     {
+      "line": 34,
+      "why": "not found",
+      "truth": "SK-MDF60"
+     },
+     {
+      "line": 35,
+      "why": "not found",
+      "truth": "AR-MDF42"
+     },
+     {
+      "line": 36,
+      "why": "not found",
+      "truth": "GF-450W"
+     },
+     {
+      "line": 37,
+      "why": "not found",
+      "truth": "SIL-300C"
+     },
+     {
+      "line": 38,
+      "why": "not found",
+      "truth": "ADH-STUD"
+     },
+     {
+      "line": 39,
+      "why": "not found",
+      "truth": "ANC-FR6"
+     },
+     {
+      "line": 40,
+      "why": "not found",
+      "truth": "NOG-9045"
+     },
+     {
+      "line": 41,
+      "why": "not found",
+      "truth": "BR-STEEL"
+     },
+     {
+      "line": 42,
+      "why": "not found",
+      "truth": "GL-SAFE"
+     },
+     {
+      "line": 43,
+      "why": "not found",
+      "truth": "DUST-P2"
+     },
+     {
+      "line": 44,
+      "why": "not found",
+      "truth": "TARP-46"
+     },
+     {
+      "line": 45,
+      "why": "not found",
+      "truth": "BIN-240"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-03-p1-photo.jpg",
+   "kind": "photo",
+   "ms": 4426,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "currency": false,
+    "taxId": false,
+    "issued": false,
+    "subtotal": false,
+    "tax": false,
+    "total": false
+   },
+   "lines": {
+    "truth": 46,
+    "right": 22,
+    "found": 26,
+    "wrong": [
+     {
+      "line": 21,
+      "truth": "JB-PINE 4 62.00",
+      "got": " 4 6200"
+     },
+     {
+      "line": 22,
+      "truth": "HW-LEV-SC 2 39.90",
+      "got": " 2 3990"
+     },
+     {
+      "line": 23,
+      "truth": "HW-PRIV-SC 40 46.90",
+      "got": " 40 4690"
+     },
+     {
+      "line": 24,
+      "truth": "HW-STOP-SC 24 6.20",
+      "got": " 24 620"
+     },
+     {
+      "line": 26,
+      "why": "not found",
+      "truth": "PT-SEAL10"
+     },
+     {
+      "line": 27,
+      "why": "not found",
+      "truth": "PT-LS-W10"
+     },
+     {
+      "line": 28,
+      "why": "not found",
+      "truth": "PT-CEIL10"
+     },
+     {
+      "line": 29,
+      "why": "not found",
+      "truth": "PT-ROLL230"
+     },
+     {
+      "line": 30,
+      "why": "not found",
+      "truth": "CT-1206"
+     },
+     {
+      "line": 31,
+      "why": "not found",
+      "truth": "CG-MAIN36"
+     },
+     {
+      "line": 32,
+      "why": "not found",
+      "truth": "CG-CROSS12"
+     },
+     {
+      "line": 33,
+      "why": "not found",
+      "truth": "CG-WALL30"
+     },
+     {
+      "line": 34,
+      "why": "not found",
+      "truth": "SK-MDF60"
+     },
+     {
+      "line": 35,
+      "why": "not found",
+      "truth": "AR-MDF42"
+     },
+     {
+      "line": 36,
+      "why": "not found",
+      "truth": "GF-450W"
+     },
+     {
+      "line": 37,
+      "why": "not found",
+      "truth": "SIL-300C"
+     },
+     {
+      "line": 38,
+      "why": "not found",
+      "truth": "ADH-STUD"
+     },
+     {
+      "line": 39,
+      "why": "not found",
+      "truth": "ANC-FR6"
+     },
+     {
+      "line": 40,
+      "why": "not found",
+      "truth": "NOG-9045"
+     },
+     {
+      "line": 41,
+      "why": "not found",
+      "truth": "BR-STEEL"
+     },
+     {
+      "line": 42,
+      "why": "not found",
+      "truth": "GL-SAFE"
+     },
+     {
+      "line": 43,
+      "why": "not found",
+      "truth": "DUST-P2"
+     },
+     {
+      "line": 44,
+      "why": "not found",
+      "truth": "TARP-46"
+     },
+     {
+      "line": 45,
+      "why": "not found",
+      "truth": "BIN-240"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-03-p2.png",
+   "kind": "png",
+   "ms": 2532,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "currency": true,
+    "taxId": false,
+    "issued": false,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 46,
+    "right": 16,
+    "found": 20,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "PB10-2412"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "PB13-2412"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "PB13-2712"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "PBA10-2412"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "PBF13-2412"
+     },
+     {
+      "line": 5,
+      "why": "not found",
+      "truth": "ST64-30"
+     },
+     {
+      "line": 6,
+      "why": "not found",
+      "truth": "ST92-30"
+     },
+     {
+      "line": 7,
+      "why": "not found",
+      "truth": "TR64-30"
+     },
+     {
+      "line": 8,
+      "why": "not found",
+      "truth": "TR92-30"
+     },
+     {
+      "line": 9,
+      "truth": "PF9045-48 40 21.60",
+      "got": "NOG-9045 2 960"
+     },
+     {
+      "line": 10,
+      "why": "not found",
+      "truth": "PF7045-48"
+     },
+     {
+      "line": 11,
+      "why": "not found",
+      "truth": "SCR-PB25"
+     },
+     {
+      "line": 12,
+      "why": "not found",
+      "truth": "SCR-PB41"
+     },
+     {
+      "line": 13,
+      "why": "not found",
+      "truth": "JC-BASE20"
+     },
+     {
+      "line": 14,
+      "why": "not found",
+      "truth": "JC-FIN15"
+     },
+     {
+      "line": 15,
+      "why": "not found",
+      "truth": "TAPE-5075"
+     },
+     {
+      "line": 16,
+      "why": "not found",
+      "truth": "CB-3000"
+     },
+     {
+      "line": 17,
+      "why": "not found",
+      "truth": "INS-R26-90"
+     },
+     {
+      "line": 18,
+      "why": "not found",
+      "truth": "INS-R32-140"
+     },
+     {
+      "line": 19,
+      "why": "not found",
+      "truth": "DR-HC760"
+     },
+     {
+      "line": 20,
+      "why": "not found",
+      "truth": "DR-HC810"
+     },
+     {
+      "line": 21,
+      "why": "not found",
+      "truth": "JB-PINE"
+     },
+     {
+      "line": 22,
+      "why": "not found",
+      "truth": "HW-LEV-SC"
+     },
+     {
+      "line": 23,
+      "why": "not found",
+      "truth": "HW-PRIV-SC"
+     },
+     {
+      "line": 24,
+      "why": "not found",
+      "truth": "HW-STOP-SC"
+     },
+     {
+      "line": 25,
+      "why": "not found",
+      "truth": "HW-HNG100"
+     },
+     {
+      "line": 38,
+      "truth": "ADH-STUD 80 9.90",
+      "got": " 80 990"
+     },
+     {
+      "line": 40,
+      "why": "not found",
+      "truth": "NOG-9045"
+     },
+     {
+      "line": 41,
+      "truth": "BR-STEEL 2 48.00",
+      "got": " 2 4800"
+     },
+     {
+      "line": 42,
+      "truth": "GL-SAFE 12 4.50",
+      "got": " 12 450"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-03-p2-photo.jpg",
+   "kind": "photo",
+   "ms": 3834,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "currency": true,
+    "taxId": false,
+    "issued": false,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 46,
+    "right": 6,
+    "found": 17,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "PB10-2412"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "PB13-2412"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "PB13-2712"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "PBA10-2412"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "PBF13-2412"
+     },
+     {
+      "line": 5,
+      "why": "not found",
+      "truth": "ST64-30"
+     },
+     {
+      "line": 6,
+      "why": "not found",
+      "truth": "ST92-30"
+     },
+     {
+      "line": 7,
+      "why": "not found",
+      "truth": "TR64-30"
+     },
+     {
+      "line": 8,
+      "why": "not found",
+      "truth": "TR92-30"
+     },
+     {
+      "line": 9,
+      "truth": "PF9045-48 40 21.60",
+      "got": "NOG-9045 2 960"
+     },
+     {
+      "line": 10,
+      "why": "not found",
+      "truth": "PF7045-48"
+     },
+     {
+      "line": 11,
+      "why": "not found",
+      "truth": "SCR-PB25"
+     },
+     {
+      "line": 12,
+      "why": "not found",
+      "truth": "SCR-PB41"
+     },
+     {
+      "line": 13,
+      "why": "not found",
+      "truth": "JC-BASE20"
+     },
+     {
+      "line": 14,
+      "why": "not found",
+      "truth": "JC-FIN15"
+     },
+     {
+      "line": 15,
+      "why": "not found",
+      "truth": "TAPE-5075"
+     },
+     {
+      "line": 16,
+      "why": "not found",
+      "truth": "CB-3000"
+     },
+     {
+      "line": 17,
+      "why": "not found",
+      "truth": "INS-R26-90"
+     },
+     {
+      "line": 18,
+      "why": "not found",
+      "truth": "INS-R32-140"
+     },
+     {
+      "line": 19,
+      "why": "not found",
+      "truth": "DR-HC760"
+     },
+     {
+      "line": 20,
+      "why": "not found",
+      "truth": "DR-HC810"
+     },
+     {
+      "line": 21,
+      "why": "not found",
+      "truth": "JB-PINE"
+     },
+     {
+      "line": 22,
+      "why": "not found",
+      "truth": "HW-LEV-SC"
+     },
+     {
+      "line": 23,
+      "why": "not found",
+      "truth": "HW-PRIV-SC"
+     },
+     {
+      "line": 24,
+      "why": "not found",
+      "truth": "HW-STOP-SC"
+     },
+     {
+      "line": 25,
+      "why": "not found",
+      "truth": "HW-HNG100"
+     },
+     {
+      "line": 26,
+      "why": "not found",
+      "truth": "PT-SEAL10"
+     },
+     {
+      "line": 28,
+      "truth": "PT-CEIL10 8 149.00",
+      "got": " 8 14900"
+     },
+     {
+      "line": 29,
+      "truth": "PT-ROLL230 20 11.50",
+      "got": " 20 1150"
+     },
+     {
+      "line": 31,
+      "truth": "CG-MAIN36 2 12.40",
+      "got": " 12 410"
+     },
+     {
+      "line": 32,
+      "why": "not found",
+      "truth": "CG-CROSS12"
+     },
+     {
+      "line": 33,
+      "truth": "CG-WALL30 24 5.30",
+      "got": " 24 530"
+     },
+     {
+      "line": 34,
+      "truth": "SK-MDF60 6 18.70",
+      "got": " 6 1870"
+     },
+     {
+      "line": 35,
+      "why": "not found",
+      "truth": "AR-MDF42"
+     },
+     {
+      "line": 36,
+      "truth": "GF-450W 15 7.40",
+      "got": " 15 740"
+     },
+     {
+      "line": 37,
+      "truth": "SIL-300C 80 12.60",
+      "got": " 80 1260"
+     },
+     {
+      "line": 38,
+      "truth": "ADH-STUD 80 9.90",
+      "got": " 80 990"
+     },
+     {
+      "line": 40,
+      "why": "not found",
+      "truth": "NOG-9045"
+     },
+     {
+      "line": 41,
+      "truth": "BR-STEEL 2 48.00",
+      "got": " 2 4800"
+     },
+     {
+      "line": 42,
+      "truth": "GL-SAFE 12 4.50",
+      "got": " 12 450"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-03.pdf",
+   "kind": "pdf",
+   "ms": 108,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 45,
+    "right": 45,
+    "found": 45,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-03-p1.png",
+   "kind": "png",
+   "ms": 3871,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": false,
+    "tax": false,
+    "total": false,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 45,
+    "right": 23,
+    "found": 24,
+    "wrong": [
+     {
+      "line": 6,
+      "truth": "ST92-30 120 11.40",
+      "got": " 120 1140"
+     },
+     {
+      "line": 24,
+      "why": "not found",
+      "truth": "HW-STOP-SC"
+     },
+     {
+      "line": 25,
+      "why": "not found",
+      "truth": "HW-HNG100"
+     },
+     {
+      "line": 26,
+      "why": "not found",
+      "truth": "PT-SEAL10"
+     },
+     {
+      "line": 27,
+      "why": "not found",
+      "truth": "PT-LS-W10"
+     },
+     {
+      "line": 28,
+      "why": "not found",
+      "truth": "PT-CEIL10"
+     },
+     {
+      "line": 29,
+      "why": "not found",
+      "truth": "PT-ROLL230"
+     },
+     {
+      "line": 30,
+      "why": "not found",
+      "truth": "CT-1206"
+     },
+     {
+      "line": 31,
+      "why": "not found",
+      "truth": "CG-MAIN36"
+     },
+     {
+      "line": 32,
+      "why": "not found",
+      "truth": "CG-CROSS12"
+     },
+     {
+      "line": 33,
+      "why": "not found",
+      "truth": "CG-WALL30"
+     },
+     {
+      "line": 34,
+      "why": "not found",
+      "truth": "SK-MDF60"
+     },
+     {
+      "line": 35,
+      "why": "not found",
+      "truth": "AR-MDF42"
+     },
+     {
+      "line": 36,
+      "why": "not found",
+      "truth": "GF-450W"
+     },
+     {
+      "line": 37,
+      "why": "not found",
+      "truth": "ADH-STUD"
+     },
+     {
+      "line": 38,
+      "why": "not found",
+      "truth": "ANC-FR6"
+     },
+     {
+      "line": 39,
+      "why": "not found",
+      "truth": "NOG-9045"
+     },
+     {
+      "line": 40,
+      "why": "not found",
+      "truth": "BR-STEEL"
+     },
+     {
+      "line": 41,
+      "why": "not found",
+      "truth": "GL-SAFE"
+     },
+     {
+      "line": 42,
+      "why": "not found",
+      "truth": "DUST-P2"
+     },
+     {
+      "line": 43,
+      "why": "not found",
+      "truth": "TARP-46"
+     },
+     {
+      "line": 44,
+      "why": "not found",
+      "truth": "BIN-240"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-03-p1-photo.jpg",
+   "kind": "photo",
+   "ms": 4387,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": false,
+    "issued": true,
+    "subtotal": false,
+    "tax": false,
+    "total": false,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 45,
+    "right": 0,
+    "found": 13,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "PB10-2412"
+     },
+     {
+      "line": 1,
+      "truth": "PB13-2412 12 29.80",
+      "got": " 41.2 1500"
+     },
+     {
+      "line": 2,
+      "truth": "PB13-2712 48 33.40",
+      "got": " 48 160"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "PBA10-2412"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "PBF13-2412"
+     },
+     {
+      "line": 5,
+      "truth": "ST64-30 20 8.95",
+      "got": " 8.95 2000"
+     },
+     {
+      "line": 6,
+      "why": "not found",
+      "truth": "ST92-30"
+     },
+     {
+      "line": 7,
+      "why": "not found",
+      "truth": "TR64-30"
+     },
+     {
+      "line": 8,
+      "why": "not found",
+      "truth": "TR92-30"
+     },
+     {
+      "line": 9,
+      "why": "not found",
+      "truth": "PF9045-48"
+     },
+     {
+      "line": 10,
+      "why": "not found",
+      "truth": "PF7045-48"
+     },
+     {
+      "line": 11,
+      "why": "not found",
+      "truth": "SCR-PB25"
+     },
+     {
+      "line": 12,
+      "why": "not found",
+      "truth": "SCR-PB41"
+     },
+     {
+      "line": 13,
+      "why": "not found",
+      "truth": "JC-BASE20"
+     },
+     {
+      "line": 14,
+      "why": "not found",
+      "truth": "JC-FIN15"
+     },
+     {
+      "line": 15,
+      "truth": "TAPE-5075 40 6.80",
+      "got": " 6.8 4000"
+     },
+     {
+      "line": 16,
+      "truth": "CB-3000 4 5.40",
+      "got": " 2 2160"
+     },
+     {
+      "line": 17,
+      "truth": "INS-R26-90 12 64.00",
+      "got": " 64 1200"
+     },
+     {
+      "line": 18,
+      "truth": "INS-R32-140 6 71.50",
+      "got": " 4 42900"
+     },
+     {
+      "line": 19,
+      "truth": "DR-HC760 120 118.00",
+      "got": " 118 12000"
+     },
+     {
+      "line": 20,
+      "why": "not found",
+      "truth": "DR-HC810"
+     },
+     {
+      "line": 21,
+      "why": "not found",
+      "truth": "JB-PINE"
+     },
+     {
+      "line": 22,
+      "truth": "HW-LEV-SC 2 39.90",
+      "got": " 2 7980"
+     },
+     {
+      "line": 23,
+      "truth": "HW-PRIV-SC 40 46.90",
+      "got": " 469 0"
+     },
+     {
+      "line": 24,
+      "why": "not found",
+      "truth": "HW-STOP-SC"
+     },
+     {
+      "line": 25,
+      "why": "not found",
+      "truth": "HW-HNG100"
+     },
+     {
+      "line": 26,
+      "why": "not found",
+      "truth": "PT-SEAL10"
+     },
+     {
+      "line": 27,
+      "why": "not found",
+      "truth": "PT-LS-W10"
+     },
+     {
+      "line": 28,
+      "why": "not found",
+      "truth": "PT-CEIL10"
+     },
+     {
+      "line": 29,
+      "why": "not found",
+      "truth": "PT-ROLL230"
+     },
+     {
+      "line": 30,
+      "why": "not found",
+      "truth": "CT-1206"
+     },
+     {
+      "line": 31,
+      "why": "not found",
+      "truth": "CG-MAIN36"
+     },
+     {
+      "line": 32,
+      "why": "not found",
+      "truth": "CG-CROSS12"
+     },
+     {
+      "line": 33,
+      "why": "not found",
+      "truth": "CG-WALL30"
+     },
+     {
+      "line": 34,
+      "why": "not found",
+      "truth": "SK-MDF60"
+     },
+     {
+      "line": 35,
+      "why": "not found",
+      "truth": "AR-MDF42"
+     },
+     {
+      "line": 36,
+      "why": "not found",
+      "truth": "GF-450W"
+     },
+     {
+      "line": 37,
+      "why": "not found",
+      "truth": "ADH-STUD"
+     },
+     {
+      "line": 38,
+      "why": "not found",
+      "truth": "ANC-FR6"
+     },
+     {
+      "line": 39,
+      "why": "not found",
+      "truth": "NOG-9045"
+     },
+     {
+      "line": 40,
+      "why": "not found",
+      "truth": "BR-STEEL"
+     },
+     {
+      "line": 41,
+      "why": "not found",
+      "truth": "GL-SAFE"
+     },
+     {
+      "line": 42,
+      "why": "not found",
+      "truth": "DUST-P2"
+     },
+     {
+      "line": 43,
+      "why": "not found",
+      "truth": "TARP-46"
+     },
+     {
+      "line": 44,
+      "why": "not found",
+      "truth": "BIN-240"
+     }
+    ],
+    "extra": 3
+   }
+  },
+  {
+   "file": "out/inv-03-p2.png",
+   "kind": "png",
+   "ms": 3143,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "orderNumber": false,
+    "currency": true,
+    "taxId": false,
+    "issued": false,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 45,
+    "right": 21,
+    "found": 21,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "PB10-2412"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "PB13-2412"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "PB13-2712"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "PBA10-2412"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "PBF13-2412"
+     },
+     {
+      "line": 5,
+      "why": "not found",
+      "truth": "ST64-30"
+     },
+     {
+      "line": 6,
+      "why": "not found",
+      "truth": "ST92-30"
+     },
+     {
+      "line": 7,
+      "why": "not found",
+      "truth": "TR64-30"
+     },
+     {
+      "line": 8,
+      "why": "not found",
+      "truth": "TR92-30"
+     },
+     {
+      "line": 9,
+      "why": "not found",
+      "truth": "PF9045-48"
+     },
+     {
+      "line": 10,
+      "why": "not found",
+      "truth": "PF7045-48"
+     },
+     {
+      "line": 11,
+      "why": "not found",
+      "truth": "SCR-PB25"
+     },
+     {
+      "line": 12,
+      "why": "not found",
+      "truth": "SCR-PB41"
+     },
+     {
+      "line": 13,
+      "why": "not found",
+      "truth": "JC-BASE20"
+     },
+     {
+      "line": 14,
+      "why": "not found",
+      "truth": "JC-FIN15"
+     },
+     {
+      "line": 15,
+      "why": "not found",
+      "truth": "TAPE-5075"
+     },
+     {
+      "line": 16,
+      "why": "not found",
+      "truth": "CB-3000"
+     },
+     {
+      "line": 17,
+      "why": "not found",
+      "truth": "INS-R26-90"
+     },
+     {
+      "line": 18,
+      "why": "not found",
+      "truth": "INS-R32-140"
+     },
+     {
+      "line": 19,
+      "why": "not found",
+      "truth": "DR-HC760"
+     },
+     {
+      "line": 20,
+      "why": "not found",
+      "truth": "DR-HC810"
+     },
+     {
+      "line": 21,
+      "why": "not found",
+      "truth": "JB-PINE"
+     },
+     {
+      "line": 22,
+      "why": "not found",
+      "truth": "HW-LEV-SC"
+     },
+     {
+      "line": 23,
+      "why": "not found",
+      "truth": "HW-PRIV-SC"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-03-p2-photo.jpg",
+   "kind": "photo",
+   "ms": 3739,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "orderNumber": false,
+    "currency": true,
+    "taxId": false,
+    "issued": false,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 45,
+    "right": 20,
+    "found": 21,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "PB10-2412"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "PB13-2412"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "PB13-2712"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "PBA10-2412"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "PBF13-2412"
+     },
+     {
+      "line": 5,
+      "why": "not found",
+      "truth": "ST64-30"
+     },
+     {
+      "line": 6,
+      "why": "not found",
+      "truth": "ST92-30"
+     },
+     {
+      "line": 7,
+      "why": "not found",
+      "truth": "TR64-30"
+     },
+     {
+      "line": 8,
+      "why": "not found",
+      "truth": "TR92-30"
+     },
+     {
+      "line": 9,
+      "why": "not found",
+      "truth": "PF9045-48"
+     },
+     {
+      "line": 10,
+      "why": "not found",
+      "truth": "PF7045-48"
+     },
+     {
+      "line": 11,
+      "why": "not found",
+      "truth": "SCR-PB25"
+     },
+     {
+      "line": 12,
+      "why": "not found",
+      "truth": "SCR-PB41"
+     },
+     {
+      "line": 13,
+      "why": "not found",
+      "truth": "JC-BASE20"
+     },
+     {
+      "line": 14,
+      "why": "not found",
+      "truth": "JC-FIN15"
+     },
+     {
+      "line": 15,
+      "why": "not found",
+      "truth": "TAPE-5075"
+     },
+     {
+      "line": 16,
+      "why": "not found",
+      "truth": "CB-3000"
+     },
+     {
+      "line": 17,
+      "why": "not found",
+      "truth": "INS-R26-90"
+     },
+     {
+      "line": 18,
+      "why": "not found",
+      "truth": "INS-R32-140"
+     },
+     {
+      "line": 19,
+      "why": "not found",
+      "truth": "DR-HC760"
+     },
+     {
+      "line": 20,
+      "why": "not found",
+      "truth": "DR-HC810"
+     },
+     {
+      "line": 21,
+      "why": "not found",
+      "truth": "JB-PINE"
+     },
+     {
+      "line": 22,
+      "why": "not found",
+      "truth": "HW-LEV-SC"
+     },
+     {
+      "line": 23,
+      "why": "not found",
+      "truth": "HW-PRIV-SC"
+     },
+     {
+      "line": 27,
+      "truth": "PT-LS-W10 50 189.00",
+      "got": "PT-L5-W10 50 18900"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-04.pdf",
+   "kind": "pdf",
+   "ms": 102,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-04.png",
+   "kind": "png",
+   "ms": 2283,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-04-photo.jpg",
+   "kind": "photo",
+   "ms": 3065,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-04.pdf",
+   "kind": "pdf",
+   "ms": 110,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-04.png",
+   "kind": "png",
+   "ms": 2632,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "orderNumber": false,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": false,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 0,
+    "found": 2,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "Double power point, horizontal, white"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "LED downlight 10 W, 90 mm cut-out, tri-colour, IC-F rated"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "TPS cable 2.5 mm² twin and earth, 100 m roll"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "RCD 40 A Type A, 30 mA, 2 pole"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "Weatherproof outdoor socket, single, IP56, grey"
+     },
+     {
+      "line": 5,
+      "why": "not found",
+      "truth": "Smoke alarm, photoelectric, 10-year lithium battery, hush button"
+     }
+    ],
+    "extra": 2
+   }
+  },
+  {
+   "file": "out/inv-04-photo.jpg",
+   "kind": "photo",
+   "ms": 3536,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": false
+   },
+   "lines": {
+    "truth": 6,
+    "right": 0,
+    "found": 1,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "Double power point, horizontal, white"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "LED downlight 10 W, 90 mm cut-out, tri-colour, IC-F rated"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "TPS cable 2.5 mm² twin and earth, 100 m roll"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "RCD 40 A Type A, 30 mA, 2 pole"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "Weatherproof outdoor socket, single, IP56, grey"
+     },
+     {
+      "line": 5,
+      "why": "not found",
+      "truth": "Smoke alarm, photoelectric, 10-year lithium battery, hush button"
+     }
+    ],
+    "extra": 1
+   }
+  },
+  {
+   "file": "out/po-05.pdf",
+   "kind": "pdf",
+   "ms": 112,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-05.png",
+   "kind": "png",
+   "ms": 2435,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-05-photo.jpg",
+   "kind": "photo",
+   "ms": 2409,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-05.pdf",
+   "kind": "pdf",
+   "ms": 116,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-05.png",
+   "kind": "png",
+   "ms": 2361,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "orderNumber": false,
+    "currency": true,
+    "issued": false,
+    "subtotal": false,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 0,
+    "found": 2,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "SMS-SH08"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "SMS-BP1100"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "SMS-NL2"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "SMS-CL10"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "SMS-FD4"
+     }
+    ],
+    "extra": 2
+   }
+  },
+  {
+   "file": "out/inv-05-photo.jpg",
+   "kind": "photo",
+   "ms": 3706,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "issued": false,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 0,
+    "found": 1,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "SMS-SH08"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "SMS-BP1100"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "SMS-NL2"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "SMS-CL10"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "SMS-FD4"
+     }
+    ],
+    "extra": 1
+   }
+  },
+  {
+   "file": "out/conf-06.pdf",
+   "kind": "pdf",
+   "ms": 115,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-06.png",
+   "kind": "png",
+   "ms": 2161,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-06-photo.jpg",
+   "kind": "photo",
+   "ms": 2579,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-06.pdf",
+   "kind": "pdf",
+   "ms": 102,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-06.png",
+   "kind": "png",
+   "ms": 2359,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-06-photo.jpg",
+   "kind": "photo",
+   "ms": 2774,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": false,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-07.pdf",
+   "kind": "pdf",
+   "ms": 113,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-07.png",
+   "kind": "png",
+   "ms": 1921,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 4,
+    "found": 5,
+    "wrong": [
+     {
+      "line": 4,
+      "truth": "EDG29-OAK 6 44.20",
+      "got": "EDG29-0AK 6 4420"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-07-photo.jpg",
+   "kind": "photo",
+   "ms": 2067,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "currency": true,
+    "taxId": false,
+    "issued": true,
+    "subtotal": false,
+    "tax": false,
+    "total": false
+   },
+   "lines": {
+    "truth": 5,
+    "right": 0,
+    "found": 1,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "MDF16-2412"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "HPP12-2412"
+     },
+     {
+      "line": 2,
+      "truth": "MEL16-WH 40 96.80",
+      "got": " 180 0"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "EDG22-WH"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "EDG29-OAK"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-07.pdf",
+   "kind": "pdf",
+   "ms": 99,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-07.png",
+   "kind": "png",
+   "ms": 2498,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": false,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 4,
+    "found": 5,
+    "wrong": [
+     {
+      "line": 4,
+      "truth": "EDG29-OAK 6 44.20",
+      "got": "EDG29-0AK 6 4420"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-07-photo.jpg",
+   "kind": "photo",
+   "ms": 2840,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": false,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-08.pdf",
+   "kind": "pdf",
+   "ms": 111,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-08.png",
+   "kind": "png",
+   "ms": 2143,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "currency": true,
+    "taxId": true,
+    "issued": false,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-08-photo.jpg",
+   "kind": "photo",
+   "ms": 2483,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-08.pdf",
+   "kind": "pdf",
+   "ms": 115,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-08.png",
+   "kind": "png",
+   "ms": 2240,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-08-photo.jpg",
+   "kind": "photo",
+   "ms": 2634,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": false,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-09.pdf",
+   "kind": "pdf",
+   "ms": 111,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-09.png",
+   "kind": "png",
+   "ms": 1949,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-09-photo.jpg",
+   "kind": "photo",
+   "ms": 2348,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-09.pdf",
+   "kind": "pdf",
+   "ms": 92,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-09.png",
+   "kind": "png",
+   "ms": 2257,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": false,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-09-photo.jpg",
+   "kind": "photo",
+   "ms": 2537,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": false,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": false,
+    "tax": false,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 1,
+    "found": 4,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "PND-350-BK"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "TRK-RAIL-2"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "DRV-24-60"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "STR-24-5"
+     },
+     {
+      "line": 5,
+      "why": "not found",
+      "truth": "Freight: Sydney to Newcastle, 3 cartons"
+     }
+    ],
+    "extra": 3
+   }
+  },
+  {
+   "file": "out/po-10.pdf",
+   "kind": "pdf",
+   "ms": 106,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-10.png",
+   "kind": "png",
+   "ms": 1890,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-10-photo.jpg",
+   "kind": "photo",
+   "ms": 2027,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-10.pdf",
+   "kind": "pdf",
+   "ms": 116,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-10.png",
+   "kind": "png",
+   "ms": 2414,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": false,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-10-photo.jpg",
+   "kind": "photo",
+   "ms": 2806,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-11.pdf",
+   "kind": "pdf",
+   "ms": 104,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-11.png",
+   "kind": "png",
+   "ms": 2129,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-11-photo.jpg",
+   "kind": "photo",
+   "ms": 2426,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": false,
+    "subtotal": false,
+    "tax": true,
+    "total": false
+   },
+   "lines": {
+    "truth": 6,
+    "right": 0,
+    "found": 2,
+    "wrong": [
+     {
+      "line": 0,
+      "truth": "TNR-K-HY 6 148.00",
+      "got": " 888 0"
+     },
+     {
+      "line": 1,
+      "truth": "PPR-A4-80 20 21.50",
+      "got": " 430 0"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "PPR-A3-100"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "LAM-A4-150"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "INK-C-XL"
+     },
+     {
+      "line": 5,
+      "why": "not found",
+      "truth": "BND-21"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-11.pdf",
+   "kind": "pdf",
+   "ms": 158,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-11.png",
+   "kind": "png",
+   "ms": 1999,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-11-photo.jpg",
+   "kind": "photo",
+   "ms": 2433,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-11.pdf",
+   "kind": "pdf",
+   "ms": 129,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-11.png",
+   "kind": "png",
+   "ms": 2471,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": false,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-11-photo.jpg",
+   "kind": "photo",
+   "ms": 2659,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-12.pdf",
+   "kind": "pdf",
+   "ms": 111,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-12.png",
+   "kind": "png",
+   "ms": 5468,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-12-photo.jpg",
+   "kind": "photo",
+   "ms": 6662,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-12.pdf",
+   "kind": "pdf",
+   "ms": 116,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-12.png",
+   "kind": "png",
+   "ms": 7669,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-12-photo.jpg",
+   "kind": "photo",
+   "ms": 8065,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": false,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-12.pdf",
+   "kind": "pdf",
+   "ms": 116,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-12.png",
+   "kind": "png",
+   "ms": 7625,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-12-photo.jpg",
+   "kind": "photo",
+   "ms": 8819,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": false,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-13.pdf",
+   "kind": "pdf",
+   "ms": 123,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-13.png",
+   "kind": "png",
+   "ms": 6812,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 5,
+    "found": 6,
+    "wrong": [
+     {
+      "line": 2,
+      "truth": "FI-40-30 4 38.60",
+      "got": "F1-40-30 4 3860"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-13-photo.jpg",
+   "kind": "photo",
+   "ms": 7740,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": false,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 4,
+    "found": 6,
+    "wrong": [
+     {
+      "line": 2,
+      "truth": "FI-40-30 4 38.60",
+      "got": "F1-40-30 4 3860"
+     },
+     {
+      "line": 3,
+      "truth": "ABZ-IP54 40 2.35",
+      "got": "ABZ-IPS54 40 235"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-13.pdf",
+   "kind": "pdf",
+   "ms": 112,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-13.png",
+   "kind": "png",
+   "ms": 6461,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-13-photo.jpg",
+   "kind": "photo",
+   "ms": 9680,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-14.pdf",
+   "kind": "pdf",
+   "ms": 116,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-14.png",
+   "kind": "png",
+   "ms": 5404,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": false
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-14-photo.jpg",
+   "kind": "photo",
+   "ms": 6102,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": false,
+    "tax": true,
+    "total": false
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-14.pdf",
+   "kind": "pdf",
+   "ms": 94,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-14.png",
+   "kind": "png",
+   "ms": 5324,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": false
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-14-photo.jpg",
+   "kind": "photo",
+   "ms": 5768,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": false
+   },
+   "lines": {
+    "truth": 6,
+    "right": 5,
+    "found": 7,
+    "wrong": [
+     {
+      "line": 2,
+      "truth": "GNT-NIT-M 10 7.45",
+      "got": " 10 745"
+     }
+    ],
+    "extra": 1
+   }
+  },
+  {
+   "file": "out/po-15.pdf",
+   "kind": "pdf",
+   "ms": 107,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 6,
+    "found": 6,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-15.png",
+   "kind": "png",
+   "ms": 5481,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "currency": true,
+    "taxId": true,
+    "issued": false,
+    "subtotal": true,
+    "tax": false,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 5,
+    "found": 6,
+    "wrong": [
+     {
+      "line": 3,
+      "truth": "CUB-24 8 34.50",
+      "got": " 8 3450"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-15-photo.jpg",
+   "kind": "photo",
+   "ms": 6252,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 6,
+    "right": 5,
+    "found": 6,
+    "wrong": [
+     {
+      "line": 1,
+      "truth": "SRV-2C-40 60 2.15",
+      "got": "SRVv-2C-40 60 215"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-15.pdf",
+   "kind": "pdf",
+   "ms": 115,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-15.png",
+   "kind": "png",
+   "ms": 5829,
+   "method": "ocr",
+   "fields": {
+    "kind": false,
+    "number": false,
+    "orderNumber": false,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/conf-15-photo.jpg",
+   "kind": "photo",
+   "ms": 6526,
+   "method": "ocr",
+   "fields": {
+    "kind": false,
+    "number": false,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": false,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 4,
+    "found": 4,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "Vaso de sidra 50 cl, caja de 6"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-15.pdf",
+   "kind": "pdf",
+   "ms": 123,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-15.png",
+   "kind": "png",
+   "ms": 5876,
+   "method": "ocr",
+   "fields": {
+    "kind": false,
+    "number": false,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": false,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-15-photo.jpg",
+   "kind": "photo",
+   "ms": 7297,
+   "method": "ocr",
+   "fields": {
+    "kind": false,
+    "number": false,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-16.pdf",
+   "kind": "pdf",
+   "ms": 130,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/po-16.png",
+   "kind": "png",
+   "ms": 3138,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": false
+   },
+   "lines": {
+    "truth": 5,
+    "right": 0,
+    "found": 1,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "HCS-12-13-2"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "SG-CLR-AF"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "NG-L-1000"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "CUT-OIL-1G"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "FD-45-60"
+     }
+    ],
+    "extra": 1
+   }
+  },
+  {
+   "file": "out/po-16-photo.jpg",
+   "kind": "photo",
+   "ms": 3426,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": false,
+    "total": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 0,
+    "found": 0,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "HCS-12-13-2"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "SG-CLR-AF"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "NG-L-1000"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "CUT-OIL-1G"
+     },
+     {
+      "line": 4,
+      "why": "not found",
+      "truth": "FD-45-60"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-16.pdf",
+   "kind": "pdf",
+   "ms": 117,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-16.png",
+   "kind": "png",
+   "ms": 2248,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-16-photo.jpg",
+   "kind": "photo",
+   "ms": 2603,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "orderNumber": true,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 5,
+    "right": 5,
+    "found": 5,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-17.pdf",
+   "kind": "pdf",
+   "ms": 111,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 4,
+    "right": 4,
+    "found": 4,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-17.png",
+   "kind": "png",
+   "ms": 2018,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 4,
+    "right": 4,
+    "found": 4,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-17-photo.jpg",
+   "kind": "photo",
+   "ms": 2192,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 4,
+    "right": 4,
+    "found": 4,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-18.pdf",
+   "kind": "pdf",
+   "ms": 98,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 4,
+    "right": 4,
+    "found": 4,
+    "wrong": [],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-18.png",
+   "kind": "png",
+   "ms": 2402,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": false,
+    "orderNumber": false,
+    "currency": true,
+    "taxId": true,
+    "issued": true,
+    "subtotal": false,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 4,
+    "right": 0,
+    "found": 1,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "MXR-SNK-CH"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "SNK-DB-860"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "TRP-40-PP"
+     },
+     {
+      "line": 3,
+      "truth": "HOS-450 12 8.95",
+      "got": " 2 10740"
+     }
+    ],
+    "extra": 0
+   }
+  },
+  {
+   "file": "out/inv-18-photo.jpg",
+   "kind": "photo",
+   "ms": 3250,
+   "method": "ocr",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": false,
+    "currency": true,
+    "taxId": true,
+    "issued": false,
+    "subtotal": true,
+    "tax": true,
+    "total": true,
+    "trackingNotLines": true
+   },
+   "lines": {
+    "truth": 4,
+    "right": 0,
+    "found": 1,
+    "wrong": [
+     {
+      "line": 0,
+      "why": "not found",
+      "truth": "MXR-SNK-CH"
+     },
+     {
+      "line": 1,
+      "why": "not found",
+      "truth": "SNK-DB-860"
+     },
+     {
+      "line": 2,
+      "why": "not found",
+      "truth": "TRP-40-PP"
+     },
+     {
+      "line": 3,
+      "why": "not found",
+      "truth": "HOS-450"
+     }
+    ],
+    "extra": 1
+   }
+  },
+  {
+   "file": "out/inv-19-zh.pdf",
+   "kind": "pdf",
+   "ms": 160,
+   "method": "pdf-text",
+   "fields": {
+    "kind": true,
+    "number": true,
+    "orderNumber": true,
+    "currency": true,
+    "issued": true,
+    "subtotal": true,
+    "tax": true,
+    "total": true
+   },
+   "lines": {
+    "truth": 3,
+    "right": 3,
+    "found": 3,
+    "wrong": [],
+    "extra": 0
+   }
+  }
+ ],
+ "pairs": [
+  {
+   "a": "out/po-01.pdf",
+   "b": "out/conf-01.pdf",
+   "kind": "pdf",
+   "expected": 0,
+   "found": 0,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-01-photo.jpg",
+   "b": "out/conf-01-photo.jpg",
+   "kind": "photo",
+   "expected": 0,
+   "found": 0,
+   "missed": [],
+   "falseAlarms": [
+    "extra-line HNG-110",
+    "tax-gst-number"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/conf-01.pdf",
+   "b": "out/inv-01.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/conf-01-photo.jpg",
+   "b": "out/inv-01-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [
+    "order-number"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-01.pdf",
+   "b": "out/inv-01.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-01-photo.jpg",
+   "b": "out/inv-01-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [
+    "extra-line HNG-110"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-02.pdf",
+   "b": "out/inv-02.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-02-photo.jpg",
+   "b": "out/inv-02-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [
+    "subtotal"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-03.pdf",
+   "b": "out/inv-03.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-03-p1-photo.jpg",
+   "b": "out/inv-03-p1-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [
+    "order-number",
+    "price-higher PB10-2412",
+    "extra-line Plasterboard standard 13 men, 2400x1200 29.80",
+    "extra-line Plasterboard standard 13 mon, 2700 x 120K 12712 A",
+    "quantity-over PBF13-2412",
+    "price-higher ST64-30",
+    "extra-line Pine framing 70x 45S MSGE M12. 48m PF 7045 48 16%",
+    "price-higher TAPE-5075",
+    "price-higher CB-3000",
+    "extra-line Wall insulationbatt R2.4, 90 men, pack INS R26 90",
+    "extra-line insulationbattR3.2, 140 mm, pack 140 71.50",
+    "price-higher DR-HC760",
+    "price-higher HW-LEV-SC Passage lever set, satin chrome",
+    "quantity-over HW-PRIV-SC Privacy lever set, satin chrome",
+    "tax-gst-number",
+    "tax-buyer"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-04.pdf",
+   "b": "out/inv-04.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-04-photo.jpg",
+   "b": "out/inv-04-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [
+    "extra-line | Tauranga 314",
+    "subtotal"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-05.pdf",
+   "b": "out/inv-05.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-05-photo.jpg",
+   "b": "out/inv-05-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [
+    "extra-line Dispatched via FedEx, tracking 7809 1094 789",
+    "subtotal"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/conf-06.pdf",
+   "b": "out/inv-06.pdf",
+   "kind": "pdf",
+   "expected": 0,
+   "found": 0,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/conf-06-photo.jpg",
+   "b": "out/inv-06-photo.jpg",
+   "kind": "photo",
+   "expected": 0,
+   "found": 0,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-07.pdf",
+   "b": "out/inv-07.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-07-photo.jpg",
+   "b": "out/inv-07-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [
+    "order-number",
+    "extra-line MDF16-2412",
+    "extra-line HPP12-2412",
+    "price-higher MELIGWH Melamine board 16 mm white, 360",
+    "extra-line EDG22-WH",
+    "extra-line EDG29-OAK"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-08.pdf",
+   "b": "out/inv-08.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-08-photo.jpg",
+   "b": "out/inv-08-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [
+    "gst",
+    "total"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-09.pdf",
+   "b": "out/inv-09.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-09-photo.jpg",
+   "b": "out/inv-09-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [
+    "order-number",
+    "extra-line Fresght Sydney 10 Newcastle. 3 canons 1 850",
+    "extra-line via DHL Express. (AWE) Subtotal",
+    "subtotal",
+    "gst",
+    "total"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-10.pdf",
+   "b": "out/inv-10.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-10-photo.jpg",
+   "b": "out/inv-10-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-11.pdf",
+   "b": "out/conf-11.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-11-photo.jpg",
+   "b": "out/conf-11-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 0,
+   "missed": [
+    "code-differs TNR-K-HY"
+   ],
+   "falseAlarms": [
+    "price-higher TNR HY Toner cantndge, black, 12 000 pages 6 148",
+    "price-higher Ad copeer paper 80 gsm. box of 5 reams 20 215",
+    "extra-line PPR-A3-100",
+    "extra-line LAM-A4-150",
+    "extra-line INK-C-XL",
+    "extra-line BND-21"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/conf-11.pdf",
+   "b": "out/inv-11.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/conf-11-photo.jpg",
+   "b": "out/inv-11-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-11.pdf",
+   "b": "out/inv-11.pdf",
+   "kind": "pdf",
+   "expected": 2,
+   "found": 2,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-11-photo.jpg",
+   "b": "out/inv-11-photo.jpg",
+   "kind": "photo",
+   "expected": 2,
+   "found": 1,
+   "missed": [
+    "code-differs TNR-K-HY"
+   ],
+   "falseAlarms": [
+    "price-higher TNR HY Toner cantndge, black, 12 000 pages 6 148",
+    "price-higher Ad copeer paper 80 gsm. box of 5 reams 20 215",
+    "extra-line PPR-A3-100",
+    "extra-line LAM-A4-150",
+    "extra-line INK-C-XL",
+    "extra-line BND-21"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-12.pdf",
+   "b": "out/conf-12.pdf",
+   "kind": "pdf",
+   "expected": 2,
+   "found": 2,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-12-photo.jpg",
+   "b": "out/conf-12-photo.jpg",
+   "kind": "photo",
+   "expected": 2,
+   "found": 2,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/conf-12.pdf",
+   "b": "out/inv-12.pdf",
+   "kind": "pdf",
+   "expected": 0,
+   "found": 0,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/conf-12-photo.jpg",
+   "b": "out/inv-12-photo.jpg",
+   "kind": "photo",
+   "expected": 0,
+   "found": 0,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-12.pdf",
+   "b": "out/inv-12.pdf",
+   "kind": "pdf",
+   "expected": 2,
+   "found": 2,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-12-photo.jpg",
+   "b": "out/inv-12-photo.jpg",
+   "kind": "photo",
+   "expected": 2,
+   "found": 2,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-13.pdf",
+   "b": "out/inv-13.pdf",
+   "kind": "pdf",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-13-photo.jpg",
+   "b": "out/inv-13-photo.jpg",
+   "kind": "photo",
+   "expected": 1,
+   "found": 1,
+   "missed": [],
+   "falseAlarms": [
+    "supplier"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-14.pdf",
+   "b": "out/inv-14.pdf",
+   "kind": "pdf",
+   "expected": 0,
+   "found": 0,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-14-photo.jpg",
+   "b": "out/inv-14-photo.jpg",
+   "kind": "photo",
+   "expected": 0,
+   "found": 0,
+   "missed": [],
+   "falseAlarms": [
+    "supplier",
+    "extra-line 691",
+    "total"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-15.pdf",
+   "b": "out/conf-15.pdf",
+   "kind": "pdf",
+   "expected": 2,
+   "found": 2,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-15-photo.jpg",
+   "b": "out/conf-15-photo.jpg",
+   "kind": "photo",
+   "expected": 2,
+   "found": 2,
+   "missed": [],
+   "falseAlarms": [
+    "subtotal",
+    "gst",
+    "total"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/conf-15.pdf",
+   "b": "out/inv-15.pdf",
+   "kind": "pdf",
+   "expected": 0,
+   "found": 0,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/conf-15-photo.jpg",
+   "b": "out/inv-15-photo.jpg",
+   "kind": "photo",
+   "expected": 0,
+   "found": 0,
+   "missed": [],
+   "falseAlarms": [
+    "order-number",
+    "extra-line VAS-SID-6"
+   ],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-15.pdf",
+   "b": "out/inv-15.pdf",
+   "kind": "pdf",
+   "expected": 2,
+   "found": 2,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-15-photo.jpg",
+   "b": "out/inv-15-photo.jpg",
+   "kind": "photo",
+   "expected": 2,
+   "found": 2,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-16.pdf",
+   "b": "out/inv-16.pdf",
+   "kind": "pdf",
+   "expected": 2,
+   "found": 2,
+   "missed": [],
+   "falseAlarms": [],
+   "orderIsA": true
+  },
+  {
+   "a": "out/po-16-photo.jpg",
+   "b": "out/inv-16-photo.jpg",
+   "kind": "photo",
+   "expected": 2,
+   "found": 0,
+   "missed": [
+    "price-higher SG-CLR-AF",
+    "qty-over NG-L-1000"
+   ],
+   "falseAlarms": [
+    "supplier",
+    "extra-line HCS-12-13-2",
+    "extra-line SG-CLR-AF",
+    "extra-line NG-L-1000",
+    "extra-line CUT-OIL-1G",
+    "extra-line FD-45-60"
+   ],
+   "orderIsA": true
+  }
+ ]
+}
