@@ -634,9 +634,9 @@
           // A gap of more than about a line ends the address block; so does the line table's heading.
           if (rows[j].y - (rows[j - 1].y + rows[j - 1].h) > rows[j - 1].h * 1.2) break;
           if (findHeader([rows[j]], 0)) break;
-          var under = rows[j].cells.filter(function (c) { return c.x0 < cell.x1 && c.x1 > cell.x0 - 8 && Math.abs(c.x0 - cell.x0) < 40; })[0];
-          if (!under) break;
-          var t = under.text.trim();
+          var belowCell = rows[j].cells.filter(function (c) { return c.x0 < cell.x1 && c.x1 > cell.x0 - 8 && Math.abs(c.x0 - cell.x0) < 40; })[0];
+          if (!belowCell) break;
+          var t = belowCell.text.trim();
           if (RE.supplier.test(fold(t)) || RE.buyer.test(fold(t)) || companyLine(t) || headingKind(t)) break;
           parts.push(t);
         }
